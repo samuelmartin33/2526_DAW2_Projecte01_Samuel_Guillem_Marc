@@ -1,0 +1,258 @@
+/* --- Importar Fuente Poppins --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* --- Reseteo Básico y Estilos Globales --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+}
+
+body {
+    /* Fondo de la imagen (Ruta correcta desde CSS) */
+    background-image: url('../img/fondo_login.png');
+    background-size: cover;
+    /* CAMBIO AQUÍ: Desplaza la imagen hacia abajo (80% de la altura) */
+    background-position: center 80%; 
+    background-repeat: no-repeat;
+    
+    overflow: hidden;
+    position: relative; /* Contenedor base para la posición absoluta */
+}
+
+/* --- Elementos de la Interfaz (Logo superior y Menú) --- */
+.top-logo {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.top-logo img {
+    height: 250px; 
+}
+
+.menu-icon {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    width: 30px;
+    height: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.menu-icon span {
+    width: 100%;
+    height: 4px;
+    background-color: #555;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+
+/* --- Tarjeta Logo Izquierda (Casa GMS) --- */
+.logo-card {
+    position: absolute;
+    left: 5vw; 
+    top: 50%;  
+    transform: translateY(-50%); 
+    
+    width: 650px; /* Ancho de referencia */
+    background-color: #ffffff;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    
+    padding: 0; 
+    overflow: hidden; 
+}
+
+.logo-card img {
+    width: 100%;
+    height: auto;
+    display: block; 
+}
+
+/* --- Contenedor Formulario Derecha (El Login) --- */
+.login-container {
+    /* Estilo de tarjeta "GORDITA" */
+    background-color: #ffffff;
+    border-radius: 24px; 
+    padding: 50px; /* Padding interior para hacerlo más robusto */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+
+    /* Posicionamiento y Tamaño */
+    position: absolute;
+    right: 5vw; /* Pegado a la derecha, igual que el logo a la izquierda */
+    top: 50%;    
+    transform: translateY(-50%); 
+
+    width: 650px; /* Igual que el .logo-card */
+}
+
+/* --- ESTILO DEL TÍTULO DE LOGIN (Más grande) --- */
+.login-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 3rem; 
+    font-weight: 700; 
+    letter-spacing: 2px; 
+    color: #333;
+    text-align: center;
+    
+    padding-bottom: 10px;
+    border-bottom: 4px solid #d9534f; 
+    display: block;
+    width: 40%; 
+    margin: 0 auto 40px auto; 
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px; 
+}
+
+/* --- Estilo de los Inputs (Select y Password) --- */
+.input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-group i.fa-solid {
+    position: absolute;
+    left: 25px; 
+    color: #888;
+    font-size: 1.3em; 
+    z-index: 2;
+}
+
+/* Estilo común para <select> y <input> (Más grandes) */
+.input-group select,
+.input-group input[type="password"] {
+    width: 100%;
+    padding: 24px 25px 24px 65px; 
+    font-size: 1.15rem; 
+    
+    border: none;
+    border-radius: 50px;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f7f7f7; 
+    box-shadow: none; 
+    outline: none;
+    transition: box-shadow 0.2s ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.input-group select:focus,
+.input-group input[type="password"]:focus {
+    box-shadow: 0 0 0 2px #d9534f; 
+    background-color: #ffffff;
+}
+
+.input-group input::placeholder { color: #999; }
+.input-group select:invalid { color: #999; }
+.input-group select option { color: #333; }
+
+/* Flecha para el <select> */
+.input-group.select-wrapper::after {
+    content: '\f078';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    right: 30px; 
+    color: #888;
+    pointer-events: none;
+}
+
+/* --- Botón de Iniciar Sesión --- */
+button[type="submit"] {
+    padding: 24px 25px; 
+    font-size: 1.3rem; 
+    border: none;
+    border-radius: 50px;
+    background-color: #d9534f;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(217, 83, 79, 0.3);
+    transition: all 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #c9302c;
+    box-shadow: 0 10px 25px rgba(217, 83, 79, 0.4);
+    transform: translateY(-2px);
+}
+
+/* --- Mensaje de Error --- */
+.error {
+    color: #c0392b;
+    font-size: 14px;
+    text-align: center;
+    background-color: #fcecec; 
+    padding: 12px;
+    border-radius: 10px;
+    box-shadow: none; 
+    border: 1px solid #f5c6cb;
+    margin-bottom: 30px; 
+}
+
+/* --- Diseño Responsivo --- */
+@media (max-width: 1400px) { 
+    body {
+        overflow: auto;
+        height: auto;
+        min-height: 100vh;
+        padding-top: 300px; 
+    }
+
+    .logo-card,
+    .login-container {
+        position: relative; 
+        left: auto;
+        right: auto;
+        top: auto;
+        transform: none; 
+        
+        width: 90%; 
+        margin: 20px auto; 
+    }
+
+    .logo-card {
+        max-width: 550px; 
+    }
+
+    .login-container {
+        max-width: 550px; 
+        margin-bottom: 50px; 
+        padding: 30px; 
+    }
+
+    .login-title {
+        font-size: 2.2rem; 
+        margin-bottom: 25px;
+        width: 60%;
+    }
+
+    .top-logo {
+        position: absolute;
+        top: 30px;
+        padding-top: 0;
+    }
+}

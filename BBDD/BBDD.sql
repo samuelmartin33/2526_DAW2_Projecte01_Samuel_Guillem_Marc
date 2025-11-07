@@ -86,9 +86,10 @@ CREATE TABLE IF NOT EXISTS ocupaciones (
 -- ==========================================
 INSERT INTO users (username, nombre, apellido, email, password_hash, rol)
 VALUES
-('camarero1', 'Camarero', 'Uno', 'camarero1@restaurante.com', SHA2('123456', 256), 1),
-('camarero2', 'Camarero', 'Dos', 'camarero2@restaurante.com', SHA2('123456', 256), 1),
-('camarero3', 'Camarero', 'Tres', 'camarero3@restaurante.com', SHA2('123456', 256), 1);
+('camarero1', 'Camarero', 'Uno', 'camarero1@restaurante.com', '$2y$10$VPM7.4cja7LDxoYO6YaOLuZgW.moRul/o5VnNuYUIupyjdko/sB5m', 1),
+('camarero2', 'Camarero', 'Dos', 'camarero2@restaurante.com', '$2y$10$VPM7.4cja7LDxoYO6YaOLuZgW.moRul/o5VnNuYUIupyjdko/sB5m', 1),
+('camarero3', 'Camarero', 'Tres', 'camarero3@restaurante.com', '$2y$10$VPM7.4cja7LDxoYO6YaOLuZgW.moRul/o5VnNuYUIupyjdko/sB5m', 1);
+
 
 -- ==========================================
 --   INSERTS: SALAS

@@ -1,0 +1,117 @@
+<?php
+session_start();
+
+// 1. Redirigir si ya está autenticado
+if (isset($_SESSION["id_usuario"])) {
+    // Si index.php está en la raíz, la ruta es:
+    header('Location: ../../index.php'); 
+    exit;
+}
+
+// 2. Incluir TU archivo de conexión
+// RUTA CORREGIDA: Solo necesita subir un nivel (../) y entrar en conexion/
+require '../conexion/conexion.php'; 
+
+$camareros = [];
+$db_error = null;
+
+try {
+    // 3. Obtener solo los camareros (rol=1)
+    $stmt = $conn->query("SELECT id, username, nombre, apellido FROM users WHERE rol = 1 AND fecha_baja IS NULL ORDER BY nombre");
+    $camareros = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+} catch (PDOException $e) {
+    // Manejo de error de la base de datos
+    $db_error = "Error al cargar la lista de usuarios. Contacte al administrador.";
+}
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Casa GMS</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../../css/login.css">
+</head>
+<body>
+
+    <div class="top-logo">
+        <img src="../../img/basic_logo.png" alt="Logo Guillem Samuel y Marc">
+    </div>
+
+
+    <main> 
+        
+        <div class="logo-card">
+            <img src="../../img/casa_gms.png" alt="Logo Casa GMS">
+        </div>
+
+        <div class="login-container">
+            
+            <h1 class="login-title">LOGIN</h1>
+
+            <?php if (isset($_GET['error']) || $db_error): ?>
+                <div class="error">
+                    <?php
+                    if ($db_error) {
+                        echo $db_error;
+                    } else {
+                        switch ($_GET['error']) {
+                            case 'campos_vacios':
+                                echo 'Por favor, completa todos los campos.';
+                                break;
+                            case 'credenciales_invalidas':
+                                echo 'Usuario o contraseña incorrectos.';
+                                break;
+                            case 'usuario_corto':
+                                echo 'El nombre de usuario es demasiado corto (mín. 3 caracteres).';
+                                break;
+                            case 'password_corto':
+                                echo 'La contraseña es demasiado corta (mín. 6 caracteres).';
+                                break;
+                            case 'error_bd':
+                                echo 'Error de servidor. Intenta más tarde.';
+                                break;
+                            default:
+                                echo 'Error en el inicio de sesión.';
+                                break;
+                        }
+                    }
+                    ?>
+                </div>
+            <?php endif; ?>
+
+            <form id="loginForm" method="post" action="../PROCEDIMIENTOS/procesar_login.php" novalidate>
+                
+                <div class="input-group select-wrapper">
+                    <i class="fa-solid fa-user"></i>
+                    <select id="username" name="username" required>
+                        <option value="" disabled selected>Selecciona tu usuario</option>
+                        <?php foreach ($camareros as $camarero): ?>
+                            <option value="<?php echo htmlspecialchars($camarero['username']); ?>">
+                                <?php echo htmlspecialchars($camarero['nombre'] . ' ' . $camarero['apellido']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="password" name="password" placeholder="Contraseña" required>
+                </div>
+
+                <button type="submit">Iniciar sesión</button>
+            </form>
+        </div>
+    </main>
+
+    </body>
+</html>
