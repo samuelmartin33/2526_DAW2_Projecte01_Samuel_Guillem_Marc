@@ -109,7 +109,7 @@ if ($hora >= 6 && $hora < 12) {
     <!-- 🔹 INCLUIR HEADER / BARRA DE NAVEGACIÓN (Ruta Corregida) -->
     <?php 
         // ¡CORRECCIÓN DE RUTA! Como header.php está en la misma carpeta PUBLIC/, se incluye directamente.
-        include 'header.php'; 
+        include './header.php'; 
     ?>
 
     <!-- 🔹 CONTENIDO PRINCIPAL: DASHBOARD -->

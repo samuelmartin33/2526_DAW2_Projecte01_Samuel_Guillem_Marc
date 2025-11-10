@@ -6,7 +6,7 @@
 <nav class="main-header">
     <div class="header-logo">
         <!-- RUTA CORREGIDA: sube a php/, sube a restaurante/, entra en img/ -->
-        <img src="../../img/basic_logo_blanco.png" alt="Logo GMS">
+        <img src="../../../img/basic_logo_blanco.png" alt="Logo GMS">
         <div class="logo-text">
             <span class="gms-title">CASA GMS</span>
            
@@ -20,13 +20,13 @@
 
     <!-- Menú de navegación (Opciones de camarero) -->
     <div class="header-menu">
-        <a href="index.php" class="nav-link">
+        <a href="../index.php" class="nav-link">
             <i class="fa-solid fa-house"></i> Inicio
         </a>
-        <a href="consultar_mesas.php" class="nav-link">
+        <a href="../consultar_mesas.php" class="nav-link">
             <i class="fa-solid fa-chair"></i> Mesas
         </a>
-        <a href="consultar_estadisticas.php" class="nav-link">
+        <a href="../consultar_estadisticas.php" class="nav-link">
             <i class="fa-solid fa-chart-bar"></i> Estadísticas
         </a>
         <?php if ($rol == 2): ?>
@@ -37,7 +37,7 @@
     </div>
 
     <!-- Botón de Cerrar Sesión -->
-    <form method="post" action="../PROCEDIMIENTOS/logout.php">
+    <form method="post" action="../../PROCEDIMIENTOS/logout.php">
         <button type="submit" class="logout-btn">
             <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
         </button>
