@@ -23,11 +23,8 @@
         <a href="../index.php" class="nav-link">
             <i class="fa-solid fa-house"></i> Inicio
         </a>
-        <a href="../consultar_mesas.php" class="nav-link">
-            <i class="fa-solid fa-chair"></i> Mesas
-        </a>
-        <a href="../consultar_estadisticas.php" class="nav-link">
-            <i class="fa-solid fa-chart-bar"></i> Estadísticas
+        <a href="../historico.php" class="nav-link">
+            <i class="fa-solid fa-chart-bar"></i> Histórico
         </a>
         <?php if ($rol == 2): ?>
             <a href="admin_panel.php" class="nav-link">
