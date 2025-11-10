@@ -161,7 +161,7 @@ if ($hora >= 6 && $hora < 12) {
                     }
                 ?>
                 <!-- Tarjeta como enlace a la página de la sala -->
-                <a href="./MESAS/<?= htmlspecialchars($sala['file']) ?>" class="sala-card-link">
+                <a href="./SALAS/<?= htmlspecialchars($sala['file']) ?>" class="sala-card-link">
                     <div class="sala-card <?= $color_class ?>">
                         <h3 class="sala-name"><?= htmlspecialchars($sala['sala']) ?></h3>
                         <div class="sala-occupancy">

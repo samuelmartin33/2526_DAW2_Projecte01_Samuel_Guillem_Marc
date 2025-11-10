@@ -29,7 +29,7 @@ body {
 /* --- Elementos de la Interfaz (Logo superior y Menú) --- */
 .top-logo {
     position: absolute;
-    top: 30px;
+    top: 20px; /* --- CAMBIO AQUÍ: Subido ligeramente --- */
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -38,7 +38,7 @@ body {
 }
 
 .top-logo img {
-    height: 250px; 
+    height: 145px; /* --- CAMBIO AQUÍ: Reducido de 250px --- */
 }
 
 .menu-icon {
@@ -66,10 +66,10 @@ body {
 .logo-card {
     position: absolute;
     left: 5vw; 
-    top: 50%;  
+    top: 50%;   
     transform: translateY(-50%); 
     
-    width: 650px; /* Ancho de referencia */
+    width: 450px; /* --- CAMBIO AQUÍ: Reducido de 650px --- */
     background-color: #ffffff;
     border-radius: 24px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -89,22 +89,22 @@ body {
     /* Estilo de tarjeta "GORDITA" */
     background-color: #ffffff;
     border-radius: 24px; 
-    padding: 50px; /* Padding interior para hacerlo más robusto */
+    padding: 30px; /* --- CAMBIO AQUÍ: Padding ligeramente reducido --- */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 
     /* Posicionamiento y Tamaño */
     position: absolute;
     right: 5vw; /* Pegado a la derecha, igual que el logo a la izquierda */
-    top: 50%;    
+    top: 50%;     
     transform: translateY(-50%); 
 
-    width: 650px; /* Igual que el .logo-card */
+    width: 450px; /* --- CAMBIO AQUÍ: Reducido de 650px (igual que .logo-card) --- */
 }
 
 /* --- ESTILO DEL TÍTULO DE LOGIN (Más grande) --- */
 .login-title {
     font-family: 'Poppins', sans-serif;
-    font-size: 3rem; 
+    font-size: 2.0rem; /* --- CAMBIO AQUÍ: Ligeramente reducido para ajustar al nuevo ancho --- */
     font-weight: 700; 
     letter-spacing: 2px; 
     color: #333;
