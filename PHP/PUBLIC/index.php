@@ -1,81 +1,84 @@
 <?php
 session_start();
+require_once __DIR__ . '/../CONEXION/conexion.php';
 
 // Comprobar si el usuario está logueado correctamente
 if (isset($_SESSION['loginok']) && $_SESSION['loginok'] === true && isset($_SESSION['username'])) {
     $nombre = htmlspecialchars($_SESSION['nombre']);
     $username = htmlspecialchars($_SESSION['username']);
-    $rol = $_SESSION['rol'] ?? 1; // 1=camarero, 2=admin
-    
+    $rol = $_SESSION['rol'] ?? 1; 
 } else {
-    // Redirección al login
     header("Location: login.php");
     exit();
 }
 
 // ----------------------------------------------------------------------------------
-// LÓGICA DE SIMULACIÓN DE ESTADÍSTICAS
+// CONSULTAS A LA BASE DE DATOS
 // ----------------------------------------------------------------------------------
 
-// 1. Definición de la lista de archivos de salas (Basado en tu estructura de carpetas)
-$archivos_sala = [
-    'comedor1.php', 'comedor2.php', 
-    'sprivada1.php', 'sprivada2.php', 'sprivada3.php', 'sprivada4.php', 
-    'terraza1.php', 'terraza2.php', 'terraza3.php'
-];
+try {
+    // Obtener salas con número de mesas y mesas ocupadas
+    $sql = "
+        SELECT 
+            s.id AS id_sala,
+            s.nombre AS sala_nombre,
+            COUNT(m.id) AS total_mesas,
+            SUM(CASE WHEN m.estado = 2 THEN 1 ELSE 0 END) AS mesas_ocupadas
+        FROM salas s
+        LEFT JOIN mesas m ON s.id = m.id_sala
+        GROUP BY s.id
+        ORDER BY s.nombre ASC
+    ";
+    $stmt = $conn->query($sql);
+    $salas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Función para limpiar el nombre de archivo y obtener el nombre de la sala para mostrar
-function obtenerNombreSala($filename) {
-    $name = str_replace('.php', '', $filename);
-    $name = str_replace('sprivada', 'Sala Privada ', $name);
-    $name = str_replace('terraza', 'Terraza ', $name);
-    $name = str_replace('comedor', 'Comedor ', $name);
-    return ucwords(trim($name));
-}
+    $ocupacion_salas = [];
+    $total_mesas = 0;
+    $mesas_ocupadas = 0;
+    $total_sillas = 0;
+    $sillas_ocupadas = 0;
 
-// 2. Datos simulados de ocupación (Se generan datos para TODAS las salas)
-$datos_simulados_ocupacion = [
-    'Comedor 1'      => ['ocupacion_pct' => 50,  'mesas_ocupadas' => 2, 'total_mesas' => 4],
-    'Comedor 2'      => ['ocupacion_pct' => 25,  'mesas_ocupadas' => 1, 'total_mesas' => 4],
-    'Sala Privada 1' => ['ocupacion_pct' => 100, 'mesas_ocupadas' => 4, 'total_mesas' => 4],
-    'Sala Privada 2' => ['ocupacion_pct' => 0,   'mesas_ocupadas' => 0, 'total_mesas' => 4],
-    'Sala Privada 3' => ['ocupacion_pct' => 10,  'mesas_ocupadas' => 1, 'total_mesas' => 10], 
-    'Sala Privada 4' => ['ocupacion_pct' => 0,   'mesas_ocupadas' => 0, 'total_mesas' => 4],
-    'Terraza 1'      => ['ocupacion_pct' => 75,  'mesas_ocupadas' => 3, 'total_mesas' => 4],
-    'Terraza 2'      => ['ocupacion_pct' => 25,  'mesas_ocupadas' => 1, 'total_mesas' => 4],
-    'Terraza 3'      => ['ocupacion_pct' => 40,  'mesas_ocupadas' => 2, 'total_mesas' => 5],
-];
+    foreach ($salas as $s) {
+        $total_mesas += $s['total_mesas'];
+        $mesas_ocupadas += $s['mesas_ocupadas'];
+        $ocupacion_pct = $s['total_mesas'] > 0 ? round(($s['mesas_ocupadas'] / $s['total_mesas']) * 100) : 0;
 
+        // Sillas totales y ocupadas por sala
+        $querySillas = $conn->prepare("
+            SELECT 
+                SUM(sillas) AS total_sillas,
+                SUM(CASE WHEN estado = 2 THEN sillas ELSE 0 END) AS sillas_ocupadas
+            FROM mesas WHERE id_sala = :id
+        ");
+        $querySillas->execute([':id' => $s['id_sala']]);
+        $sillas = $querySillas->fetch(PDO::FETCH_ASSOC);
 
-$ocupacion_salas = [];
-$total_mesas = 0;
-$mesas_ocupadas = 0;
-$total_sillas = 160; 
+        $total_sillas += intval($sillas['total_sillas']);
+        $sillas_ocupadas += intval($sillas['sillas_ocupadas']);
 
-foreach ($archivos_sala as $file) {
-    $nombre_sala = obtenerNombreSala($file);
-    // Recuperar datos simulados o usar valores por defecto (0% ocupación)
-    $data = $datos_simulados_ocupacion[$nombre_sala] ?? ['ocupacion_pct' => 0, 'mesas_ocupadas' => 0, 'total_mesas' => 4];
+        $ocupacion_salas[] = [
+            'sala' => $s['sala_nombre'],
+            'file' => strtolower(str_replace(' ', '', $s['sala_nombre'])) . '.php',
+            'ocupacion_pct' => $ocupacion_pct,
+            'mesas_ocupadas' => $s['mesas_ocupadas'],
+            'total_mesas' => $s['total_mesas']
+        ];
+    }
+
+    $stats = [
+        'total_mesas' => $total_mesas,
+        'mesas_ocupadas' => $mesas_ocupadas,
+        'mesas_libres' => $total_mesas - $mesas_ocupadas,
+        'total_sillas' => $total_sillas,
+        'sillas_ocupadas' => $sillas_ocupadas,
+        'sillas_libres' => $total_sillas - $sillas_ocupadas,
+    ];
+
+    usort($ocupacion_salas, fn($a, $b) => $b['ocupacion_pct'] <=> $a['ocupacion_pct']);
     
-    $ocupacion_salas[] = array_merge($data, ['sala' => $nombre_sala, 'file' => $file]);
-
-    // Recalcular los totales principales en base a los datos simulados de sala
-    $total_mesas += $data['total_mesas'];
-    $mesas_ocupadas += $data['mesas_ocupadas'];
+} catch (PDOException $e) {
+    die("Error al obtener los datos: " . $e->getMessage());
 }
-
-// Recalcular los stats principales basados en el nuevo cálculo
-$stats = [
-    'total_mesas' => $total_mesas,
-    'mesas_ocupadas' => $mesas_ocupadas,
-    'mesas_libres' => $total_mesas - $mesas_ocupadas,
-    'total_sillas' => $total_sillas, 
-    'sillas_ocupadas' => 50, 
-    'sillas_libres' => $total_sillas - 50,
-];
-
-// Ordenar para mostrar más ocupadas primero
-usort($ocupacion_salas, fn($a, $b) => $b['ocupacion_pct'] <=> $a['ocupacion_pct']);
 
 // Saludo dinámico (necesario para header.php)
 $hora = date('H');
@@ -86,8 +89,8 @@ if ($hora >= 6 && $hora < 12) {
 } else {
     $saludo = "Buenas noches";
 }
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -106,13 +109,13 @@ if ($hora >= 6 && $hora < 12) {
 </head>
 <body>
     
-    <!-- 🔹 INCLUIR HEADER / BARRA DE NAVEGACIÓN (Ruta Corregida) -->
+    <!--  INCLUIR HEADER / BARRA DE NAVEGACIÓN (Ruta Corregida) -->
     <?php 
         // ¡CORRECCIÓN DE RUTA! Como header.php está en la misma carpeta PUBLIC/, se incluye directamente.
         include 'header.php'; 
     ?>
 
-    <!-- 🔹 CONTENIDO PRINCIPAL: DASHBOARD -->
+    <!--  CONTENIDO PRINCIPAL: DASHBOARD -->
     <div class="container">
         
         <h1 class="dashboard-title">Resumen de Ocupación Hoy</h1>

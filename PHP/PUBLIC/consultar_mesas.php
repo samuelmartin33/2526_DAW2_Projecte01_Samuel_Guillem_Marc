@@ -10,7 +10,7 @@ if (!isset($_SESSION['loginok']) || $_SESSION['loginok'] !== true) {
 
 $msg = "";
 $salas = [];
-$mesas = [];
+// $mesas = [];
 
 // Cargar salas
 try {
@@ -21,52 +21,52 @@ try {
 }
 
 
-// Si se envía el formulario de asignación
-if (isset($_POST['asignar'])) {
-    $id_camarero = $_SESSION['id_usuario'];
-    $id_sala = intval($_POST['sala']);
-    $id_mesa = intval($_POST['mesa']);
-    $num_comensales = intval($_POST['num_comensales']);
+// // Si se envía el formulario de asignación
+// if (isset($_POST['asignar'])) {
+//     $id_camarero = $_SESSION['id_usuario'];
+//     $id_sala = intval($_POST['sala']);
+//     $id_mesa = intval($_POST['mesa']);
+//     $num_comensales = intval($_POST['num_comensales']);
 
-    if ($id_sala && $id_mesa && $num_comensales > 0) {
-        try {
-            $conn->beginTransaction();
+//     if ($id_sala && $id_mesa && $num_comensales > 0) {
+//         try {
+//             $conn->beginTransaction();
 
-            // Verificar que la mesa sigue libre
-            $check = $conn->prepare("SELECT estado FROM mesas WHERE id = :mesa FOR UPDATE");
-            $check->execute([':mesa' => $id_mesa]);
-            $mesa = $check->fetch(PDO::FETCH_ASSOC);
+//             // Verificar que la mesa sigue libre
+//             $check = $conn->prepare("SELECT estado FROM mesas WHERE id = :mesa FOR UPDATE");
+//             $check->execute([':mesa' => $id_mesa]);
+//             $mesa = $check->fetch(PDO::FETCH_ASSOC);
 
-            if (!$mesa || $mesa['estado'] != 1) {
-                throw new Exception("La mesa ya no está disponible.");
-            }
+//             if (!$mesa || $mesa['estado'] != 1) {
+//                 throw new Exception("La mesa ya no está disponible.");
+//             }
 
-            // Cambiar estado a ocupada
-            $update = $conn->prepare("UPDATE mesas SET estado = 2 WHERE id = :mesa");
-            $update->execute([':mesa' => $id_mesa]);
+//             // Cambiar estado a ocupada
+//             $update = $conn->prepare("UPDATE mesas SET estado = 2 WHERE id = :mesa");
+//             $update->execute([':mesa' => $id_mesa]);
 
-            // Insertar ocupación
-            $insert = $conn->prepare("
-                INSERT INTO ocupaciones (id_camarero, id_sala, id_mesa, inicio_ocupacion, num_comensales)
-                VALUES (:camarero, :sala, :mesa, NOW(), :num)
-            ");
-            $insert->execute([
-                ':camarero' => $id_camarero,
-                ':sala' => $id_sala,
-                ':mesa' => $id_mesa,
-                ':num' => $num_comensales
-            ]);
+//             // Insertar ocupación
+//             $insert = $conn->prepare("
+//                 INSERT INTO ocupaciones (id_camarero, id_sala, id_mesa, inicio_ocupacion, num_comensales)
+//                 VALUES (:camarero, :sala, :mesa, NOW(), :num)
+//             ");
+//             $insert->execute([
+//                 ':camarero' => $id_camarero,
+//                 ':sala' => $id_sala,
+//                 ':mesa' => $id_mesa,
+//                 ':num' => $num_comensales
+//             ]);
 
-            $conn->commit();
-            $msg = "✅ Mesa asignada correctamente.";
-        } catch (Exception $e) {
-            $conn->rollBack();
-            $msg = "❌ Error: " . $e->getMessage();
-        }
-    } else {
-        $msg = "⚠️ Debes seleccionar sala, mesa y número de comensales.";
-    }
-}
+//             $conn->commit();
+//             $msg = "✅ Mesa asignada correctamente.";
+//         } catch (Exception $e) {
+//             $conn->rollBack();
+//             $msg = "❌ Error: " . $e->getMessage();
+//         }
+//     } else {
+//         $msg = "⚠️ Debes seleccionar sala, mesa y número de comensales.";
+//     }
+// }
 ?>
 
 <!DOCTYPE html>
