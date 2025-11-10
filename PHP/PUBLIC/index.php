@@ -2,29 +2,23 @@
 session_start();
 
 // --- AÑADIDO: Conexión a la BBDD ---
-// Asumo que tu index.php está en /PUBLIC/ y CONEXION en /PHP/CONEXION/
-// Ajusta la ruta si es necesario. Si index.php está en /PUBLIC/, esta ruta es correcta.
 require_once __DIR__ . '/../CONEXION/conexion.php';
-
 
 // Comprobar si el usuario está logueado correctamente
 if (isset($_SESSION['loginok']) && $_SESSION['loginok'] === true && isset($_SESSION['username'])) {
     $nombre = htmlspecialchars($_SESSION['nombre']);
     $username = htmlspecialchars($_SESSION['username']);
     $rol = $_SESSION['rol'] ?? 1; // 1=camarero, 2=admin
-    
 } else {
-    // Redirección al login
     header("Location: login.php");
     exit();
 }
 
 // ----------------------------------------------------------------------------------
-// --- BLOQUE ACTUALIZADO: CONSULTAS A LA BASE DE DATOS ---
+// --- CONSULTAS A LA BASE DE DATOS ---
 // ----------------------------------------------------------------------------------
 
 try {
-    // Obtener salas con número de mesas y mesas ocupadas
     $sql = "
         SELECT 
             s.id AS id_sala,
@@ -50,7 +44,6 @@ try {
         $mesas_ocupadas += $s['mesas_ocupadas'];
         $ocupacion_pct = $s['total_mesas'] > 0 ? round(($s['mesas_ocupadas'] / $s['total_mesas']) * 100) : 0;
 
-        // Sillas totales y ocupadas por sala
         $querySillas = $conn->prepare("
             SELECT 
                 SUM(sillas) AS total_sillas,
@@ -65,7 +58,6 @@ try {
 
         $ocupacion_salas[] = [
             'sala' => $s['sala_nombre'],
-            // Generar nombre de archivo (ej. "Terraza 1" -> "terraza1.php")
             'file' => strtolower(str_replace(' ', '', $s['sala_nombre'])) . '.php',
             'ocupacion_pct' => $ocupacion_pct,
             'mesas_ocupadas' => $s['mesas_ocupadas'],
@@ -82,18 +74,13 @@ try {
         'sillas_libres' => $total_sillas - $sillas_ocupadas,
     ];
 
-    // Ordenar para mostrar más ocupadas primero
     usort($ocupacion_salas, fn($a, $b) => $b['ocupacion_pct'] <=> $a['ocupacion_pct']);
     
 } catch (PDOException $e) {
     die("Error al obtener los datos: " . $e->getMessage());
 }
-// ----------------------------------------------------------------------------------
-// --- FIN DEL BLOQUE ACTUALIZADO ---
-// ----------------------------------------------------------------------------------
 
-
-// Saludo dinámico (necesario para header.php)
+// Saludo dinámico
 $hora = date('H');
 if ($hora >= 6 && $hora < 12) {
     $saludo = "Buenos días";
@@ -102,7 +89,6 @@ if ($hora >= 6 && $hora < 12) {
 } else {
     $saludo = "Buenas noches";
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -114,15 +100,44 @@ if ($hora >= 6 && $hora < 12) {
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
     <link rel="stylesheet" href="../../css/panel_principal.css">
 </head>
 <body>
     
-    <?php 
-        // ¡CORRECCIÓN DE RUTA! Como header.php está en la misma carpeta PUBLIC/, se incluye directamente.
-        include './header.php'; 
-    ?>
+    <!-- HEADER INTEGRADO -->
+    <nav class="main-header">
+        <div class="header-logo">
+            <img src="../../img/basic_logo_blanco.png" alt="Logo GMS">
+            <div class="logo-text">
+                <span class="gms-title">CASA GMS</span>
+            </div>
+        </div>
+
+        <div class="header-greeting">
+            <?= $saludo ?> <span class="username-tag"><?= $username ?></span>
+        </div>
+
+        <div class="header-menu">
+            <a href="./index.php" class="nav-link">
+                <i class="fa-solid fa-house"></i> Inicio
+            </a>
+            <a href="./historico.php" class="nav-link">
+                <i class="fa-solid fa-chart-bar"></i> Histórico
+            </a>
+            <?php if ($rol == 2): ?>
+                <a href="./admin_panel.php" class="nav-link">
+                    <i class="fa-solid fa-gear"></i> Admin
+                </a>
+            <?php endif; ?>
+        </div>
+
+        <form method="post" action="../PROCEDIMIENTOS/logout.php">
+            <button type="submit" class="logout-btn">
+                <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+            </button>
+        </form>
+    </nav>
+    <!-- FIN HEADER -->
 
     <div class="container">
         
@@ -153,20 +168,18 @@ if ($hora >= 6 && $hora < 12) {
         <div class="salas-grid">
             <?php foreach ($ocupacion_salas as $sala): ?>
                 <?php
-                    // Determinación de la clase de color basada en la ocupación
-                    $color_class = 'bg-neutral-100'; // Por defecto, gris/neutro (0% ocupación)
+                    $color_class = 'bg-neutral-100';
                     if ($sala['ocupacion_pct'] >= 75) {
                         $color_class = 'bg-red-100';
                     } elseif ($sala['ocupacion_pct'] > 0) {
                         $color_class = 'bg-yellow-100';
                     }
                     
-                    // Determinar el color de la barra
-                    $bar_color = '#27ae60'; // Verde
+                    $bar_color = '#27ae60';
                     if ($sala['ocupacion_pct'] >= 75) {
-                        $bar_color = '#e74c3c'; // Rojo
+                        $bar_color = '#e74c3c';
                     } elseif ($sala['ocupacion_pct'] > 0) {
-                        $bar_color = '#f39c12'; // Amarillo
+                        $bar_color = '#f39c12';
                     }
                 ?>
                 <a href="./SALAS/<?= htmlspecialchars($sala['file']) ?>" class="sala-card-link">

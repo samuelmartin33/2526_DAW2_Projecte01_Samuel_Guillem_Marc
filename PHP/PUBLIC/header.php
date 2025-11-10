@@ -15,7 +15,7 @@
 
     <!-- Saludo dinámico -->
     <div class="header-greeting">
-        <?= $saludo ?> <span class="username-tag">@<?= $username ?></span>
+        <?= $saludo ?> <span class="username-tag"><?= $username ?></span>
     </div>
 
     <!-- Menú de navegación (Opciones de camarero) -->
