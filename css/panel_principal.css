@@ -19,7 +19,8 @@ html, body {
     background-image: url('../img/fondo_panel_principal.png'); 
     background-size: cover; 
     background-attachment: fixed; 
-    background-position: center 90%;
+    /* AJUSTE: Imagen de fondo alineada al 100% (abajo) */
+    background-position: center 50%; 
     /* ======================================================= */
 }
 
@@ -143,7 +144,9 @@ html, body {
 
 .container {
     padding: 40px;
-    max-width: 1600px;
+    /* AJUSTE: Contenedor más pequeño */
+    /* max-width: 1400px;  <-- VALOR ANTERIOR */
+    max-width: 1200px; /* <-- NUEVO VALOR (Aún más pequeño) */
     margin: 0 auto;
     
     /* Para mejorar la legibilidad sobre la imagen de fondo */
@@ -151,7 +154,7 @@ html, body {
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     /* AJUSTE: Margen superior aumentado para separar del header */
-    margin-top: 230px; 
+    margin-top: 170px; 
     margin-bottom: 30px;
 }
 
