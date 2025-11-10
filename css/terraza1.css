@@ -4,7 +4,7 @@
 
 .sala-layout.terraza1 {
     /* RUTA CORREGIDA
-      Sube 1 nivel (de css/ a restaurante/) y entra en img/
+     Sube 1 nivel (de css/ a restaurante/) y entra en img/
     */
     background-image: url('../img/terraza1.png');
 }
@@ -13,24 +13,24 @@
 
 /* (Mesa T1-1) */
 #mesa-1 {
-    top: 20%;
+    top: 15%; /* ANTES: 20% */
     left: 25%;
 }
 
 /* (Mesa T1-2) */
 #mesa-2 {
-    top: 20%;
+    top: 15%; /* ANTES: 20% */
     left: 65%;
 }
 
 /* (Mesa T1-3) */
 #mesa-3 {
-    top: 60%;
+    top: 55%; /* ANTES: 60% */
     left: 25%;
 }
 
 /* (Mesa T1-4) */
 #mesa-4 {
-    top: 60%;
+    top: 55%; /* ANTES: 60% */
     left: 65%;
 }

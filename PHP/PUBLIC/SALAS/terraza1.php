@@ -2,8 +2,7 @@
 // Iniciar la sesión PRIMERO
 session_start();
 
-// --- RUTA A CONEXION (Esta estaba bien) ---
-// Sube 2 niveles (SALAS -> PUBLIC -> PHP) y entra en CONEXION
+// --- RUTA A CONEXION ---
 require_once '../../CONEXION/conexion.php'; // Usa tu $conn
 
 // --- Simulación de inicio de sesión (PARA PRUEBAS) ---
@@ -18,8 +17,7 @@ $username = $_SESSION['username'] ?? 'Invitado';
 $rol = $_SESSION['rol'] ?? 0;
 $saludo = "Buenos días"; // Puedes añadir lógica de hora aquí
 
-// --- ¡¡¡RUTA CORREGIDA A HEADER.PHP!!! ---
-// Sube 1 nivel (de SALAS/ a PUBLIC/)
+// --- RUTA A HEADER.PHP ---
 require_once '../header.php';
 // --- FIN DE CORRECCIÓN ---
 
@@ -36,21 +34,20 @@ try {
 }
 
 try {
+    // --- CAMBIO EN LA CONSULTA SQL ---
+    // Ahora obtenemos 'asignado_por' y unimos con 'users' en esa columna
     $sql = "
         SELECT 
             m.id AS mesa_id,
             m.nombre AS mesa_nombre,
             m.sillas AS mesa_sillas,
             m.estado AS mesa_estado,
-            o.id AS ocupacion_id,
-            o.id_camarero AS camarero_id,
+            m.asignado_por AS camarero_id,  -- CAMBIO
             u.username AS camarero_username
         FROM 
             mesas m
         LEFT JOIN 
-            ocupaciones o ON m.id = o.id_mesa AND o.final_ocupacion IS NULL
-        LEFT JOIN 
-            users u ON o.id_camarero = u.id
+            users u ON m.asignado_por = u.id -- CAMBIO
         WHERE 
             m.id_sala = :id_sala_actual
     ";
@@ -82,23 +79,26 @@ $id_camarero_logueado = $_SESSION['user_id'] ?? 0;
 </head>
 <body>
 
-    <?php
-    // El header ya se incluyó arriba
-    ?>
-
     <div class="sala-container">
 
         <main class="sala-layout terraza1">
             
             <?php foreach ($mesas as $mesa): ?>
                 <?php $estado_clase = ($mesa['mesa_estado'] == 2) ? 'ocupada' : 'libre'; ?>
+                
                 <div 
                     class="mesa <?php echo $estado_clase; ?>" 
                     id="mesa-<?php echo $mesa['mesa_id']; ?>" 
                     data-mesa-id="<?php echo $mesa['mesa_id']; ?>"
                 >
-                    🍽️
+                    <img src="../../../img/mesa1.png" alt="Mesa" class="mesa-img">
+                    
+                    <div class="mesa-sillas">
+                        <i class="fa-solid fa-chair"></i> <?php echo $mesa['mesa_sillas']; ?>
+                    </div>
+
                     <span class="mesa-label"><?php echo htmlspecialchars($mesa['mesa_nombre']); ?></span>
+
                 </div>
             <?php endforeach; ?>
 
