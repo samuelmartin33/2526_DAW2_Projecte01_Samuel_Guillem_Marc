@@ -1,0 +1,45 @@
+<?php
+// Este archivo contiene la barra de navegación reutilizable.
+// Debe ser incluido DESPUÉS de haber definido $saludo, $username y $rol.
+?>
+
+<nav class="main-header">
+    <div class="header-logo">
+        <!-- RUTA CORREGIDA: sube a php/, sube a restaurante/, entra en img/ -->
+        <img src="../../img/basic_logo_blanco.png" alt="Logo GMS">
+        <div class="logo-text">
+            <span class="gms-title">CASA GMS</span>
+           
+        </div>
+    </div>
+
+    <!-- Saludo dinámico -->
+    <div class="header-greeting">
+        <?= $saludo ?> <span class="username-tag">@<?= $username ?></span>
+    </div>
+
+    <!-- Menú de navegación (Opciones de camarero) -->
+    <div class="header-menu">
+        <a href="index.php" class="nav-link">
+            <i class="fa-solid fa-house"></i> Inicio
+        </a>
+        <a href="consultar_mesas.php" class="nav-link">
+            <i class="fa-solid fa-chair"></i> Mesas
+        </a>
+        <a href="consultar_estadisticas.php" class="nav-link">
+            <i class="fa-solid fa-chart-bar"></i> Estadísticas
+        </a>
+        <?php if ($rol == 2): ?>
+            <a href="admin_panel.php" class="nav-link">
+                <i class="fa-solid fa-gear"></i> Admin
+            </a>
+        <?php endif; ?>
+    </div>
+
+    <!-- Botón de Cerrar Sesión -->
+    <form method="post" action="../PROCEDIMIENTOS/logout.php">
+        <button type="submit" class="logout-btn">
+            <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+        </button>
+    </form>
+</nav>

@@ -1,0 +1,327 @@
+/* --- Importar Fuente Poppins (Consistencia) --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* --- Reseteo Básico y Estilos Globales --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    
+    /* === ESTILOS PARA EL FONDO: fondo_panel_principal.png === */
+    background-color: #f4f7f9; 
+    /* La ruta es correcta desde css/ hasta img/ */
+    background-image: url('../img/fondo_panel_principal.png'); 
+    background-size: cover; 
+    background-attachment: fixed; 
+    background-position: center 90%;
+    /* ======================================================= */
+}
+
+/* ==============================================
+   1. ESTILOS DEL HEADER (Barra de Navegación)
+   ============================================== */
+
+.main-header {
+    background-color: #ce4535; /* ROJO SOLICITADO */
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* AJUSTE: Aumento de padding vertical (más grande) */
+    padding: 20px 40px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    position: relative; 
+    z-index: 10;
+}
+
+/* --- Logo GMS (Imagen + Texto) --- */
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-logo img {
+    /* AJUSTE: Aumento del tamaño del logo */
+    height: 70px; 
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.gms-title {
+    /* AJUSTE: Aumento del tamaño del título */
+    font-size: 2.0rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.gms-subtitle {
+    font-size: 0.7rem;
+    font-weight: 300;
+    opacity: 0.9;
+}
+
+/* --- Saludo y Usuario --- */
+.header-greeting {
+    font-size: 1.4rem;
+    font-weight: 500;
+    flex-grow: 1; /* Para que ocupe el espacio central */
+    text-align: center;
+}
+
+.username-tag {
+    font-weight: 700;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 5px 10px;
+    border-radius: 20px;
+    margin-left: 10px;
+}
+
+/* --- Menú de Navegación --- */
+.header-menu {
+    display: flex;
+    gap: 25px;
+    margin-right: 30px;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 10px 0;
+    transition: color 0.2s, opacity 0.2s;
+    font-size: 1.05rem;
+}
+
+.nav-link:hover {
+    color: #f7f7f7;
+    opacity: 0.8;
+}
+
+.nav-link i {
+    margin-right: 8px;
+}
+
+/* --- Botón Cerrar Sesión --- */
+.logout-btn {
+    background-color: white;
+    color: #ce4535; /* Color del header */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logout-btn:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-1px);
+}
+
+.logout-btn i {
+    margin-right: 8px;
+    font-size: 1.1em;
+}
+
+
+/* ==============================================
+   2. ESTILOS DEL DASHBOARD (Estadísticas)
+   ============================================== */
+
+.container {
+    padding: 40px;
+    max-width: 1600px;
+    margin: 0 auto;
+    
+    /* Para mejorar la legibilidad sobre la imagen de fondo */
+    background-color: rgba(255, 255, 255, 0.95); /* Fondo blanco semi-transparente */
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    /* AJUSTE: Margen superior aumentado para separar del header */
+    margin-top: 230px; 
+    margin-bottom: 30px;
+}
+
+.dashboard-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    border-bottom: 3px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.section-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #555;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+/* --- Grid de Widgets Principales (3 Columnas) --- */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.stat-card {
+    background-color: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 5px;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #777;
+}
+
+.stat-icon {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    font-size: 4rem;
+    opacity: 0.1;
+}
+
+/* Colores de los Widgets */
+.stat-card.primary { color: #2980b9; } /* Azul - Mesas Disponibles */
+.stat-card.warning { color: #f39c12; } /* Amarillo - Mesas Ocupadas */
+.stat-card.success { color: #27ae60; } /* Verde - Sillas Ocupadas (Total) */
+
+
+/* --- Ocupación por Sala (Enlaces Clicables) --- */
+
+.salas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.sala-card-link {
+    text-decoration: none; /* Elimina el subrayado del enlace */
+    color: inherit; /* Hereda el color del texto */
+}
+
+.sala-card {
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    height: 100%; /* Asegura que todas tengan la misma altura */
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente para las tarjetas */
+}
+
+.sala-card-link:hover .sala-card {
+    transform: translateY(-4px); /* Efecto de elevación al pasar el ratón */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Colores de fondo basados en la ocupación */
+.bg-neutral-100 { background-color: #f0f0f0; border-color: #ddd; } /* Nuevo color para 0% (Libre) */
+.bg-yellow-100 { background-color: #fff3cd; border-color: #ffeeba; } /* Media */
+.bg-red-100   { background-color: #f8d7da; border-color: #f5c6cb; } /* Alta */
+
+.sala-name {
+    font-size: 1.4rem; /* Más grande para el título */
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.sala-occupancy {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.progress-bar-container {
+    background-color: #eee;
+    border-radius: 10px;
+    height: 12px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.progress-bar {
+    height: 100%;
+    transition: width 0.5s ease-in-out;
+}
+
+.percentage {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #444;
+    text-align: right;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 900px) {
+    .main-header {
+        /* Se mantiene el nuevo padding más generoso */
+        padding: 20px 20px; 
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .header-greeting {
+        font-size: 1.2rem;
+        order: -1; 
+        margin-bottom: 10px;
+    }
+    
+    .header-logo {
+        order: 0;
+    }
+
+    .header-menu {
+        order: 1;
+        gap: 15px;
+    }
+
+    .logout-btn {
+        order: 2;
+        width: 100%;
+        text-align: center;
+    }
+
+    .container {
+        padding: 20px;
+        /* Se mantiene el margen superior aumentado */
+        margin-top: 50px; 
+    }
+}
