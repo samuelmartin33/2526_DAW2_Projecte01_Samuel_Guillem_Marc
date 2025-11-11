@@ -73,11 +73,13 @@ $id_camarero_logueado = $_SESSION['user_id'] ?? 0;
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
 
     <!-- Rutas CSS (Están correctas) -->
     <link rel="stylesheet" href="../../../css/panel_principal.css"> 
     <link rel="stylesheet" href="../../../css/salas_general.css">
     <link rel="stylesheet" href="../../../css/privada3.css"> <!-- <-- CAMBIO -->
+     <link rel="stylesheet" href="../../../css/mesas_privadas.css">
 </head>
 <body>
 
@@ -94,7 +96,7 @@ $id_camarero_logueado = $_SESSION['user_id'] ?? 0;
                     data-mesa-id="<?php echo $mesa['mesa_id']; ?>"
                 >
                     <!-- Se mantiene la imagen de mesa2.png -->
-                    <img src="../../../img/mesa2.png" alt="Mesa" class="mesa-img">
+                    <img src="../../../img/mesa_privada3.png" alt="Mesa" class="mesa-img">
                     
                     <div class="mesa-sillas">
                         <i class="fa-solid fa-chair"></i> <?php echo $mesa['mesa_sillas']; ?>

@@ -78,6 +78,7 @@ $id_camarero_logueado = $_SESSION['user_id'] ?? 0;
     <link rel="stylesheet" href="../../../css/panel_principal.css"> 
     <link rel="stylesheet" href="../../../css/salas_general.css">
     <link rel="stylesheet" href="../../../css/privada1.css"> <!-- <-- CAMBIO -->
+    <link rel="stylesheet" href="../../../css/mesas_privadas.css">
 </head>
 <body>
 
@@ -94,7 +95,7 @@ $id_camarero_logueado = $_SESSION['user_id'] ?? 0;
                     data-mesa-id="<?php echo $mesa['mesa_id']; ?>"
                 >
                     <!-- Se mantiene la imagen de mesa2.png -->
-                    <img src="../../../img/mesa2.png" alt="Mesa" class="mesa-img">
+                    <img src="../../../img/mesa_privada1.png" alt="Mesa" class="mesa-img">
                     
                     <div class="mesa-sillas">
                         <i class="fa-solid fa-chair"></i> <?php echo $mesa['mesa_sillas']; ?>
