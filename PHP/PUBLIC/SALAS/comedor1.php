@@ -113,9 +113,7 @@ try {
                     
                     // Lógica para nombres de fichero (ej. Privada 1 -> sprivada1.php)
                     $nombre_fichero = strtolower(str_replace(' ', '', $sala['nombre']));
-                    if (strpos($nombre_fichero, 'privada') === 0) {
-                         $nombre_fichero = 's' . $nombre_fichero;
-                    }
+                    
                     $url = $nombre_fichero . ".php"; 
                 ?>
                 <a href="<?php echo $url; ?>" class="sala-nav-link <?php echo $clase_activa; ?>">
