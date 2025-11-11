@@ -1,6 +1,6 @@
 -- ==========================================
 --   BASE DE DATOS: restaurante_db
---   Autor: Marc Guillem, Samuel Martínez
+--   Autor: Marc Guillem, Samuel Martín
 --   Fecha: Noviembre 2025
 --   Descripción: Modelo para TPV con salas, mesas, camareros y ocupaciones
 -- ==========================================
