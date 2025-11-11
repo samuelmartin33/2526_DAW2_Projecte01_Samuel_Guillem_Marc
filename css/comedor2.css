@@ -1,0 +1,43 @@
+/*
+ * Estilos específicos para comedor2.php
+ */
+
+.sala-layout.comedor2 {
+    background-image: url('../img/comedor2.png');
+    
+    /* * CAMBIO: Mover imagen de fondo manualmente.
+     * ANTES: background-position: center top;
+     * * "center" la mantiene centrada horizontalmente.
+     * "-50px" la "tira" 50 píxeles hacia arriba (ocultando el borde superior).
+     * * Prueba a cambiar -50px por -80px (más arriba) o -20px (menos arriba).
+     */
+    background-position: center -145px; 
+}
+
+/* * Posicionamiento de las 4 mesas para Comedor 2
+ * (IDs 17, 18, 19, 20 según tu BBDD)
+ */
+
+/* (Mesa C2-1) */
+#mesa-17 {
+    top: 20%;
+    left: 25%;
+}
+
+/* (Mesa C2-2) */
+#mesa-18 {
+    top: 20%;
+    left: 65%;
+}
+
+/* (Mesa C2-3) */
+#mesa-19 {
+    top: 60%;
+    left: 25%;
+}
+
+/* (Mesa C2-4) */
+#mesa-20 {
+    top: 60%;
+    left: 65%;
+}
