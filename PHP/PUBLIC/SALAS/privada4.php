@@ -14,7 +14,6 @@ if (isset($_SESSION['loginok']) && $_SESSION['loginok'] === true && isset($_SESS
     header("Location: ../login.php");
     exit();
 }
-
 // --- Definimos las variables ANTES de incluir el header ---
 $username = $_SESSION['username'] ?? 'Invitado';
 $rol = $_SESSION['rol'] ?? 0;
@@ -26,8 +25,8 @@ require_once '../header.php';
 
 
 // --- Lógica de la página ---
-$id_sala_actual = 1; 
-$nombre_sala_actual = "Terraza 1";
+$id_sala_actual = 9; // <-- CAMBIO (Privada 4 es ID 9)
+$nombre_sala_actual = "Privada 4"; // <-- CAMBIO
 
 try {
     $stmt_salas = $conn->query("SELECT id, nombre FROM salas");
@@ -37,20 +36,19 @@ try {
 }
 
 try {
-    // --- CAMBIO EN LA CONSULTA SQL ---
-    // Ahora obtenemos 'asignado_por' y unimos con 'users' en esa columna
+    // La consulta SQL es la misma, solo cambia el :id_sala_actual
     $sql = "
         SELECT 
             m.id AS mesa_id,
             m.nombre AS mesa_nombre,
             m.sillas AS mesa_sillas,
             m.estado AS mesa_estado,
-            m.asignado_por AS camarero_id,  -- CAMBIO
+            m.asignado_por AS camarero_id,
             u.username AS camarero_username
         FROM 
             mesas m
         LEFT JOIN 
-            users u ON m.asignado_por = u.id -- CAMBIO
+            users u ON m.asignado_por = u.id
         WHERE 
             m.id_sala = :id_sala_actual
     ";
@@ -76,15 +74,16 @@ $id_camarero_logueado = $_SESSION['user_id'] ?? 0;
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+    <!-- Rutas CSS (Están correctas) -->
     <link rel="stylesheet" href="../../../css/panel_principal.css"> 
     <link rel="stylesheet" href="../../../css/salas_general.css">
-    <link rel="stylesheet" href="../../../css/terraza1.css">
+    <link rel="stylesheet" href="../../../css/privada4.css"> <!-- <-- CAMBIO -->
 </head>
 <body>
 
     <div class="sala-container">
 
-        <main class="sala-layout terraza1">
+        <main class="sala-layout privada4"> <!-- <-- CAMBIO -->
             
             <?php foreach ($mesas as $mesa): ?>
                 <?php $estado_clase = ($mesa['mesa_estado'] == 2) ? 'ocupada' : 'libre'; ?>
@@ -94,7 +93,8 @@ $id_camarero_logueado = $_SESSION['user_id'] ?? 0;
                     id="mesa-<?php echo $mesa['mesa_id']; ?>" 
                     data-mesa-id="<?php echo $mesa['mesa_id']; ?>"
                 >
-                    <img src="../../../img/mesa1.png" alt="Mesa" class="mesa-img">
+                    <!-- Se mantiene la imagen de mesa2.png -->
+                    <img src="../../../img/mesa2.png" alt="Mesa" class="mesa-img">
                     
                     <div class="mesa-sillas">
                         <i class="fa-solid fa-chair"></i> <?php echo $mesa['mesa_sillas']; ?>
@@ -122,6 +122,7 @@ $id_camarero_logueado = $_SESSION['user_id'] ?? 0;
     </div>
 
 
+    <!-- MODAL (Es el mismo, no necesita cambios) -->
     <div id="modal-gestion-mesa" class="modal-backdrop">
         <div class="modal-content">
             
