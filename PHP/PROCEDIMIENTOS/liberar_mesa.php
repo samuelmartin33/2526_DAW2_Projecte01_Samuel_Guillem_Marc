@@ -24,9 +24,20 @@ if (!$camarero) {
 $id_camarero = $camarero['id'];
 $rol = $_SESSION['rol'] ?? 1; // Necesitamos el rol para permisos
 
+
 // --- Variables para el Header ---
 $nombre = htmlspecialchars($_SESSION['nombre'] ?? $username);
-$saludo = "Buenos días"; 
+$rol = $_SESSION['rol'] ?? 1;
+// Saludo dinámico
+$hora = date('H');
+if ($hora >= 6 && $hora < 12) {
+    $saludo = "Buenos días";
+} elseif ($hora >= 12 && $hora < 20) {
+    $saludo = "Buenas tardes";
+} else {
+    $saludo = "Buenas noches";
+}
+
 
 // --- Obtener Mesa ---
 $id_mesa = $_POST['mesa_id'] ?? null;
@@ -106,11 +117,38 @@ try {
     <link rel="stylesheet" href="../../css/<?php echo $sala_css_class; ?>.css">
 </head>
 <body>
+<nav class="main-header">
+        <div class="header-logo">
+            <img src="../../img/basic_logo_blanco.png" alt="Logo GMS">
+            <div class="logo-text">
+                <span class="gms-title">CASA GMS</span>
+            </div>
+        </div>
 
-    <?php 
-    // Incluir Header (desde PROCEDIMIENTOS/ hasta PUBLIC/header.php)
-    require_once './../PUBLIC/header.php'; 
-    ?>
+        <div class="header-greeting">
+            <?= $saludo ?> <span class="username-tag"><?= $username ?></span>
+        </div>
+
+        <div class="header-menu">
+            <a href="../PUBLIC/index.php" class="nav-link">
+                <i class="fa-solid fa-house"></i> Inicio
+            </a>
+            <a href="../PUBLIC/historico.php" class="nav-link">
+                <i class="fa-solid fa-chart-bar"></i> Histórico
+            </a>
+            <?php if ($rol == 2): ?>
+                <a href="../PUBLIC/admin_panel.php" class="nav-link">
+                    <i class="fa-solid fa-gear"></i> Admin
+                </a>
+            <?php endif; ?>
+        </div>
+
+        <form method="post" action="../PROCEDIMIENTOS/logout.php">
+            <button type="submit" class="logout-btn">
+                <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+            </button>
+        </form>
+    </nav>
 
     <div class="sala-container">
         <main class="sala-layout <?php echo $sala_css_class; ?>">
