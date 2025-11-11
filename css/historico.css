@@ -1,0 +1,250 @@
+html, body {
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    
+    /* === ESTILOS PARA EL FONDO: fondo_panel_principal.png === */
+    background-color: #f4f7f9; 
+    /* La ruta es correcta desde css/ hasta img/ */
+    background-image: url('../img/fondo_panel_principal.png'); 
+    background-size: cover; 
+    background-attachment: fixed; 
+    /* AJUSTE: Imagen de fondo alineada al 100% (abajo) */
+    background-position: center 50%; 
+    /* ======================================================= */
+}           
+/* ==========================
+   ESTILO GENERAL CASA GMS
+   ========================== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+    --rojo-gms: #c94736;
+    --rojo-hover: #b33e2f;
+    --gris-fondo: #f9f9f9;
+    --gris-claro: #ececec;
+    --gris-texto: #555;
+    --sombra: 0 4px 20px rgba(0, 0, 0, 0.1);
+    --radio: 12px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background: url('../../img/fondo_restaurante.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #222;
+    min-height: 100vh;
+}
+
+/* ==========================
+   HEADER SUPERIOR
+   ========================== */
+.main-header {
+    background-color: #ce4535; /* ROJO SOLICITADO */
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 40px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    font-size: 1rem;
+    position: relative; 
+    z-index: 10;
+}
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-logo img {
+    height: 45px;
+}
+
+.gms-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* --- Saludo centrado verticalmente --- */
+.header-greeting {
+    flex: 1;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.username-tag {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 6px 12px;
+    border-radius: 999px;
+    margin-left: 6px;
+}
+
+/* --- MENÚ DE NAVEGACIÓN --- */
+.header-menu {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-right: 10px; /* más cerca del botón de cerrar sesión */
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+/* Quitar subrayado al pasar el ratón */
+.nav-link:hover {
+    color: #ffe3dc;
+    text-decoration: none;
+}
+
+/* --- BOTÓN CERRAR SESIÓN --- */
+.logout-section form {
+    margin: 0;
+}
+
+.logout-btn {
+    background-color: white;
+    color: var(--rojo-gms);
+    border: none;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* ==========================
+   FORMULARIO DE FILTROS
+   ========================== */
+.filter-form {
+    background: rgba(255, 255, 255, 0.9);
+    width: 90%;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    border-radius: var(--radio);
+    box-shadow: var(--sombra);
+}
+
+.filter-form fieldset {
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap; /* todos en una línea */
+    gap: 12px;
+}
+
+.filter-form legend {
+    position: absolute;
+    left: 3rem;
+    top: -1rem;
+    background: transparent;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--rojo-gms);
+}
+
+.filter-form label {
+    font-weight: 600;
+    margin-right: 4px;
+}
+
+.filter-form select {
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: white;
+    font-size: 0.9rem;
+}
+
+.filter-form button {
+    background-color: var(--rojo-gms);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.filter-form button:hover {
+    background-color: var(--rojo-hover);
+}
+
+/* ==========================
+   TABLA DE RESULTADOS
+   ========================== */
+table {
+    width: 90%;
+    max-width: 1100px;
+    margin: 1rem auto 3rem auto;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: var(--radio);
+    overflow: hidden;
+    box-shadow: var(--sombra);
+}
+
+thead {
+    background-color: var(--rojo-gms);
+    color: white;
+    font-weight: 600;
+}
+
+th, td {
+    padding: 12px 16px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+tbody tr:hover {
+    background-color: #f7f7f7;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ==========================
+   RESPONSIVE
+   ========================== */
+@media (max-width: 950px) {
+    .main-header {
+        flex-wrap: wrap;
+        text-align: center;
+    }
+
+    .header-menu {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-right: 0;
+    }
+
+    .filter-form fieldset {
+        flex-wrap: wrap; /* en móviles ya no cabe todo en línea */
+    }
+
+    .filter-form {
+        width: 95%;
+        padding: 1rem;
+    }
+
+    table {
+        font-size: 0.9rem;
+    }
+}

@@ -90,7 +90,11 @@ INSERT INTO users (username, nombre, apellido, email, password_hash, rol)
 VALUES
 ('camarero1', 'Camarero', 'Uno', 'camarero1@restaurante.com', '$2y$10$VPM7.4cja7LDxoYO6YaOLuZgW.moRul/o5VnNuYUIupyjdko/sB5m', 1),
 ('camarero2', 'Camarero', 'Dos', 'camarero2@restaurante.com', '$2y$10$VPM7.4cja7LDxoYO6YaOLuZgW.moRul/o5VnNuYUIupyjdko/sB5m', 1),
-('camarero3', 'Camarero', 'Tres', 'camarero3@restaurante.com', '$2y$10$VPM7.4cja7LDxoYO6YaOLuZgW.moRul/o5VnNuYUIupyjdko/sB5m', 1);
+('camarero3', 'Camarero', 'Tres', 'camarero3@restaurante.com', '$2y$10$VPM7.4cja7LDxoYO6YaOLuZgW.moRul/o5VnNuYUIupyjdko/sB5m', 1),
+('Jorge', 'Jorge', 'López', 'jorge@restaurante.com', '$2y$10$VPM7.4cja7LDxoYO6YaOLuZgW.moRul/o5VnNuYUIupyjdko/sB5m', 1), 
+('Maria', 'María', 'García', 'maria@restaurante.com', '$2y$10$VPM7.4cja7LDxoYO6YaOLuZgW.moRul/o5VnNuYUIupyjdko/sB5m', 1), 
+('Pablo', 'Pablo', 'Ruiz', 'pablo@restaurante.com', '$2y$10$VPM7.4cja7LDxoYO6YaOLuZgW.moRul/o5VnNuYUIupyjdko/sB5m', 1), 
+('Laura', 'Laura', 'Martín', 'laura@restaurante.com', '$2y$10$VPM7.4cja7LDxoYO6YaOLuZgW.moRul/o5VnNuYUIupyjdko/sB5m', 1);
 
 -- ==========================================
 --   INSERTS: SALAS
@@ -145,4 +149,15 @@ VALUES
 (2, 2, 5, '2025-11-07 14:35:00', '2025-11-07 15:30:00', 2, 2),
 (3, 4, 13, '2025-11-07 15:10:00', '2025-11-07 16:45:00', 3, 3),
 (1, 3, 9, '2025-11-07 17:00:00', '2025-11-07 18:20:00', 4, NULL),
-(2, 7, 22, '2025-11-07 19:00:00', '2025-11-07 21:30:00', 10, NULL);
+(2, 7, 25, '2025-11-07 19:00:00', '2025-11-07 21:30:00', 10, NULL),
+(3, 5, 16, '2025-11-07 20:15:00', '2025-11-07 22:00:00', 6, NULL),
+(4, 6, 19, '2025-11-08 12:30:00', '2025-11-08 14:00:00', 8, NULL),
+(5, 8, 30, '2025-11-08 13:00:00', '2025-11-08 15:30:00', 8, NULL),
+(6, 9, 35, '2025-11-08 18:00:00', '2025-11-08 20:00:00', 12, NULL),
+(7, 1, 2, '2025-11-08 19:30:00', '2025-11-08 21:00:00', 4, NULL),
+(7, 1, 2, '2025-10-08 19:30:00', '2025-10-08 21:00:00', 4, NULL),
+(6, 2, 6, '2025-10-08 20:00:00', '2025-10-08 22:15:00', 6, NULL);
+
+
+
+
