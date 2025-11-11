@@ -1,6 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 html, body {
     height: 100%;
-    font-family: 'Poppins', sans-serif;
     color: #333;
     
     /* === ESTILOS PARA EL FONDO: fondo_panel_principal.png === */
@@ -16,8 +16,6 @@ html, body {
 /* ==========================
    ESTILO GENERAL CASA GMS
    ========================== */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-
 :root {
     --rojo-gms: #c94736;
     --rojo-hover: #b33e2f;
