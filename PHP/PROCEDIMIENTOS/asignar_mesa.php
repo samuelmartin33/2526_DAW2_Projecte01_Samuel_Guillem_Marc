@@ -1,43 +1,51 @@
 <?php
 session_start();
-require_once './../CONEXION/conexion.php'; // Ruta desde PROCEDIMIENTOS
+require_once './../CONEXION/conexion.php';
 
-// --- Verificación de sesión ---
 if (!isset($_SESSION['loginok']) || $_SESSION['loginok'] !== true) {
     header("Location: ../PUBLIC/login.php");
     exit();
 }
+
+// Recuperar username desde la sesión
 $username = $_SESSION['username'] ?? null;
+
 if (!$username) {
-    session_destroy(); header("Location: ../PUBLIC/login.php"); exit();
-}
-
-// --- Consultar ID del camarero ---
-$stmt_camarero = $conn->prepare("SELECT id FROM users WHERE username = :username LIMIT 1");
-$stmt_camarero->execute([':username' => $username]);
-$camarero = $stmt_camarero->fetch(PDO::FETCH_ASSOC);
-if (!$camarero) {
-    session_destroy(); header("Location: ../PUBLIC/login.php"); exit();
-}
-$id_camarero = $camarero['id'];
-
-// --- Obtener Mesa ---
-$id_mesa = $_POST['mesa_id'] ?? null;
-if (!$id_mesa) {
-    header("Location: ./../PUBLIC/SALAS/comedor1.php"); // Volver a comedor1
+    session_destroy();
+    header("Location: ../PUBLIC/login.php");
     exit();
 }
 
-$stmt_mesa = $conn->prepare("SELECT * FROM mesas WHERE id = ?");
-$stmt_mesa->execute([$id_mesa]);
-$mesa = $stmt_mesa->fetch(PDO::FETCH_ASSOC);
+// Consultar el ID del camarero correspondiente
+$stmt = $conn->prepare("SELECT id FROM users WHERE username = :username LIMIT 1");
+$stmt->execute([':username' => $username]);
+$camarero = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$camarero) {
+    session_destroy();
+    header("Location: ../PUBLIC/login.php");
+    exit();
+}
+
+// Guardar el id para usarlo en operaciones
+$id_camarero = $camarero['id'];
+
+$id_mesa = $_POST['mesa_id'] ?? null;
+
+if (!$id_mesa) {
+    header("Location: ./../PUBLIC/SALAS/comedor1.php");
+    exit();
+}
+
+// Obtener info de la mesa
+$stmt = $conn->prepare("SELECT * FROM mesas WHERE id = ?");
+$stmt->execute([$id_mesa]);
+$mesa = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$mesa || $mesa['estado'] != 1) {
-    // Aquí podrías guardar un mensaje de error en la sesión y redirigir
     die("Mesa no disponible o ya ocupada.");
 }
 
-// --- Lógica de Asignación (si se envía el formulario de esta página) ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['num_comensales'])) {
     $num_comensales = (int)$_POST['num_comensales'];
     $conn->beginTransaction();
@@ -55,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['num_comensales'])) {
         $insert->execute([$id_camarero, $mesa['id_sala'], $id_mesa, $num_comensales]);
 
         $conn->commit();
-        header("Location: ./../PUBLIC/SALAS/comedor1.php"); // Volver a comedor1
+        header("Location: ./../PUBLIC/SALAS/comedor1.php");
         exit();
     } catch (Exception $e) {
         $conn->rollBack();
@@ -68,33 +76,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['num_comensales'])) {
 <head>
     <meta charset="UTF-8">
     <title>Asignar <?php echo htmlspecialchars($mesa['nombre']); ?></title>
-    <!-- Rutas relativas desde PROCEDIMIENTOS/ -->
-    <link rel="stylesheet" href="../../css/panel_principal.css">
-    <link rel="stylesheet" href="../../css/salas_general.css">
-    <link rel="stylesheet" href="../../css/comedor1.css">
+    <link rel="stylesheet" href="../../../css/panel_principal.css">
+    <link rel="stylesheet" href="../../../css/salas_general.css">
+    <link rel="stylesheet" href="../../../css/comedor1.css">
 </head>
 <body>
 <div class="sala-container">
-    <!-- Mantenemos el fondo de la sala -->
     <main class="sala-layout comedor1">
-        
-        <!-- Usamos la clase 'interstitial-form' (nueva en salas_general.css) -->
-        <div class="interstitial-form">
+        <div class="login-container" style="width: 400px; text-align:center;">
             <h2>Asignar <?php echo htmlspecialchars($mesa['nombre']); ?></h2>
             <p><strong>Sala:</strong> Comedor 1</p>
             <p><strong>Capacidad:</strong> <?php echo $mesa['sillas']; ?> comensales</p>
 
-            <form method="POST" class="form-full-page">
+            <form method="POST">
                 <input type="hidden" name="mesa_id" value="<?php echo $id_mesa; ?>">
-                
-                <label for="num-comensales">Número de comensales:</label>
-                <input type="number" id="num-comensales" name="num_comensales" min="1" max="<?php echo $mesa['sillas']; ?>" required>
-                
-                <div class="form-actions">
-                    <button type="submit" class="btn-primary">Asignar Mesa</button>
-                    <!-- Ruta para cancelar -->
-                    <a href="./../PUBLIC/SALAS/comedor1.php" class="btn-secondary">Cancelar</a>
-                </div>
+                <label>Número de comensales:</label>
+                <input type="number" name="num_comensales" min="1" max="<?php echo $mesa['sillas']; ?>" required>
+                <br><br>
+                <button type="submit">Asignar Mesa</button>
+                <a href="./../PUBLIC/SALAS/comedor1.php" class="btn-volver">Cancelar</a>
             </form>
         </div>
     </main>

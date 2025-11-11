@@ -2,37 +2,47 @@
 session_start();
 require_once '../../CONEXION/conexion.php';
 
-// --- Verificación de sesión ---
+// Verificación de sesión
 if (!isset($_SESSION['loginok']) || $_SESSION['loginok'] !== true) {
     header("Location: ../login.php");
     exit();
 }
 
-// --- Recuperar datos del camarero ---
-$username = $_SESSION['username'];
-$stmt_camarero = $conn->prepare("SELECT id FROM users WHERE username = :username LIMIT 1");
-$stmt_camarero->execute([':username' => $username]);
-$camarero = $stmt_camarero->fetch(PDO::FETCH_ASSOC);
-
-if (!$camarero) {
+// --- CORRECCIÓN: Asegurarse de que username exista ---
+if (!isset($_SESSION['username'])) {
     session_destroy();
-    header("Location: ../login.php");
+    header("Location: ../login.php?error=session_expired");
     exit();
 }
+$username = $_SESSION['username'];
+
+// Consultar el ID del camarero correspondiente
+$stmt = $conn->prepare("SELECT id FROM users WHERE username = :username LIMIT 1");
+$stmt->execute([':username' => $username]);
+$camarero = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// Si no se encuentra, forzar logout por seguridad
+if (!$camarero) {
+    session_destroy();
+    header("Location: ../login.php?error=user_not_found");
+    exit();
+}
+
+// Guardar el id para usarlo en operaciones
 $id_camarero = $camarero['id'];
 
-// --- Variables para el Header ---
-$nombre = htmlspecialchars($_SESSION['nombre']);
-$rol = $_SESSION['rol'] ?? 1;
+// --- CORRECCIÓN: Añadir variables para header.php ---
+$nombre = htmlspecialchars($_SESSION['nombre'] ?? $username); // Usar username si 'nombre' no está
+$rol = $_SESSION['rol'] ?? 1; // Asumir rol 1 si no está definido
 $saludo = "Buenos días"; // Puedes añadir lógica de hora
-
-// --- IDs de la Sala ---
+    
+// Sala Comedor 1
 $id_sala_actual = 4;
-$nombre_sala_actual = "Comedor 1";
+$nombre_sala_actual = "Comedor 1"; // Renombrado por consistencia
 
-// --- Consultar Mesas (Tu consulta) ---
+// Obtener mesas
 $stmt_mesas = $conn->prepare("
-    SELECT m.*, u.username AS camarero 
+    SELECT m.*, u.username AS camarero
     FROM mesas m
     LEFT JOIN users u ON m.asignado_por = u.id
     WHERE m.id_sala = :sala
@@ -40,7 +50,7 @@ $stmt_mesas = $conn->prepare("
 $stmt_mesas->execute(['sala' => $id_sala_actual]);
 $mesas = $stmt_mesas->fetchAll(PDO::FETCH_ASSOC);
 
-// --- Consultar Salas (Para la navegación) ---
+// --- CORRECCIÓN: Añadir consulta para la barra de navegación ---
 try {
     $stmt_salas = $conn->query("SELECT id, nombre FROM salas");
     $salas = $stmt_salas->fetchAll(PDO::FETCH_ASSOC);
@@ -52,16 +62,13 @@ try {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $nombre_sala_actual; ?> - Casa GMS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title><?php echo $nombre_sala_actual; ?> - Casa GMS</title>
     
-    <!-- Fuentes y CSS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <!-- Tus CSS -->
+
     <link rel="stylesheet" href="../../../css/panel_principal.css">
     <link rel="stylesheet" href="../../../css/salas_general.css">
     <link rel="stylesheet" href="../../../css/comedor1.css">
@@ -69,41 +76,31 @@ try {
 <body>
 
     <?php 
-    // Incluir el header estándar
+    // --- CORRECCIÓN: Incluir el header ---
     require_once '../header.php'; 
     ?>
 
     <div class="sala-container">
-        
         <main class="sala-layout comedor1">
             <?php foreach ($mesas as $mesa): ?>
                 <?php 
                     $clase = $mesa['estado'] == 2 ? 'ocupada' : 'libre';
-                    // Determina a qué script de PROCEDIMIENTOS enviar
-                    $accion = $mesa['estado'] == 1 ? '../../PROCEDIMIENTOS/asignar_mesa.php' : '../../PROCEDIMIENTOS/liberar_mesa.php';
+                    $accion = $mesa['estado'] == 1 ? './../../PROCEDIMIENTOS/asignar_mesa.php' : './../../PROCEDIMIENTOS/liberar_mesa.php';
                 ?>
-                
-                <!-- El formulario envuelve el botón de la mesa -->
                 <form action="<?php echo $accion; ?>" method="POST" class="mesa-form">
                     <input type="hidden" name="mesa_id" value="<?php echo $mesa['id']; ?>">
-                    
-                    <!-- El botón es la "carta" de la mesa -->
                     <button type="submit" class="mesa <?php echo $clase; ?>" id="mesa-<?php echo $mesa['id']; ?>">
                         
                         <img src="../../../img/mesa2.png" alt="Mesa" class="mesa-img">
                         
                         <span class="mesa-label"><?php echo htmlspecialchars($mesa['nombre']); ?></span>
-                        
-                        <div class="mesa-sillas">
-                            <i class="fa-solid fa-chair"></i> <?php echo $mesa['sillas']; ?>
-                        </div>
+                        <div class="mesa-sillas"><i class="fa-solid fa-chair"></i> <?php echo $mesa['sillas']; ?></div>
                         
                         <?php if ($mesa['estado'] == 2): ?>
                             <div class="mesa-camarero">
                                 Asig: <?php echo htmlspecialchars($mesa['camarero'] ?? 'N/A'); ?>
                             </div>
                         <?php endif; ?>
-
                     </button>
                 </form>
             <?php endforeach; ?>
@@ -113,7 +110,13 @@ try {
             <?php foreach ($salas as $sala): ?>
                 <?php
                     $clase_activa = ($sala['id'] == $id_sala_actual) ? 'active' : '';
-                    $url = strtolower(str_replace(' ', '', $sala['nombre'])) . ".php"; 
+                    
+                    // Lógica para nombres de fichero (ej. Privada 1 -> sprivada1.php)
+                    $nombre_fichero = strtolower(str_replace(' ', '', $sala['nombre']));
+                    if (strpos($nombre_fichero, 'privada') === 0) {
+                         $nombre_fichero = 's' . $nombre_fichero;
+                    }
+                    $url = $nombre_fichero . ".php"; 
                 ?>
                 <a href="<?php echo $url; ?>" class="sala-nav-link <?php echo $clase_activa; ?>">
                     <?php echo htmlspecialchars($sala['nombre']); ?>
