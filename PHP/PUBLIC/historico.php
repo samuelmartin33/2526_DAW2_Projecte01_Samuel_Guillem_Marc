@@ -108,7 +108,9 @@ $ocupaciones = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <header class="main-header">
     <div class="header-logo">
-        <img src="./../../img/basic_logo_blanco.png" alt="Logo GMS">
+        <a href="./index.php">
+            <img src="./../../img/basic_logo_blanco.png" alt="Logo GMS">
+        </a>        
         <div class="logo-text">
             <span class="gms-title">CASA GMS</span>
         </div> 
