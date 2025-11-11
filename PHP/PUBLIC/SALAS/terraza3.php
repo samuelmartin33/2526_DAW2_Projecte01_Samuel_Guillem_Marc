@@ -5,13 +5,15 @@ session_start();
 // --- RUTA A CONEXION ---
 require_once '../../CONEXION/conexion.php'; // Usa tu $conn
 
-// --- Simulación de inicio de sesión (PARA PRUEBAS) ---
-if (!isset($_SESSION['user_id'])) {
-     $_SESSION['user_id'] = 1; // ID de 'camarero1'
-     $_SESSION['username'] = 'camarero1';
-     $_SESSION['rol'] = 1; // Rol 1 = camarero
+// Comprobar si el usuario está logueado correctamente
+if (isset($_SESSION['loginok']) && $_SESSION['loginok'] === true && isset($_SESSION['username'])) {
+    $nombre = htmlspecialchars($_SESSION['nombre']);
+    $username = htmlspecialchars($_SESSION['username']);
+    $rol = $_SESSION['rol'] ?? 1; // 1=camarero, 2=admin
+} else {
+    header("Location: ../login.php");
+    exit();
 }
-
 // --- Definimos las variables ANTES de incluir el header ---
 $username = $_SESSION['username'] ?? 'Invitado';
 $rol = $_SESSION['rol'] ?? 0;

@@ -1,7 +1,7 @@
 <?php 
  $servername = "localhost:3306"; // Nombre del servidor 
  $dbusername = "root"; // Nombre de usuario 
- $dbpassword = ""; // Contraseña 
+ $dbpassword = "MarcNavarroGomez7."; // Contraseña 
  $dbname = "restaurante_db"; // Nombre de la base de datos 
  
  // ---------------------------------------------------------------------- 
@@ -25,4 +25,4 @@
     echo "Error en la conexión a la base de datos: " . $e->getMessage(); 
     die(); 
 
- } 
+ }
