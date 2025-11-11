@@ -1,0 +1,9 @@
+/*
+ * Este fichero sobrescribe el tamaño de las mesas
+ * SOLO para las salas privadas.
+ */
+
+.mesa-img {
+    width: 400px; /* Tamaño "mucho más grande" */
+    height: auto;
+}
