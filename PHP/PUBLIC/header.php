@@ -1,6 +1,12 @@
 <?php
-// Este archivo contiene la barra de navegación reutilizable.
-// Debe ser incluido DESPUÉS de haber definido $saludo, $username y $rol.
+$hora = date('H');
+if ($hora >= 6 && $hora < 12) {
+    $saludo = "Buenos días";
+} elseif ($hora >= 12 && $hora < 20) {
+    $saludo = "Buenas tardes";
+} else {
+    $saludo = "Buenas noches";
+}
 ?>
 
 <nav class="main-header">
