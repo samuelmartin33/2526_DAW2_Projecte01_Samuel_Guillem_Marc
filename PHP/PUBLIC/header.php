@@ -5,8 +5,10 @@
 
 <nav class="main-header">
     <div class="header-logo">
-        <!-- RUTA CORREGIDA: sube a php/, sube a restaurante/, entra en img/ -->
-        <img src="../../../img/basic_logo_blanco.png" alt="Logo GMS">
+        <a href="../index.php">
+            <!-- RUTA CORREGIDA: sube a php/, sube a restaurante/, entra en img/ -->
+            <img src="../../../img/basic_logo_blanco.png" alt="Logo GMS">
+        </a>
         <div class="logo-text">
             <span class="gms-title">CASA GMS</span>
            
