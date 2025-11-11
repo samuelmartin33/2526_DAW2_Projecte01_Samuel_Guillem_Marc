@@ -82,10 +82,6 @@ $id_camarero_logueado = $_SESSION['user_id'] ?? 0;
 </head>
 <body>
 
-    <?php
-    // El header ya se incluyó arriba
-    ?>
-
     <div class="sala-container">
 
         <main class="sala-layout terraza1">
