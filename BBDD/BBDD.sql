@@ -101,7 +101,7 @@ VALUES
 -- ==========================================
 INSERT INTO salas (nombre, descripcion, num_mesas)
 VALUES
-('Terraza 1', 'Terraza exterior con vistas al parque', 4),
+('Terraza 1', 'Terraza exterior vistas al parque', 4),
 ('Terraza 2', 'Terraza cubierta', 4),
 ('Terraza 3', 'Terraza principal', 4),
 ('Comedor 1', 'Comedor principal interior', 4),
