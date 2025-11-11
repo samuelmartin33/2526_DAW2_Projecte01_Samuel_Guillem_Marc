@@ -43,7 +43,9 @@ CREATE TABLE IF NOT EXISTS mesas (
     nombre VARCHAR(20) NOT NULL,
     sillas INT NOT NULL,
     estado INT DEFAULT 1,  -- 1=libre, 2=ocupada, 3=reservada
-    FOREIGN KEY (id_sala) REFERENCES salas(id) ON DELETE CASCADE
+    asignado_por INT NULL, -- ID del camarero que asignó la mesa (NULL si ninguna asignación aún)
+    FOREIGN KEY (id_sala) REFERENCES salas(id) ON DELETE CASCADE,
+    FOREIGN KEY (asignado_por) REFERENCES users(id) ON DELETE SET NULL
 );
 
 -- ==========================================
@@ -88,11 +90,15 @@ INSERT INTO users (username, nombre, apellido, email, password_hash, rol)
 VALUES
 ('camarero1', 'Camarero', 'Uno', 'camarero1@restaurante.com', '$2y$10$VPM7.4cja7LDxoYO6YaOLuZgW.moRul/o5VnNuYUIupyjdko/sB5m', 1),
 ('camarero2', 'Camarero', 'Dos', 'camarero2@restaurante.com', '$2y$10$VPM7.4cja7LDxoYO6YaOLuZgW.moRul/o5VnNuYUIupyjdko/sB5m', 1),
+<<<<<<< HEAD
 ('camarero3', 'Camarero', 'Tres', 'camarero3@restaurante.com', '$2y$10$VPM7.4cja7LDxoYO6YaOLuZgW.moRul/o5VnNuYUIupyjdko/sB5m', 1),
 ('Jorge', 'Jorge', 'López', 'jorge@restaurante.com', '$2y$10$VPM7.4cja7LDxoYO6YaOLuZgW.moRul/o5VnNuYUIupyjdko/sB5m', 1), 
 ('Maria', 'María', 'García', 'maria@restaurante.com', '$2y$10$VPM7.4cja7LDxoYO6YaOLuZgW.moRul/o5VnNuYUIupyjdko/sB5m', 1), 
 ('Pablo', 'Pablo', 'Ruiz', 'pablo@restaurante.com', '$2y$10$VPM7.4cja7LDxoYO6YaOLuZgW.moRul/o5VnNuYUIupyjdko/sB5m', 1), 
 ('Laura', 'Laura', 'Martín', 'laura@restaurante.com', '$2y$10$VPM7.4cja7LDxoYO6YaOLuZgW.moRul/o5VnNuYUIupyjdko/sB5m', 1);
+=======
+('camarero3', 'Camarero', 'Tres', 'camarero3@restaurante.com', '$2y$10$VPM7.4cja7LDxoYO6YaOLuZgW.moRul/o5VnNuYUIupyjdko/sB5m', 1);
+>>>>>>> 0d14f86daac64c40008a45f7b4e937f7415f1115
 
 -- ==========================================
 --   INSERTS: SALAS
@@ -104,15 +110,14 @@ VALUES
 ('Terraza 3', 'Terraza principal', 4),
 ('Comedor 1', 'Comedor principal interior', 4),
 ('Comedor 2', 'Comedor pequeño interior', 4),
-('Privada 1', 'Sala privada para eventos', 4),
-('Privada 2', 'Sala privada con decoración clásica', 4),
-('Privada 3', 'Sala privada moderna', 4),
-('Privada 4', 'Sala privada VIP', 4);
+('Privada 1', 'Sala privada para eventos', 1),
+('Privada 2', 'Sala privada con decoración clásica', 1),
+('Privada 3', 'Sala privada moderna', 1),
+('Privada 4', 'Sala privada VIP', 1);
 
 -- ==========================================
 --   INSERTS: MESAS
 -- ==========================================
--- Generamos 4 mesas por sala con sillas promedio entre 2 y 8
 INSERT INTO mesas (id_sala, nombre, sillas) VALUES
 -- Terraza 1
 (1, 'Mesa T1-1', 4), (1, 'Mesa T1-2', 4), (1, 'Mesa T1-3', 6), (1, 'Mesa T1-4', 2),
@@ -124,11 +129,11 @@ INSERT INTO mesas (id_sala, nombre, sillas) VALUES
 (4, 'Mesa C1-1', 6), (4, 'Mesa C1-2', 6), (4, 'Mesa C1-3', 4), (4, 'Mesa C1-4', 4),
 -- Comedor 2
 (5, 'Mesa C2-1', 4), (5, 'Mesa C2-2', 4), (5, 'Mesa C2-3', 6), (5, 'Mesa C2-4', 2),
--- Privadas
-(6, 'Mesa P1-1', 8), (6, 'Mesa P1-2', 8), (6, 'Mesa P1-3', 10), (6, 'Mesa P1-4', 6),
-(7, 'Mesa P2-1', 6), (7, 'Mesa P2-2', 8), (7, 'Mesa P2-3', 6), (7, 'Mesa P2-4', 10),
-(8, 'Mesa P3-1', 6), (8, 'Mesa P3-2', 8), (8, 'Mesa P3-3', 8), (8, 'Mesa P3-4', 10),
-(9, 'Mesa P4-1', 8), (9, 'Mesa P4-2', 8), (9, 'Mesa P4-3', 10), (9, 'Mesa P4-4', 12);
+-- Privadas (una mesa por sala)
+(6, 'Mesa P1', 10),
+(7, 'Mesa P2', 15),
+(8, 'Mesa P3', 20),
+(9, 'Mesa P4', 30);
 
 -- ==========================================
 --   INSERTS: RESERVAS (ejemplo)
@@ -140,7 +145,7 @@ VALUES
 (3, 10, '2025-11-07 15:00:00', 3, 'Carlos Martínez', 2);
 
 -- ==========================================
---   INSERTS: OCUPACIONES (aleatorias)
+--   INSERTS: OCUPACIONES (corregido)
 -- ==========================================
 INSERT INTO ocupaciones (id_camarero, id_sala, id_mesa, inicio_ocupacion, final_ocupacion, num_comensales, id_reserva)
 VALUES
@@ -148,6 +153,7 @@ VALUES
 (2, 2, 5, '2025-11-07 14:35:00', '2025-11-07 15:30:00', 2, 2),
 (3, 4, 13, '2025-11-07 15:10:00', '2025-11-07 16:45:00', 3, 3),
 (1, 3, 9, '2025-11-07 17:00:00', '2025-11-07 18:20:00', 4, NULL),
+<<<<<<< HEAD
 (2, 7, 25, '2025-11-07 19:00:00', '2025-11-07 21:30:00', 10, NULL),
 (3, 5, 16, '2025-11-07 20:15:00', '2025-11-07 22:00:00', 6, NULL),
 (4, 6, 19, '2025-11-08 12:30:00', '2025-11-08 14:00:00', 8, NULL),
@@ -160,3 +166,6 @@ VALUES
 
 
 
+=======
+(2, 7, 22, '2025-11-07 19:00:00', '2025-11-07 21:30:00', 10, NULL);
+>>>>>>> 0d14f86daac64c40008a45f7b4e937f7415f1115

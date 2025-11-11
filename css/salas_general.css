@@ -65,28 +65,40 @@ body {
     box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
 }
 
-/* --- Estilo de las Mesas (Emojis) --- */
+/* --- Estilo de las Mesas (Contenedor) --- */
 .mesa {
     position: absolute;
     cursor: pointer;
-    font-size: 5rem; /* Tamaño del emoji */
-    transition: transform 0.2s ease, filter 0.2s ease;
+    transition: transform 0.2s ease;
     padding: 10px;
-    border-radius: 50%;
+    border-radius: 10px;
     /* Quitar selección de texto */
     user-select: none;
+    
+    /* CAMBIO: Convertido en contenedor flex */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+/* CAMBIO IMPORTANTE AQUÍ: Aumento del tamaño de la imagen */
+.mesa-img {
+    width: 160px; /* **¡AUMENTADO DE 80px A 160px!** */
+    height: auto;
+    transition: filter 0.2s ease;
 }
 
 .mesa:hover {
     transform: scale(1.1);
+}
+.mesa:hover .mesa-img {
     filter: brightness(1.1);
 }
 
+/* CAMBIO: Estilo para el nombre de la mesa */
 .mesa-label {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    /* Ya no es absolute, es parte del flex */
     background-color: rgba(0, 0, 0, 0.7);
     color: white;
     font-size: 0.8rem;
@@ -96,17 +108,35 @@ body {
     white-space: nowrap;
 }
 
-/* Estados de las mesas (se aplicará por PHP) */
-.mesa.libre {
-    filter: grayscale(0%);
+/* NUEVO: Estilo para el contador de sillas */
+.mesa-sillas {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #333;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 2px 8px;
+    border-radius: 10px;
+    /* Posicionado encima de la imagen */
+    order: -1; /* Lo pone primero en el flex visualmente */
+}
+.mesa-sillas i {
+    margin-right: 4px;
 }
 
-.mesa.ocupada {
-    filter: grayscale(100%) opacity(0.6); /* Color grisáceo */
+
+/* CAMBIO: El filtro de 'ocupada' se aplica a la imagen, no a todo */
+.mesa.ocupada .mesa-img {
+    filter: grayscale(100%) opacity(0.6);
 }
+.mesa.ocupada .mesa-sillas {
+    background-color: rgba(255, 204, 204, 0.8);
+    color: #a53030;
+}
+
 
 /* ==============================================
    MODAL (POP-UP) GESTIÓN DE MESA
+   (Sin cambios, ya estaba bien)
    ============================================== */
 
 .modal-backdrop {
@@ -135,7 +165,6 @@ body {
     transition: all 0.2s ease-out;
 }
 
-/* Animación de entrada */
 .modal-backdrop.show {
     display: flex;
 }
@@ -191,8 +220,6 @@ body {
     gap: 20px;
 }
 
-/* --- Contenido del Modal --- */
-
 .info-grupo {
     font-size: 1.1rem;
 }
@@ -206,7 +233,6 @@ body {
     color: #333;
 }
 
-/* Formulario para asignar */
 #form-asignar-mesa {
     display: flex;
     flex-direction: column;
@@ -255,9 +281,8 @@ body {
     transition: all 0.2s ease;
 }
 
-/* Botón principal (Asignar) */
 .btn-primary {
-    background-color: #27ae60; /* Verde */
+    background-color: #27ae60;
     color: white;
 }
 .btn-primary:hover {
@@ -268,21 +293,18 @@ body {
     cursor: not-allowed;
 }
 
-
-/* Botón secundario (Desasignar) */
 .btn-danger {
-    background-color: #ce4535; /* Rojo */
+    background-color: #ce4535;
     color: white;
 }
 .btn-danger:hover {
     background-color: #b93e2f;
 }
 
-/* Mensaje de error */
 #modal-error-message {
     font-size: 0.9rem;
     color: #ce4535;
     font-weight: 600;
     text-align: center;
-    display: none; /* Oculto por defecto */
+    display: none;
 }

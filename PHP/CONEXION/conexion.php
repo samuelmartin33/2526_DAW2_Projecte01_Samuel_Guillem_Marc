@@ -25,4 +25,4 @@
     echo "Error en la conexión a la base de datos: " . $e->getMessage(); 
     die(); 
 
- } 
+ }

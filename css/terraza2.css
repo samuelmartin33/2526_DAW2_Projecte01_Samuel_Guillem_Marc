@@ -1,0 +1,36 @@
+/*
+ * Estilos específicos para terraza2.php
+ */
+
+.sala-layout.terraza2 {
+    /* CAMBIO: Nueva imagen de fondo */
+    background-image: url('../img/terraza2.png');
+}
+
+/* * Posicionamiento de las 4 mesas para Terraza 2
+ * (IDs 5, 6, 7, 8 según tu BBDD)
+ */
+
+/* (Mesa T2-1) */
+#mesa-5 {
+    top: 15%;
+    left: 25%;
+}
+
+/* (Mesa T2-2) */
+#mesa-6 {
+    top: 15%;
+    left: 65%;
+}
+
+/* (Mesa T2-3) */
+#mesa-7 {
+    top: 55%;
+    left: 25%;
+}
+
+/* (Mesa T2-4) */
+#mesa-8 {
+    top: 55%;
+    left: 65%;
+}
