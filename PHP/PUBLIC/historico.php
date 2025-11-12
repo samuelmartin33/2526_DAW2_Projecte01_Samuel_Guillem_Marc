@@ -177,7 +177,8 @@ try {
     
     <link rel="stylesheet" href="../../css/historico.css"> 
    
-    
+    <link rel="icon" type="image/png" href="../../img/icono.png">
+
     <!-- CDNs de Bootstrap y Font Awesome (Solo CSS) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
