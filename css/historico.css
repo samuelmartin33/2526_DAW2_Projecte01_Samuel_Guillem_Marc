@@ -50,18 +50,19 @@ body {
    HEADER SUPERIOR (Tu historico.css original)
    ========================== */
 .main-header {
-    background-color: #ce4535; /* ROJO */
+    background-color: #ce4535; /* ROJO SOLICITADO */
     color: white;
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 15px 30px; 
+    align-items: center;
+    /* AJUSTE: Aumento de padding vertical (más grande) */
+    padding: 20px 40px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    font-size: 0.95rem; 
-    position: sticky; /* Fijado arriba */
-    top: 0;
-    z-index: 1030; /* Encima de Bootstrap */
+    position: relative; 
+    z-index: 10;
 }
+
+/* --- Logo GMS (Imagen + Texto) --- */
 .header-logo {
     display: flex;
     align-items: center;
@@ -69,14 +70,29 @@ body {
 }
 
 .header-logo img {
-    height: 40px; 
+    /* AJUSTE: Aumento del tamaño del logo */
+    height: 70px; 
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
 }
 
 .gms-title {
-    font-size: 1.4rem; 
-    font-weight: 700;
+    /* AJUSTE: Aumento del tamaño del título */
+    font-size: 2.0rem;
+    font-weight: 800;
     letter-spacing: 1px;
 }
+
+.gms-subtitle {
+    font-size: 0.7rem;
+    font-weight: 300;
+    opacity: 0.9;
+}
+
 
 .header-greeting {
     flex: 1;
@@ -86,18 +102,17 @@ body {
 }
 
 .username-tag {
+    font-weight: 700;
     background-color: rgba(255, 255, 255, 0.2);
-    padding: 5px 12px;
-    border-radius: 999px;
-    margin-left: 6px;
-    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 20px;
+    margin-left: 10px;
 }
-
 .header-menu {
     display: flex;
     align-items: center;
     gap: 15px;
-    margin-right: 10px;
+    margin-right: 30px;
 }
 
 .nav-link {
@@ -137,6 +152,20 @@ body {
 .logout-btn:hover {
     background-color: #f0f0f0;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.header-greeting {
+    font-size: 1.4rem;
+    font-weight: 500;
+    flex-grow: 1; /* Para que ocupe el espacio central */
+    text-align: center;
+}
+
+.username-tag {
+    font-weight: 700;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 5px 10px;
+    border-radius: 20px;
+    margin-left: 10px;
 }
 
 /* ==========================

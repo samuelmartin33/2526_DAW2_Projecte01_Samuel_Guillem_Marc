@@ -190,9 +190,9 @@ try {
 <!-- HEADER (Tu código exacto) -->
 <nav class="main-header">
     <div class="header-logo">
-        <a href="../index.php">
+        <a href="./index.php">
             <!-- La ruta a la imagen debe ser correcta desde 'historico.php' -->
-            <img src="../../../img/basic_logo_blanco.png" alt="Logo GMS">
+            <img src="../../img/basic_logo_blanco.png" alt="Logo GMS">
         </a>
         <div class="logo-text">
             <span class="gms-title">CASA GMS</span>
@@ -207,10 +207,10 @@ try {
 
     <!-- Menú de navegación (Opciones de camarero) -->
     <div class="header-menu">
-        <a href="../index.php" class="nav-link">
+        <a href="./index.php" class="nav-link">
             <i class="fa-solid fa-house"></i> Inicio
         </a>
-        <a href="../historico.php" class="nav-link"> <!-- Marcado como activo -->
+        <a href="./historico.php" class="nav-link"> <!-- Marcado como activo -->
             <i class="fa-solid fa-chart-bar"></i> Histórico
         </a>
         <?php if ($rol == 2): ?>
@@ -222,7 +222,7 @@ try {
 
     <!-- Botón de Cerrar Sesión -->
     <!-- La ruta al logout debe ser correcta -->
-    <form method="post" action="../../PROCEDIMIENTOS/logout.php">
+    <form method="post" action="./../PROCEDIMIENTOS/logout.php">
         <button type="submit" class="logout-btn">
             <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
         </button>
