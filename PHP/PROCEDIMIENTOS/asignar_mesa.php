@@ -128,9 +128,6 @@ try {
                 <?php
                     $clase_activa = ($sala['id'] == $id_sala_actual) ? 'active' : '';
                     $nombre_fichero = strtolower(str_replace(' ', '', $sala['nombre']));
-                    if (strpos($nombre_fichero, 'privada') === 0) {
-                         $nombre_fichero = 's' . $nombre_fichero;
-                    }
                     // Ruta desde PROCEDIMIENTOS/ hasta PUBLIC/SALAS/
                     $url = './../PUBLIC/SALAS/' . $nombre_fichero . ".php"; 
                 ?>
