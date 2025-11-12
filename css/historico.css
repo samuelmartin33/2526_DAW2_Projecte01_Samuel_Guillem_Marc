@@ -1,21 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
-html, body {
-    height: 100%;
-    color: #333;
-    
-    /* === ESTILOS PARA EL FONDO: fondo_panel_principal.png === */
-    background-color: #f4f7f9; 
-    /* La ruta es correcta desde css/ hasta img/ */
-    background-image: url('../img/fondo_panel_principal.png'); 
-    background-size: cover; 
-    background-attachment: fixed; 
-    /* AJUSTE: Imagen de fondo alineada al 100% (abajo) */
-    background-position: center 50%; 
-    /* ======================================================= */
-}           
 /* ==========================
-   ESTILO GENERAL CASA GMS
+   IMPORTACIONES Y ROOT
    ========================== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
 :root {
     --rojo-gms: #c94736;
     --rojo-hover: #b33e2f;
@@ -24,8 +11,17 @@ html, body {
     --gris-texto: #555;
     --sombra: 0 4px 20px rgba(0, 0, 0, 0.1);
     --radio: 12px;
+
+    /* Colores de estadisticas.php */
+    --primary-gradient: linear-gradient(135deg, #c94736 0%, #b33e2f 100%);
+    --success-gradient: linear-gradient(135deg, #28a745 0%, #218838 100%);
+    --danger-gradient: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    --info-gradient: linear-gradient(135deg, #0dcaf0 0%, #0a9cb5 100%);
 }
 
+/* ==========================
+   ESTILO GENERAL
+   ========================== */
 * {
     margin: 0;
     padding: 0;
@@ -33,27 +29,38 @@ html, body {
     font-family: "Poppins", sans-serif;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    background: url('../../img/fondo_restaurante.jpg') no-repeat center center fixed;
-    background-size: cover;
-    color: #222;
+    /* Fondo de tu historico.css original */
+    background-color: #f4f7f9; 
+    /* Ruta relativa desde la carpeta CSS a la carpeta IMG */
+    /* Ajusta esta ruta si tu CSS está en /css/ y tus img en /img/ */
+    background-image: url('../img/fondo_panel_principal.png'); 
+    background-size: cover; 
+    background-attachment: fixed; 
+    background-position: center 50%;
+    color: #333;
     min-height: 100vh;
 }
 
 /* ==========================
-   HEADER SUPERIOR
+   HEADER SUPERIOR (Tu historico.css original)
    ========================== */
 .main-header {
-    background-color: #ce4535; /* ROJO SOLICITADO */
+    background-color: #ce4535; /* ROJO */
     color: white;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 40px;
+    padding: 15px 30px; 
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    font-size: 1rem;
-    position: relative; 
-    z-index: 10;
+    font-size: 0.95rem; 
+    position: sticky; /* Fijado arriba */
+    top: 0;
+    z-index: 1030; /* Encima de Bootstrap */
 }
 .header-logo {
     display: flex;
@@ -62,36 +69,35 @@ body {
 }
 
 .header-logo img {
-    height: 45px;
+    height: 40px; 
 }
 
 .gms-title {
-    font-size: 1.6rem;
+    font-size: 1.4rem; 
     font-weight: 700;
     letter-spacing: 1px;
 }
 
-/* --- Saludo centrado verticalmente --- */
 .header-greeting {
     flex: 1;
     text-align: center;
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
 }
 
 .username-tag {
     background-color: rgba(255, 255, 255, 0.2);
-    padding: 6px 12px;
+    padding: 5px 12px;
     border-radius: 999px;
     margin-left: 6px;
+    font-weight: 500;
 }
 
-/* --- MENÚ DE NAVEGACIÓN --- */
 .header-menu {
     display: flex;
     align-items: center;
     gap: 15px;
-    margin-right: 10px; /* más cerca del botón de cerrar sesión */
+    margin-right: 10px;
 }
 
 .nav-link {
@@ -99,15 +105,20 @@ body {
     text-decoration: none;
     font-weight: 500;
     transition: 0.3s;
+    padding: 8px 12px;
+    border-radius: 8px;
 }
 
-/* Quitar subrayado al pasar el ratón */
 .nav-link:hover {
     color: #ffe3dc;
     text-decoration: none;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+.nav-link.active {
+    background-color: rgba(0, 0, 0, 0.2);
+    font-weight: 600;
 }
 
-/* --- BOTÓN CERRAR SESIÓN --- */
 .logout-section form {
     margin: 0;
 }
@@ -123,126 +134,268 @@ body {
     transition: 0.3s;
 }
 
-/* ==========================
-   FORMULARIO DE FILTROS
-   ========================== */
-.filter-form {
-    background: rgba(255, 255, 255, 0.9);
-    width: 90%;
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 1.5rem;
-    border-radius: var(--radio);
-    box-shadow: var(--sombra);
+.logout-btn:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.filter-form fieldset {
-    border: none;
+/* ==========================
+   ESTILOS DASHBOARD
+   ========================== */
+
+/* Contenedor principal */
+.main-content {
+    /* Espacio para el header fijo. Ajusta si tu header es más alto */
+    padding-top: 20px; 
+}
+
+/* Tarjeta de "cristal" */
+.glass-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+/* Tarjetas de Métricas (KPIs) */
+.metric-card {
+    background: var(--primary-gradient);
+    color: white;
+    border-radius: 20px;
+    padding: 1.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+.metric-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.metric-card.success { background: var(--success-gradient); }
+.metric-card.danger { background: var(--danger-gradient); }
+.metric-card.info { background: var(--info-gradient); }
+
+.metric-number {
+    font-size: 2.8rem;
+    font-weight: bold;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.metric-label {
+    font-size: 1rem;
+    opacity: 0.9;
+    margin-top: 0.25rem;
+}
+
+.metric-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 2rem;
+    opacity: 0.2;
+}
+
+.metric-trend {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-wrap: nowrap; /* todos en una línea */
-    gap: 12px;
+    gap: 5px;
+    opacity: 0.8;
 }
 
-.filter-form legend {
-    position: absolute;
-    left: 3rem;
-    top: -1rem;
-    background: transparent;
-    font-weight: 700;
+/* Encabezados de Sección */
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(0,0,0,0.05);
+}
+
+.section-title {
     font-size: 1.3rem;
-    color: var(--rojo-gms);
-}
-
-.filter-form label {
     font-weight: 600;
-    margin-right: 4px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.filter-form select {
-    padding: 0.4rem 0.6rem;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    background-color: white;
-    font-size: 0.9rem;
+/* ==========================
+   FORMULARIO DE FILTROS
+   ========================== */
+.filter-form-inline {
+    background: rgba(0, 0, 0, 0.02);
+    padding: 1rem;
+    border-radius: var(--radio);
+    margin-bottom: 1.5rem;
 }
 
-.filter-form button {
-    background-color: var(--rojo-gms);
-    color: white;
-    border: none;
-    padding: 0.6rem 1.2rem;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.filter-form button:hover {
-    background-color: var(--rojo-hover);
+.filter-form-inline .form-label-sm {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 0.25rem;
 }
 
 /* ==========================
    TABLA DE RESULTADOS
    ========================== */
-table {
-    width: 90%;
-    max-width: 1100px;
-    margin: 1rem auto 3rem auto;
-    border-collapse: collapse;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: var(--radio);
-    overflow: hidden;
-    box-shadow: var(--sombra);
+.table-responsive {
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+.table-sm th,
+.table-sm td {
+    padding: 0.5rem 0.6rem;
+    font-size: 0.85rem;
+    vertical-align: middle;
 }
 
-thead {
-    background-color: var(--rojo-gms);
-    color: white;
-    font-weight: 600;
-}
-
-th, td {
-    padding: 12px 16px;
-    text-align: center;
-    border-bottom: 1px solid #eee;
-}
-
-tbody tr:hover {
+.table-hover tbody tr:hover {
     background-color: #f7f7f7;
 }
 
-tbody tr:last-child td {
-    border-bottom: none;
+/* ==========================
+   NUEVOS: GRÁFICOS PHP
+   ========================== */
+.bar-chart-container {
+    width: 100%;
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: #fdfdfd;
+    border-radius: 8px;
+    border: 1px solid #eee;
 }
+
+/* Contenedor con scroll para horas */
+.bar-chart-container-scroll {
+    width: 100%;
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: #fdfdfd;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    max-height: 300px; /* Altura máxima para el gráfico de horas */
+    overflow-y: auto;
+}
+
+.bar-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+}
+.bar-label {
+    width: 120px; /* Ancho fijo para etiquetas */
+    font-weight: 500;
+    color: #555;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 10px;
+    flex-shrink: 0; /* Evita que la etiqueta se encoja */
+}
+.bar-wrap {
+    flex-grow: 1;
+    background: #f0f0f0;
+    border-radius: 5px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+}
+.bar {
+    height: 100%;
+    /* Color principal */
+    background: var(--rojo-gms); 
+    border-radius: 5px;
+    min-width: 1px; /* Mínimo visible */
+    transition: width 0.5s ease-out;
+    white-space: nowrap;
+}
+/* Colores alternativos para las barras */
+.glass-card:nth-child(2) .bar {
+    background: var(--rojo-hover);
+}
+.glass-card:nth-child(3) .bar {
+    background: var(--info-gradient);
+}
+.glass-card:nth-child(4) .bar {
+    background: var(--success-gradient);
+}
+
+
+.bar-value {
+    font-weight: 600;
+    margin-left: 10px;
+    color: #333;
+}
+
 
 /* ==========================
    RESPONSIVE
    ========================== */
-@media (max-width: 950px) {
+@media (max-width: 1100px) {
     .main-header {
         flex-wrap: wrap;
+        padding: 15px;
+    }
+    .header-greeting {
+        order: -1; /* Mover saludo arriba en móvil */
+        width: 100%;
         text-align: center;
+        margin-bottom: 10px;
+        flex: auto;
     }
-
+    .header-logo {
+        flex-grow: 1;
+    }
     .header-menu {
+        width: 100%;
         justify-content: center;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-right: 0;
+        gap: 5px;
+        margin-top: 10px;
     }
-
-    .filter-form fieldset {
-        flex-wrap: wrap; /* en móviles ya no cabe todo en línea */
-    }
-
-    .filter-form {
-        width: 95%;
-        padding: 1rem;
-    }
-
-    table {
+    .nav-link {
         font-size: 0.9rem;
+        padding: 6px 10px;
+    }
+    .main-content {
+        /* Ajusta este valor si tu header mide más de 140px en móvil */
+        padding-top: 20px; 
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 10px;
+        padding-top: 10px; /* Reducir padding en móvil */
+    }
+    .metric-number {
+        font-size: 2.2rem;
+    }
+    .metric-label {
+        font-size: 0.9rem;
+    }
+    .section-title {
+        font-size: 1.1rem;
+    }
+    .bar-label {
+        width: 90px; /* Más pequeño en móvil */
+        font-size: 0.8rem;
+    }
+    .bar-value {
+        font-size: 0.8rem;
+    }
+    .filter-form-inline .btn {
+        margin-top: 10px; /* Botón de filtro en su propia línea */
     }
 }
