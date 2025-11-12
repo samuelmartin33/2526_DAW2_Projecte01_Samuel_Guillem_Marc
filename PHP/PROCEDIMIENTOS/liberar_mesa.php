@@ -99,6 +99,25 @@ try {
 } catch (PDOException $e) {
     die("Error al cargar las salas: " . $e->getMessage());
 }
+
+
+// --- Obtener tiempo de inicio de ocupación ---
+
+$stmt_ocupacion_tiempo = $conn->prepare("
+    SELECT DATE_FORMAT(o.inicio_ocupacion, '%d/%m/%Y %H:%i:%s') AS tiempo
+    FROM ocupaciones o
+    WHERE o.id_mesa = ?
+    ORDER BY o.inicio_ocupacion DESC
+    LIMIT 1;
+");
+$stmt_ocupacion_tiempo->execute([$id_mesa]);
+$ocupacion_tiempo = $stmt_ocupacion_tiempo->fetch(PDO::FETCH_ASSOC);
+
+
+
+if (!$ocupacion_tiempo) {
+    $error_ocupacion = "Inicio de la ocupacion no detectado.";
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -136,11 +155,6 @@ try {
             <a href="../PUBLIC/historico.php" class="nav-link">
                 <i class="fa-solid fa-chart-bar"></i> Histórico
             </a>
-            <?php if ($rol == 2): ?>
-                <a href="../PUBLIC/admin_panel.php" class="nav-link">
-                    <i class="fa-solid fa-gear"></i> Admin
-                </a>
-            <?php endif; ?>
         </div>
 
         <form method="post" action="../PROCEDIMIENTOS/logout.php">
@@ -156,6 +170,7 @@ try {
             <div class="interstitial-form">
                 <h2>Liberar <?php echo htmlspecialchars($mesa['nombre']); ?></h2>
                 <p>Asignada por: <strong><?php echo htmlspecialchars($mesa['camarero'] ?? 'N/A'); ?></strong></p>
+                <p>Asignada a las: <strong><?php echo htmlspecialchars($ocupacion_tiempo['tiempo'] ?? $error_ocupacion); ?></strong></p>
                 <p>¿Seguro que quieres liberar esta mesa?</p>
 
                 <?php if ($error): ?>
