@@ -93,7 +93,7 @@ try {
                 
                 <div class="input-group select-wrapper">
                     <i class="fa-solid fa-user"></i>
-                    <select id="username" name="username" required>
+                    <select id="username" name="username">
                         <option value="" disabled selected>Selecciona tu usuario</option>
                         <?php foreach ($camareros as $camarero): ?>
                             <option value="<?php echo htmlspecialchars($camarero['username']); ?>">
@@ -105,13 +105,13 @@ try {
 
                 <div class="input-group">
                     <i class="fa-solid fa-lock"></i>
-                    <input type="password" id="password" name="password" placeholder="Contraseña" required>
+                    <input type="password" id="password" name="password" placeholder="Contraseña">
                 </div>
 
                 <button type="submit">Iniciar sesión</button>
             </form>
         </div>
     </main>
-
+    <script src="../../JS/validar_login.js"></script>
     </body>
 </html>
