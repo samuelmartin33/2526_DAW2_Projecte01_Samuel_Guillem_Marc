@@ -242,10 +242,10 @@ if ($hora >= 6 && $hora < 12) {
          CAMBIO: Tus scripts JS
        ============================================== -->
     <!-- Script para el mensaje de bienvenida (de la tarea anterior) -->
-    <script src="JS/mensaje_inicio.js"></script>
+    <script src="../../JS/mensaje_inicio.js"></script>
     
     <!-- Script para el temporizador de inactividad (NUEVO) -->
-    <script src="JS/inactivity_timer.js"></script>
+    <script src="../../JS/inactivity_timer.js"></script>
 
 </body>
 </html>
