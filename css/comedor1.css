@@ -34,3 +34,32 @@
     top: 55%;
     left: 65%;
 }
+
+/* ==============================================
+   RESPONSIVE (TABLET Y MÓVIL)
+   ============================================== */
+@media (max-width: 899px) {
+    /* (Mesa C1-1) */
+    #mesa-13 {
+        top: 25%; /* +10% (Abajo) */
+        left: 15%; /* -10% (Izquierda) */
+    }
+
+    /* (Mesa C1-2) */
+    #mesa-14 {
+        top: 25%; /* +10% (Abajo) */
+        left: 55%; /* -10% (Izquierda) */
+    }
+
+    /* (Mesa C1-3) */
+    #mesa-15 {
+        top: 65%; /* +10% (Abajo) */
+        left: 15%; /* -10% (Izquierda) */
+    }
+
+    /* (Mesa C1-4) */
+    #mesa-16 {
+        top: 65%; /* +10% (Abajo) */
+        left: 55%; /* -10% (Izquierda) */
+    }
+}

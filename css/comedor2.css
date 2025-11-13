@@ -41,3 +41,38 @@
     top: 60%;
     left: 65%;
 }
+
+/* ==============================================
+   RESPONSIVE (TABLET Y MÓVIL)
+   ============================================== */
+@media (max-width: 899px) {
+    
+    .sala-layout.comedor2 {
+        /* Reseteamos la posición del fondo para que se vea mejor en vertical */
+        background-position: center top; 
+    }
+
+    /* (Mesa C2-1) */
+    #mesa-17 {
+        top: 39%; /* +10% (Abajo) */
+        left: 15%; /* -10% (Izquierda) */
+    }
+
+    /* (Mesa C2-2) */
+    #mesa-18 {
+        top: 39%; /* +10% (Abajo) */
+        left: 55%; /* -10% (Izquierda) */
+    }
+
+    /* (Mesa C2-3) */
+    #mesa-19 {
+        top: 70%; /* +10% (Abajo) */
+        left: 15%; /* -10% (Izquierda) */
+    }
+
+    /* (Mesa C2-4) */
+    #mesa-20 {
+        top: 70%; /* +10% (Abajo) */
+        left: 55%; /* -10% (Izquierda) */
+    }
+}
