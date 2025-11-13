@@ -186,6 +186,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.18);
   box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
+  height: 100%; /* <-- AÑADIDO PARA IGUALAR ALTURA */
 }
 
 /* Tarjetas de Métricas (KPIs) */
@@ -198,6 +199,7 @@ body {
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease;
+  height: 100%; /* <-- AÑADIDO PARA IGUALAR ALTURA */
 }
 .metric-card:hover {
   transform: translateY(-5px);
