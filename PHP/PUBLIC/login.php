@@ -112,6 +112,6 @@ try {
             </form>
         </div>
     </main>
-
+    <script src="../../JS/validar_login.js"></script>
     </body>
 </html>
