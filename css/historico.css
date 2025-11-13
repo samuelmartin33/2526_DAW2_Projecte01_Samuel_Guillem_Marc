@@ -1,207 +1,207 @@
 /* ==========================
-   IMPORTACIONES Y ROOT
-   ========================== */
+ IMPORTACIONES Y ROOT
+ ========================== */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-    --rojo-gms: #c94736;
-    --rojo-hover: #b33e2f;
-    --gris-fondo: #f9f9f9;
-    --gris-claro: #ececec;
-    --gris-texto: #555;
-    --sombra: 0 4px 20px rgba(0, 0, 0, 0.1);
-    --radio: 12px;
+  --rojo-gms: #c94736;
+  --rojo-hover: #b33e2f;
+  --gris-fondo: #f9f9f9;
+  --gris-claro: #ececec;
+  --gris-texto: #555;
+  --sombra: 0 4px 20px rgba(0, 0, 0, 0.1);
+  --radio: 12px;
 
-    /* Colores de estadisticas.php */
-    --primary-gradient: linear-gradient(135deg, #c94736 0%, #b33e2f 100%);
-    --success-gradient: linear-gradient(135deg, #28a745 0%, #218838 100%);
-    --danger-gradient: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-    --info-gradient: linear-gradient(135deg, #0dcaf0 0%, #0a9cb5 100%);
+  /* Colores de estadisticas.php */
+  --primary-gradient: linear-gradient(135deg, #c94736 0%, #b33e2f 100%);
+  --success-gradient: linear-gradient(135deg, #28a745 0%, #218838 100%);
+  --danger-gradient: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  --info-gradient: linear-gradient(135deg, #0dcaf0 0%, #0a9cb5 100%);
 }
 
 /* ==========================
-   ESTILO GENERAL
-   ========================== */
+ ESTILO GENERAL
+ ========================== */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 body {
-    /* Fondo de tu historico.css original */
-    background-color: #f4f7f9; 
-    /* Ruta relativa desde la carpeta CSS a la carpeta IMG */
-    /* Ajusta esta ruta si tu CSS está en /css/ y tus img en /img/ */
-    background-image: url('../img/fondo_panel_principal.png'); 
-    background-size: cover; 
-    background-attachment: fixed; 
-    background-position: center 50%;
-    color: #333;
-    min-height: 100vh;
+  /* Fondo de tu historico.css original */
+  background-color: #f4f7f9; 
+  /* Ruta relativa desde la carpeta CSS a la carpeta IMG */
+  /* Ajusta esta ruta si tu CSS está en /css/ y tus img en /img/ */
+  background-image: url('../img/fondo_panel_principal.png'); 
+  background-size: cover; 
+  background-attachment: fixed; 
+  background-position: center 50%;
+  color: #333;
+  min-height: 100vh;
 }
 
 /* ==========================
-   HEADER SUPERIOR (Tu historico.css original)
-   ========================== */
+ HEADER SUPERIOR (Tu historico.css original)
+ ========================== */
 .main-header {
-    background-color: #ce4535; /* ROJO SOLICITADO */
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    /* AJUSTE: Aumento de padding vertical (más grande) */
-    padding: 20px 40px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    position: relative; 
-    z-index: 10;
+  background-color: #ce4535; /* ROJO SOLICITADO */
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* AJUSTE: Aumento de padding vertical (más grande) */
+  padding: 20px 40px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  position: relative; 
+  z-index: 10;
 }
 
 /* --- Logo GMS (Imagen + Texto) --- */
 .header-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .header-logo img {
-    /* AJUSTE: Aumento del tamaño del logo */
-    height: 70px; 
+  /* AJUSTE: Aumento del tamaño del logo */
+  height: 70px; 
 }
 
 .logo-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.1;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
 }
 
 .gms-title {
-    /* AJUSTE: Aumento del tamaño del título */
-    font-size: 2.0rem;
-    font-weight: 800;
-    letter-spacing: 1px;
+  /* AJUSTE: Aumento del tamaño del título */
+  font-size: 2.0rem;
+  font-weight: 800;
+  letter-spacing: 1px;
 }
 
 .gms-subtitle {
-    font-size: 0.7rem;
-    font-weight: 300;
-    opacity: 0.9;
+  font-size: 0.7rem;
+  font-weight: 300;
+  opacity: 0.9;
 }
 
 
 .header-greeting {
-    flex: 1;
-    text-align: center;
-    font-weight: 600;
-    font-size: 1.05rem;
+  flex: 1;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.05rem;
 }
 
 .username-tag {
-    font-weight: 700;
-    background-color: rgba(255, 255, 255, 0.2);
-    padding: 5px 10px;
-    border-radius: 20px;
-    margin-left: 10px;
+  font-weight: 700;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 5px 10px;
+  border-radius: 20px;
+  margin-left: 10px;
 }
 .header-menu {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-right: 30px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-right: 30px;
 }
 
 .nav-link {
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-    transition: 0.3s;
-    padding: 8px 12px;
-    border-radius: 8px;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.3s;
+  padding: 8px 12px;
+  border-radius: 8px;
 }
 
 .nav-link:hover {
-    color: #ffe3dc;
-    text-decoration: none;
-    background-color: rgba(255, 255, 255, 0.1);
+  color: #ffe3dc;
+  text-decoration: none;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 .nav-link.active {
-    background-color: rgba(0, 0, 0, 0.2);
-    font-weight: 600;
+  background-color: rgba(0, 0, 0, 0.2);
+  font-weight: 600;
 }
 
 .logout-section form {
-    margin: 0;
+  margin: 0;
 }
 
 .logout-btn {
-    background-color: white;
-    color: var(--rojo-gms);
-    border: none;
-    padding: 8px 18px;
-    border-radius: 999px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.3s;
+  background-color: white;
+  color: var(--rojo-gms);
+  border: none;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 .logout-btn:hover {
-    background-color: #f0f0f0;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  background-color: #f0f0f0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 .header-greeting {
-    font-size: 1.4rem;
-    font-weight: 500;
-    flex-grow: 1; /* Para que ocupe el espacio central */
-    text-align: center;
+  font-size: 1.4rem;
+  font-weight: 500;
+  flex-grow: 1; /* Para que ocupe el espacio central */
+  text-align: center;
 }
 
 .username-tag {
-    font-weight: 700;
-    background-color: rgba(255, 255, 255, 0.2);
-    padding: 5px 10px;
-    border-radius: 20px;
-    margin-left: 10px;
+  font-weight: 700;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 5px 10px;
+  border-radius: 20px;
+  margin-left: 10px;
 }
 
 /* ==========================
-   ESTILOS DASHBOARD
-   ========================== */
+ ESTILOS DASHBOARD
+ ========================== */
 
 /* Contenedor principal */
 .main-content {
-    /* Espacio para el header fijo. Ajusta si tu header es más alto */
-    padding-top: 20px; 
+  /* Espacio para el header fijo. Ajusta si tu header es más alto */
+  padding-top: 20px; 
 }
 
 /* Tarjeta de "cristal" */
 .glass-card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(5px);
-    border-radius: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(5px);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
 /* Tarjetas de Métricas (KPIs) */
 .metric-card {
-    background: var(--primary-gradient);
-    color: white;
-    border-radius: 20px;
-    padding: 1.5rem;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
+  background: var(--primary-gradient);
+  color: white;
+  border-radius: 20px;
+  padding: 1.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
 }
 .metric-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
 
 .metric-card.success { background: var(--success-gradient); }
@@ -209,222 +209,263 @@ body {
 .metric-card.info { background: var(--info-gradient); }
 
 .metric-number {
-    font-size: 2.8rem;
-    font-weight: bold;
-    margin: 0;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+  font-size: 2.8rem;
+  font-weight: bold;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
 }
 
 .metric-label {
-    font-size: 1rem;
-    opacity: 0.9;
-    margin-top: 0.25rem;
+  font-size: 1rem;
+  opacity: 0.9;
+  margin-top: 0.25rem;
 }
 
 .metric-icon {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 2rem;
-    opacity: 0.2;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 2rem;
+  opacity: 0.2;
 }
 
 .metric-trend {
-    font-size: 0.9rem;
-    margin-top: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    opacity: 0.8;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  opacity: 0.8;
 }
 
 /* Encabezados de Sección */
 .section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(0,0,0,0.05);
 }
 
 .section-title {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #333;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 /* ==========================
-   FORMULARIO DE FILTROS
-   ========================== */
+ FORMULARIO DE FILTROS
+ ========================== */
 .filter-form-inline {
-    background: rgba(0, 0, 0, 0.02);
-    padding: 1rem;
-    border-radius: var(--radio);
-    margin-bottom: 1.5rem;
+  background: rgba(0, 0, 0, 0.02);
+  padding: 1rem;
+  border-radius: var(--radio);
+  margin-bottom: 1.5rem;
 }
 
 .filter-form-inline .form-label-sm {
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: #555;
-    margin-bottom: 0.25rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 0.25rem;
 }
 
 /* ==========================
-   TABLA DE RESULTADOS
-   ========================== */
+ TABLA DE RESULTADOS
+ ========================== */
 .table-responsive {
-    border: 1px solid #eee;
-    border-radius: 8px;
+  border: 1px solid #eee;
+  border-radius: 8px;
 }
 .table-sm th,
 .table-sm td {
-    padding: 0.5rem 0.6rem;
-    font-size: 0.85rem;
-    vertical-align: middle;
+  padding: 0.5rem 0.6rem;
+  font-size: 0.85rem;
+  vertical-align: middle;
 }
 
 .table-hover tbody tr:hover {
-    background-color: #f7f7f7;
+  background-color: #f7f7f7;
 }
 
 /* ==========================
-   NUEVOS: GRÁFICOS PHP
-   ========================== */
+ NUEVOS: GRÁFICOS PHP
+ ========================== */
 .bar-chart-container {
-    width: 100%;
-    margin-top: 1.5rem;
-    padding: 1rem;
-    background: #fdfdfd;
-    border-radius: 8px;
-    border: 1px solid #eee;
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #fdfdfd;
+  border-radius: 8px;
+  border: 1px solid #eee;
 }
 
 /* Contenedor con scroll para horas */
 .bar-chart-container-scroll {
-    width: 100%;
-    margin-top: 1.5rem;
-    padding: 1rem;
-    background: #fdfdfd;
-    border-radius: 8px;
-    border: 1px solid #eee;
-    max-height: 300px; /* Altura máxima para el gráfico de horas */
-    overflow-y: auto;
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #fdfdfd;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  max-height: 300px; /* Altura máxima para el gráfico de horas */
+  overflow-y: auto;
 }
 
 .bar-row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px;
-    font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
 }
 .bar-label {
-    width: 120px; /* Ancho fijo para etiquetas */
-    font-weight: 500;
-    color: #555;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding-right: 10px;
-    flex-shrink: 0; /* Evita que la etiqueta se encoja */
+  width: 120px; /* Ancho fijo para etiquetas */
+  font-weight: 500;
+  color: #555;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+  flex-shrink: 0; /* Evita que la etiqueta se encoja */
 }
 .bar-wrap {
-    flex-grow: 1;
-    background: #f0f0f0;
-    border-radius: 5px;
-    height: 20px;
-    display: flex;
-    align-items: center;
+  flex-grow: 1;
+  background: #f0f0f0;
+  border-radius: 5px;
+  height: 20px;
+  display: flex;
+  align-items: center;
 }
 .bar {
-    height: 100%;
-    /* Color principal */
-    background: var(--rojo-gms); 
-    border-radius: 5px;
-    min-width: 1px; /* Mínimo visible */
-    transition: width 0.5s ease-out;
-    white-space: nowrap;
+  height: 100%;
+  /* Color principal */
+  background: var(--rojo-gms); 
+  border-radius: 5px;
+  min-width: 1px; /* Mínimo visible */
+  transition: width 0.5s ease-out;
+  white-space: nowrap;
 }
 /* Colores alternativos para las barras */
 .glass-card:nth-child(2) .bar {
-    background: var(--rojo-hover);
+  background: var(--rojo-hover);
 }
 .glass-card:nth-child(3) .bar {
-    background: var(--info-gradient);
+  background: var(--info-gradient);
 }
 .glass-card:nth-child(4) .bar {
-    background: var(--success-gradient);
+  background: var(--success-gradient);
 }
 
 
 .bar-value {
-    font-weight: 600;
-    margin-left: 10px;
-    color: #333;
+  font-weight: 600;
+  margin-left: 10px;
+  color: #333;
 }
 
 
 /* ==========================
-   RESPONSIVE
-   ========================== */
-@media (max-width: 1100px) {
-    .main-header {
-        flex-wrap: wrap;
-        padding: 15px;
-    }
-    .header-greeting {
-        order: -1; /* Mover saludo arriba en móvil */
-        width: 100%;
-        text-align: center;
-        margin-bottom: 10px;
-        flex: auto;
-    }
-    .header-logo {
-        flex-grow: 1;
-    }
-    .header-menu {
-        width: 100%;
-        justify-content: center;
-        gap: 5px;
-        margin-top: 10px;
-    }
-    .nav-link {
-        font-size: 0.9rem;
-        padding: 6px 10px;
-    }
-    .main-content {
-        /* Ajusta este valor si tu header mide más de 140px en móvil */
-        padding-top: 20px; 
-    }
+ RESPONSIVE
+ ========================== */
+
+/* --- CAMBIO AQUÍ: Reemplazado el media query de 1100px por este de 900px --- */
+@media (max-width: 900px) {
+  
+  .main-header {
+    padding: 20px 20px;
+    /* Cambiamos a row-wrap para controlar el orden */
+    flex-direction: row; 
+    flex-wrap: wrap;
+    justify-content: center; /* Centra los items de la última fila (la nav) */
+    gap: 15px;
+  }
+
+  /* Orden 1 (Arriba) y centrado */
+  .header-logo {
+    order: 1;
+    width: 100%;
+    justify-content: center;
+    flex-grow: 0; /* Reseteo */
+  }
+
+  /* Orden 2 (Medio) y centrado */
+  .header-greeting {
+    order: 2;
+    width: 100%;
+    text-align: center;
+    font-size: 1.1rem;
+    margin-bottom: 0;
+    flex: 1 1 100%; /* Asegura que ocupe todo el ancho */
+  }
+
+  /* Orden 3, vuelve a ser fila */
+  .header-menu {
+    order: 3;
+    flex-direction: row; /* Vuelve a ser fila */
+    align-items: center;
+    gap: 20px; /* Un poco más de espacio */
+    width: auto; /* Ancho automático */
+    margin-right: 0; /* Resetea el margen de desktop */
+    margin-top: 0; /* Resetea el margen */
+    justify-content: center;
+  }
+
+  /* El formulario también es orden 3 */
+  .main-header form {
+    order: 3;
+    margin: 0;
+  }
+
+  /* Ocultamos el texto del botón */
+  .logout-btn {
+    order: 3; 
+    width: auto; /* Ancho automático */
+    font-size: 0; /* Oculta el texto "Cerrar Sesión" */
+    padding: 10px 12px; /* Ajusta el padding para el icono */
+    /* Ajusta el padding del botón original (8px 18px) a algo más cuadrado */
+    padding: 8px 10px;
+  }
+
+  /* Hacemos el icono visible de nuevo */
+  .logout-btn i {
+    font-size: 1.1rem; /* Restaura el tamaño del icono */
+    margin-right: 0; /* Quita el margen que tenía para el texto */
+  }
+  
+  .nav-link {
+    font-size: 1rem;
+    padding: 6px 10px;
+  }
 }
 
+
 @media (max-width: 768px) {
-    .main-content {
-        padding: 10px;
-        padding-top: 10px; /* Reducir padding en móvil */
-    }
-    .metric-number {
-        font-size: 2.2rem;
-    }
-    .metric-label {
-        font-size: 0.9rem;
-    }
-    .section-title {
-        font-size: 1.1rem;
-    }
-    .bar-label {
-        width: 90px; /* Más pequeño en móvil */
-        font-size: 0.8rem;
-    }
-    .bar-value {
-        font-size: 0.8rem;
-    }
-    .filter-form-inline .btn {
-        margin-top: 10px; /* Botón de filtro en su propia línea */
-    }
+  .main-content {
+    padding: 10px;
+    padding-top: 10px; /* Reducir padding en móvil */
+  }
+  .metric-number {
+    font-size: 2.2rem;
+  }
+  .metric-label {
+    font-size: 0.9rem;
+  }
+  .section-title {
+    font-size: 1.1rem;
+  }
+  .bar-label {
+    width: 90px; /* Más pequeño en móvil */
+    font-size: 0.8rem;
+  }
+  .bar-value {
+    font-size: 0.8rem;
+  }
+  .filter-form-inline .btn {
+    margin-top: 10px; /* Botón de filtro en su propia línea */
+  }
 }
