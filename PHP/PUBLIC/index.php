@@ -14,6 +14,20 @@ if (isset($_SESSION['loginok']) && $_SESSION['loginok'] === true && isset($_SESS
     exit();
 }
 
+// --- AÑADIDO: Lógica para el mensaje de bienvenida (Toast) ---
+$welcome_data_flag = "false";
+$welcome_data_name = "";
+
+if (isset($_SESSION['show_welcome_message']) && $_SESSION['show_welcome_message'] === true) {
+    $welcome_data_flag = "true";
+    $welcome_data_name = $nombre; // $nombre ya está definido arriba
+    
+    // ¡Importante! Borramos la variable para que no se muestre de nuevo al recargar
+    unset($_SESSION['show_welcome_message']); 
+}
+// --- FIN DEL AÑADIDO ---
+
+
 // ----------------------------------------------------------------------------------
 // --- CONSULTAS A LA BASE DE DATOS ---
 // ----------------------------------------------------------------------------------
@@ -103,8 +117,19 @@ if ($hora >= 6 && $hora < 12) {
     <link rel="stylesheet" href="../../css/panel_principal.css">
     <link rel="icon" type="image/png" href="../../img/icono.png">
 
+    <!-- LIBRERÍA SWEETALERT2 (CSS) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
 </head>
-<body>
+
+<!-- ==============================================
+     CAMBIO: Añadidos los 3 atributos data-*
+   ============================================== -->
+<body 
+    data-show-welcome="<?php echo $welcome_data_flag; ?>" 
+    data-welcome-name="<?php echo htmlspecialchars($welcome_data_name); ?>"
+    data-user-name="<?php echo htmlspecialchars($nombre); ?>"
+>
     
     <!-- HEADER INTEGRADO -->
     <nav class="main-header">
@@ -209,6 +234,18 @@ if ($hora >= 6 && $hora < 12) {
         </div>
 
     </div>
+
+    <!-- LIBRERÍA SWEETALERT2 (JS) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- ==============================================
+         CAMBIO: Tus scripts JS
+       ============================================== -->
+    <!-- Script para el mensaje de bienvenida (de la tarea anterior) -->
+    <script src="JS/mensaje_inicio.js"></script>
+    
+    <!-- Script para el temporizador de inactividad (NUEVO) -->
+    <script src="JS/inactivity_timer.js"></script>
 
 </body>
 </html>

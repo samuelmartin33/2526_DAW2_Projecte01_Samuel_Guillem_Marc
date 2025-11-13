@@ -27,7 +27,7 @@ $rol = $_SESSION['rol'] ?? 1; // Necesitamos el rol para permisos
 
 // --- Variables para el Header ---
 $nombre = htmlspecialchars($_SESSION['nombre'] ?? $username);
-$rol = $_SESSION['rol'] ?? 1;
+// $rol = $_SESSION['rol'] ?? 1; // Ya definida arriba
 // Saludo dinámico
 $hora = date('H');
 if ($hora >= 6 && $hora < 12) {
@@ -102,20 +102,20 @@ try {
 
 
 // --- Obtener tiempo de inicio de ocupación ---
+$ocupacion_tiempo = null;
+if ($id_mesa && !$error) {
+    $stmt_ocupacion_tiempo = $conn->prepare("
+        SELECT DATE_FORMAT(o.inicio_ocupacion, '%d/%m/%Y %H:%i:%s') AS tiempo
+        FROM ocupaciones o
+        WHERE o.id_mesa = ?
+        ORDER BY o.inicio_ocupacion DESC
+        LIMIT 1;
+    ");
+    $stmt_ocupacion_tiempo->execute([$id_mesa]);
+    $ocupacion_tiempo = $stmt_ocupacion_tiempo->fetch(PDO::FETCH_ASSOC);
+}
 
-$stmt_ocupacion_tiempo = $conn->prepare("
-    SELECT DATE_FORMAT(o.inicio_ocupacion, '%d/%m/%Y %H:%i:%s') AS tiempo
-    FROM ocupaciones o
-    WHERE o.id_mesa = ?
-    ORDER BY o.inicio_ocupacion DESC
-    LIMIT 1;
-");
-$stmt_ocupacion_tiempo->execute([$id_mesa]);
-$ocupacion_tiempo = $stmt_ocupacion_tiempo->fetch(PDO::FETCH_ASSOC);
-
-
-
-if (!$ocupacion_tiempo) {
+if (!$ocupacion_tiempo && !$error) {
     $error_ocupacion = "Inicio de la ocupacion no detectado.";
 }
 ?>
@@ -131,12 +131,22 @@ if (!$ocupacion_tiempo) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+    <!-- AÑADIDO: CSS de SweetAlert -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
     <link rel="stylesheet" href="../../css/panel_principal.css">
     <link rel="stylesheet" href="../../css/salas_general.css">
+    <!-- La siguiente línea carga el CSS de la sala dinámicamente, ¡perfecto! -->
     <link rel="stylesheet" href="../../css/<?php echo $sala_css_class; ?>.css">
 </head>
-<body>
+
+<!-- ==============================================
+     AÑADIDO (1/2): Atributo data-user-name para pasar el nombre
+   ============================================== -->
+<body data-user-name="<?php echo htmlspecialchars($nombre); ?>">
+
 <nav class="main-header">
+        <!-- ... (Tu código de header no se toca) ... -->
         <div class="header-logo">
             <img src="../../img/basic_logo_blanco.png" alt="Logo GMS">
             <div class="logo-text">
@@ -157,7 +167,8 @@ if (!$ocupacion_tiempo) {
             </a>
         </div>
 
-        <form method="post" action="../PROCEDIMIENTOS/logout.php">
+        <!-- RUTA CORREGIDA -->
+        <form method="post" action="logout.php">
             <button type="submit" class="logout-btn">
                 <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
             </button>
@@ -170,7 +181,7 @@ if (!$ocupacion_tiempo) {
             <div class="interstitial-form">
                 <h2>Liberar <?php echo htmlspecialchars($mesa['nombre']); ?></h2>
                 <p>Asignada por: <strong><?php echo htmlspecialchars($mesa['camarero'] ?? 'N/A'); ?></strong></p>
-                <p>Asignada a las: <strong><?php echo htmlspecialchars($ocupacion_tiempo['tiempo'] ?? $error_ocupacion); ?></strong></p>
+                <p>Asignada a las: <strong><?php echo htmlspecialchars($ocupacion_tiempo['tiempo'] ?? $error_ocupacion ?? 'N/A'); ?></strong></p>
                 <p>¿Seguro que quieres liberar esta mesa?</p>
 
                 <?php if ($error): ?>
@@ -180,7 +191,7 @@ if (!$ocupacion_tiempo) {
                 <?php endif; ?>
 
                 <form method="POST" class="form-full-page">
-                    <input type="hidden" name="mesa_id" value="<?php echo $id_mesa; ?>">
+                    <input type="hidden" name="mesa_id" value="<?php echo htmlspecialchars($id_mesa ?? ''); ?>">
                     
                     <div class="form-actions">
                         <button type="submit" name="confirmar" value="1" class="btn-danger">Sí, liberar</button>
@@ -206,5 +217,16 @@ if (!$ocupacion_tiempo) {
         </aside>
 
     </div>
+
+    <!-- ==============================================
+         AÑADIDO (2/2): Tus scripts JS
+       ============================================== -->
+    <!-- LIBRERÍA SWEETALERT2 (JS) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- Script para el temporizador de inactividad (NUEVO) -->
+    <!-- Ruta corregida: Sube un nivel a /restaurante/ y entra a /PUBLIC/JS/ -->
+    <script src="../PUBLIC/JS/inactivity_timer.js"></script>
+
 </body>
 </html>

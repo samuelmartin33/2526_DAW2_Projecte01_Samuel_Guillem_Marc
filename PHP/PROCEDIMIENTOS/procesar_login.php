@@ -27,7 +27,8 @@ if (mb_strlen($password) < 6) {
 
 try {
     // Buscar usuario en la tabla `users`
-    $stmt = $conn->prepare('SELECT id, username, nombre, apellido, email, password_hash FROM users WHERE username = :username LIMIT 1');
+    // --- CAMBIO AQUÍ: He añadido 'rol' a tu consulta ---
+    $stmt = $conn->prepare('SELECT id, username, nombre, apellido, email, password_hash, rol FROM users WHERE username = :username LIMIT 1');
     $stmt->execute([':username' => $username]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -39,8 +40,17 @@ try {
     // Login correcto: guardar datos en sesión
     $_SESSION['id_usuario'] = $user['id'];
     $_SESSION['username'] = $user['username'];
-    $_SESSION['nombre'] = $user['nombre'];
+    
+    // --- CAMBIO AQUÍ: Guardamos Nombre y Apellido juntos para el saludo ---
+    $_SESSION['nombre'] = $user['nombre'] . ' ' . $user['apellido']; 
+    
     $_SESSION['loginok'] = true;
+    
+    // --- AÑADIDO: Guardamos el ROL ---
+    $_SESSION['rol'] = $user['rol'];
+
+    // --- AÑADIDO: Esta es la "bandera" para SweetAlert ---
+    $_SESSION['show_welcome_message'] = true; 
 
     header('Location: ../PUBLIC/index.php');
     exit;
