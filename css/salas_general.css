@@ -264,3 +264,31 @@ body {
     font-weight: 500;
     margin-bottom: 15px;
 }
+.btn-confirmar {
+  background-color: #27ae60;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 8px 18px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-confirmar:hover {
+  background-color: #219d55;
+}
+
+.btn-cancelar {
+  background-color: #fff;
+  color: #d44736;
+  border: 2px solid #d44736;
+  border-radius: 25px;
+  padding: 8px 18px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-cancelar:hover {
+  background-color: #d44736;
+  color: #fff;
+}

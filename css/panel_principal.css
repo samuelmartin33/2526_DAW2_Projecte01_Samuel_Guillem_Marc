@@ -328,3 +328,31 @@ html, body {
         margin-top: 50px; 
     }
 }
+.btn-confirmar {
+  background-color: #d44736; /* rojo temático */
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 8px 18px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-confirmar:hover {
+  background-color: #b73728;
+}
+
+.btn-cancelar {
+  background-color: #fff;
+  color: #d44736;
+  border: 2px solid #d44736;
+  border-radius: 25px;
+  padding: 8px 18px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-cancelar:hover {
+  background-color: #d44736;
+  color: #fff;
+}
