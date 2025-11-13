@@ -77,14 +77,14 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($nombre_sala_actual); ?> - Casa GMS</title>
 
-    <!-- Fuentes y estilos -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" type="image/png" href="../../../img/icono.png">
 
-    <!-- CSS específico -->
     <link rel="stylesheet" href="../../../css/panel_principal.css">
     <link rel="stylesheet" href="../../../css/salas_general.css">
     <link rel="stylesheet" href="../../../css/terraza3.css">
@@ -99,6 +99,27 @@ try {
     <div class="sala-container">
 
         <main class="sala-layout terraza3">
+
+            <div class="sala-layout-dropdown dropdown">
+                <button class="btn btn-salas" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-layer-group"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <?php foreach ($salas as $sala_dropdown): ?>
+                        <?php
+                            $clase_activa_dropdown = ($sala_dropdown['id'] == $id_sala_actual) ? 'active' : '';
+                            $nombre_fichero_dropdown = strtolower(str_replace(' ', '', $sala_dropdown['nombre']));
+                            $url_dropdown = $nombre_fichero_dropdown . ".php"; 
+                        ?>
+                        <li>
+                            <a class="dropdown-item <?php echo $clase_activa_dropdown; ?>" href="<?php echo $url_dropdown; ?>">
+                                <?php echo htmlspecialchars($sala_dropdown['nombre']); ?>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+
             <?php foreach ($mesas as $mesa): ?>
                 <?php 
                     $clase = $mesa['estado'] == 2 ? 'ocupada' : 'libre';
@@ -127,7 +148,6 @@ try {
             <?php endforeach; ?>
         </main>
 
-        <!-- NAVEGACIÓN ENTRE SALAS -->
         <aside class="salas-navigation">
             <?php foreach ($salas as $sala): ?>
                 <?php
@@ -143,6 +163,8 @@ try {
         </aside>
 
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

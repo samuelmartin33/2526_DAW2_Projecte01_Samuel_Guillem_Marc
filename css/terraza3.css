@@ -14,18 +14,18 @@
 /* (Mesa T3-1) */
 #mesa-9 {
     top: 15%;
-    left: 35%;
+    left: 30%;
 }
 
 /* (Mesa T3-2) */
 #mesa-10 {
     top: 15%;
-    left: 55%;
+    left: 60%;
 }
 
 /* (Mesa T3-3) */
 #mesa-11 {
-    top: 55%;
+    top: 60%;
     left: 25%;
 }
 
@@ -33,4 +33,33 @@
 #mesa-12 {
     top: 55%;
     left: 65%;
+}
+
+/* ==============================================
+   RESPONSIVE (TABLET Y MÓVIL)
+   ============================================== */
+@media (max-width: 899px) {
+    /* (Mesa T3-1) */
+    #mesa-9 {
+        top: 25%; /* +10% (Abajo) */
+        left: 15%; /* -15% (Izquierda) */
+    }
+
+    /* (Mesa T3-2) */
+    #mesa-10 {
+        top: 25%; /* +10% (Abajo) */
+        left: 55%; /* -5% (Ajuste menor) */
+    }
+
+    /* (Mesa T3-3) */
+    #mesa-11 {
+        top: 58%; /* +10% (Abajo) */
+        left: 15%; /* -10% (Izquierda) */
+    }
+
+    /* (Mesa T3-4) */
+    #mesa-12 {
+        top: 58%; /* +10% (Abajo) */
+        left: 65%; /* -10% (Izquierda) */
+    }
 }
