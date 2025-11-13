@@ -2,17 +2,17 @@
     let inactivityTimer;
     
     // 5 minutos en milisegundos
-    const timeoutDuration = 5 * 60 * 1000; 
-    // const timeoutDuration = 10000; // --- Descomenta esta línea para probar (10 segundos)
+     const timeoutDuration = 5 * 60 * 1000; 
+    //  const timeoutDuration = 10000; // --- Descomenta esta línea para probar (10 segundos)
 
     // 1. Determinar la ruta correcta al script de logout
     // (Según tu estructura de carpetas)
-    let logoutPath = '../PROCEDIMIENTOS/logout.php'; // Ruta por defecto (para index.php, historico.php)
+    let logoutPath = '../PHP/PROCEDIMIENTOS/logout.php'; // Ruta por defecto (para index.php, historico.php)
     const path = window.location.pathname;
 
-    if (path.includes('/SALAS/')) {
+    if (path.includes('/PHP/')) {
         // Desde PUBLIC/SALAS/terraza1.php -> ../../PROCEDIMIENTOS/logout.php
-        logoutPath = '../../PROCEDIMIENTOS/logout.php';
+        logoutPath = '../PROCEDIMIENTOS/logout.php';
     } else if (path.includes('/PROCEDIMIENTOS/')) {
         // Desde PUBLIC/PROCEDIMIENTOS/liberar_mesa.php -> logout.php
         logoutPath = 'logout.php'; 
