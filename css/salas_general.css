@@ -1,25 +1,19 @@
 /* --- Importar Fuente Poppins (Consistencia) --- */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
-/* --- Estilos Globales --- */
-body {
-    overflow: hidden; 
-    font-family: 'Poppins', sans-serif;
-}
-
 /* ==============================================
-   ESTRUCTURA PRINCIPAL DE SALAS
+   ESTRUCTURA PRINCIPAL DE SALAS (ESCRITORIO)
    ============================================== */
 
 .sala-container {
     display: flex;
-    /* Asumo 110px de header, ajusta si es necesario */
+    /* Asumo 110px de header (del panel_principal.css) */
     height: calc(100vh - 110px); 
     position: relative;
     font-family: 'Poppins', sans-serif;
 }
 
-/* --- Panel de Navegación de Salas (Derecha) --- */
+/* --- Panel de Navegación de Salas (Derecha) - ESCRITORIO --- */
 .salas-navigation {
     width: 280px;
     background-color: #ce4535;
@@ -57,7 +51,7 @@ body {
 /* --- Área de Visualización de la Sala (Izquierda/Centro) --- */
 .sala-layout {
     flex-grow: 1;
-    position: relative;
+    position: relative; /* ¡Importante para posicionar el botón! */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -67,61 +61,54 @@ body {
 
 /* --- Formulario que envuelve la mesa --- */
 .mesa-form {
-    display: contents; /* Hace que el form no afecte al layout */
+    display: contents; 
 }
 
-/* --- Estilo de las Mesas (AHORA ES UN BOTÓN) --- */
+/* --- Estilo de las Mesas (BOTÓN) --- */
 .mesa {
-    /* Resetear estilos de botón */
     border: none;
     font: inherit;
-    
-    /* CAMBIO: Fondo y sombra eliminados */
     background-color: transparent;
     box-shadow: none;
-    
-    /* Estilos de layout de la carta */
     position: absolute;
     cursor: pointer;
     transition: transform 0.2s ease;
-    padding: 10px;
+    padding: 5px; /* Reducido para móvil */
     border-radius: 10px;
     user-select: none;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 3px; /* Reducido para móvil */
 }
 
 .mesa-img {
-    width: 160px; /* Tamaño normal para comedores */
+    width: 80px; /* Tamaño MÓVIL por defecto */
     height: auto;
-    transition: filter 0.2s ease;
+    transition: filter 0.2s ease, width 0.3s ease;
 }
 
 .mesa:hover {
     transform: scale(1.05);
 }
-.mesa:hover .mesa-img {
-    filter: brightness(1.1);
-}
 
+/* ... (resto de tus estilos de .mesa-label, .mesa-sillas, etc. están bien) ... */
 .mesa-label {
     background-color: rgba(0, 0, 0, 0.7);
     color: white;
-    font-size: 0.8rem;
+    font-size: 0.7rem; 
     font-weight: 600;
-    padding: 3px 8px;
+    padding: 2px 5px; 
     border-radius: 5px;
     white-space: nowrap;
 }
 
 .mesa-sillas {
-    font-size: 1rem;
+    font-size: 0.8rem; 
     font-weight: 700;
     color: #333;
     background-color: rgba(255, 255, 255, 0.8);
-    padding: 2px 8px;
+    padding: 2px 6px; 
     border-radius: 10px;
     order: -1; 
 }
@@ -129,13 +116,12 @@ body {
     margin-right: 4px;
 }
 
-/* Texto de camarero asignado */
 .mesa-camarero {
-    font-size: 0.8rem;
+    font-size: 0.7rem; 
     font-weight: 600;
     color: #c23e2f;
     background-color: rgba(255, 255, 255, 0.9);
-    padding: 2px 6px;
+    padding: 1px 4px; 
     border-radius: 4px;
 }
 
@@ -146,15 +132,53 @@ body {
     background-color: rgba(255, 204, 204, 0.8);
     color: #a53030;
 }
-/* CAMBIO: Fondo de mesa ocupada eliminado */
 .mesa.ocupada {
     background-color: transparent;
 }
 
 
 /* ==============================================
-   NUEVOS ESTILOS PARA PÁGINAS DE ACCIÓN
-   (asignar_mesa.php y liberar_mesa.php)
+   BOTÓN DESPLEGABLE (MÓVIL) - (Se queda aquí pero no se usa en liberar_mesa.php)
+   ============================================== */
+
+/* Contenedor del botón (Bootstrap 'dropdown') */
+.sala-layout-dropdown {
+    display: none; /* Oculto en escritorio */
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000; /* Por encima del plano pero debajo del header */
+}
+
+/* Estilo personalizado para el botón */
+.sala-layout-dropdown .btn-salas {
+    background-color: #ce4535;
+    color: white;
+    width: 50px;  /* Más pequeño */
+    height: 50px; /* Más pequeño */
+    border-radius: 50%;
+    font-size: 1.2rem; /* Más pequeño */
+    padding: 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+}
+
+/* Ajuste del menú desplegable */
+.sala-layout-dropdown .dropdown-menu {
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
+.sala-layout-dropdown .dropdown-item.active {
+    background-color: #ce4535;
+    color: white;
+}
+
+/* ==============================================
+   ¡ESTILOS AÑADIDOS DE VUELTA! (Para asignar_mesa.php y liberar_mesa.php)
    ============================================== */
 
 .interstitial-form {
@@ -172,6 +196,7 @@ body {
     max-width: 450px;
     padding: 30px;
     text-align: center;
+    z-index: 500; /* Asegura que esté sobre el fondo */
 }
 
 .interstitial-form h2 {
@@ -254,7 +279,7 @@ body {
     background-color: #95a5a6;
 }
 
-/* NUEVO: Estilo para el mensaje de error */
+/* Estilo para el mensaje de error */
 .form-error-message {
     background-color: #f8d7da;
     color: #721c24;
@@ -264,31 +289,77 @@ body {
     font-weight: 500;
     margin-bottom: 15px;
 }
-.btn-confirmar {
-  background-color: #27ae60;
-  color: #fff;
-  border: none;
-  border-radius: 25px;
-  padding: 8px 18px;
-  font-weight: 600;
-  transition: all 0.3s ease;
+
+
+/* ==============================================
+   RESPONSIVE (ESCRITORIO GRANDE)
+   ============================================== */
+@media (min-width: 900px) {
+    /* Agrandamos las mesas en escritorio */
+    .mesa-img {
+        width: 160px; /* Tamaño normal */
+    }
+    .mesa {
+        gap: 5px;
+    }
+    .mesa-label {
+        font-size: 0.8rem;
+        padding: 3px 8px;
+    }
+    .mesa-sillas {
+        font-size: 1rem;
+        padding: 2px 8px;
+    }
+    .mesa-camarero {
+        font-size: 0.8rem;
+        padding: 2px 6px;
+    }
 }
 
-.btn-confirmar:hover {
-  background-color: #219d55;
-}
 
-.btn-cancelar {
-  background-color: #fff;
-  color: #d44736;
-  border: 2px solid #d44736;
-  border-radius: 25px;
-  padding: 8px 18px;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
+/* ==============================================
+   RESPONSIVE (TABLET Y MÓVIL)
+   ============================================== */
+/* (Tu panel_principal.css usa 900px, así que usamos 899px) */
+@media (max-width: 899px) {
 
-.btn-cancelar:hover {
-  background-color: #d44736;
-  color: #fff;
+    /* 1. Ajustamos la altura de la sala al header responsive */
+    .sala-container {
+        display: block; /* Rompemos el flex */
+        height: auto;
+    }
+    
+    .sala-layout {
+        width: 100%;
+        /* (Tu header móvil es alto, asumimos 180px de alto) */
+        height: calc(100vh - 180px); 
+    }
+
+    /* 2. Ocultamos la barra lateral de escritorio */
+    .salas-navigation {
+        display: none;
+    }
+
+    /* 3. Mostramos el botón flotante (si se usa) */
+    .sala-layout-dropdown {
+        display: block; /* Lo hacemos visible */
+    }
+
+    /* 4. Ajustamos el formulario en móvil */
+    .interstitial-form {
+        width: 90%;
+        padding: 20px;
+    }
+    
+    .interstitial-form h2 {
+        font-size: 1.3rem;
+    }
+    
+    .interstitial-form p {
+        font-size: 1rem;
+    }
+
+    .form-actions {
+        flex-direction: column; /* Botones apilados */
+    }
 }

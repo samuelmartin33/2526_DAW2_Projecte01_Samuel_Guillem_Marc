@@ -4,6 +4,16 @@
  */
 
 .mesa-img {
-    width: 400px; /* Tamaño "mucho más grande" */
+    width: 400px; /* Tamaño "mucho más grande" (ESCRITORIO) */
     height: auto;
+}
+
+/* ==============================================
+   RESPONSIVE (TABLET Y MÓVIL)
+   ============================================== */
+@media (max-width: 899px) {
+    .mesa-img {
+        /* Hacemos la imagen más pequeña en móvil */
+        width: 350px; 
+    }
 }

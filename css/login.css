@@ -219,10 +219,19 @@ button[type="submit"]:hover {
         overflow: auto;
         height: auto;
         min-height: 100vh;
-        padding-top: 300px; 
+        /* Reducimos el padding superior ya que no hay logo GMS */
+        padding-top: 220px; /* --- MODIFICACIÓN AQUÍ --- */
     }
 
-    .logo-card,
+    /* --- MODIFICACIÓN AQUÍ --- */
+    /* Ocultamos la tarjeta del logo de Casa GMS */
+    .logo-card {
+        display: none; 
+    }
+
+    /* --- MODIFICACIÓN AQUÍ --- */
+    /* El contenedor de login ahora necesita todas las propiedades
+       que antes compartía con .logo-card para centrarse */
     .login-container {
         position: relative; 
         left: auto;
@@ -231,14 +240,9 @@ button[type="submit"]:hover {
         transform: none; 
         
         width: 90%; 
-        margin: 20px auto; 
-    }
-
-    .logo-card {
-        max-width: 550px; 
-    }
-
-    .login-container {
+        margin: 20px auto; /* Esto lo centra */
+        
+        /* Mantenemos sus estilos originales */
         max-width: 550px; 
         margin-bottom: 50px; 
         padding: 30px; 

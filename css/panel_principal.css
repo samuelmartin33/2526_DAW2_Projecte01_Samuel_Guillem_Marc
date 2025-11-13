@@ -293,39 +293,72 @@ html, body {
 }
 
 /* --- RESPONSIVE --- */
+/* === CAMBIOS IMPORTANTES AQUÍ === */
 @media (max-width: 900px) {
-    .main-header {
-        /* Se mantiene el nuevo padding más generoso */
-        padding: 20px 20px; 
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .header-greeting {
-        font-size: 1.2rem;
-        order: -1; 
-        margin-bottom: 10px;
-    }
     
-    .header-logo {
-        order: 0;
-    }
-
-    .header-menu {
-        order: 1;
+    .main-header {
+        padding: 20px 20px;
+        /* --- CAMBIO: Cambiamos a row-wrap para controlar el orden --- */
+        flex-direction: row; 
+        flex-wrap: wrap;
+        justify-content: center; /* Centra los items de la última fila (la nav) */
         gap: 15px;
     }
 
-    .logout-btn {
+    /* --- CAMBIO: Orden 1 (Arriba) y centrado --- */
+    .header-logo {
+        order: 1;
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* --- CAMBIO: Orden 2 (Medio) y centrado --- */
+    .header-greeting {
         order: 2;
         width: 100%;
         text-align: center;
+        font-size: 1.1rem;
+        margin-bottom: 0; /* Quitar margen extra */
     }
 
+    /* --- CAMBIO: Orden 3, vuelve a ser fila --- */
+    .header-menu {
+        order: 3;
+        flex-direction: row; /* Vuelve a ser fila */
+        align-items: center;
+        gap: 20px; /* Un poco más de espacio */
+        width: auto; /* Ancho automático */
+        margin-right: 0; /* Resetea el margen de desktop */
+    }
+
+    /* --- CAMBIO: El formulario también es orden 3 --- */
+    nav.main-header form {
+        order: 3;
+    }
+
+    /* --- CAMBIO: Ocultamos el texto del botón --- */
+    .logout-btn {
+        order: 3; /* Redundante pero claro */
+        width: auto; /* Ancho automático */
+        font-size: 0; /* Oculta el texto "Cerrar Sesión" */
+        padding: 10px 12px; /* Ajusta el padding para el icono */
+    }
+
+    /* --- CAMBIO: Hacemos el icono visible de nuevo --- */
+    .logout-btn i {
+        font-size: 1.1rem; /* Restaura el tamaño del icono */
+        margin-right: 0; /* Quita el margen que tenía para el texto */
+    }
+
+    /* --- ESTO SE MANTIENE IGUAL (Contenedor principal) --- */
     .container {
         padding: 20px;
-        /* Se mantiene el margen superior aumentado */
         margin-top: 50px; 
+        width: 95%; 
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 30px;
     }
 }
 .btn-confirmar {
