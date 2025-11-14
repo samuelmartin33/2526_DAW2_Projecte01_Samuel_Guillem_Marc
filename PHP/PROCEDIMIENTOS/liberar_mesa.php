@@ -192,11 +192,11 @@ if (!$ocupacion_tiempo && !$error) {
                     </div>
                 <?php endif; ?>
 
-                <form method="POST" class="form-full-page">
+                <form method="POST" id="liberar-mesa-form" class="form-full-page">
                     <input type="hidden" name="mesa_id" value="<?php echo htmlspecialchars($id_mesa ?? ''); ?>">
-                    
+                    <input type="hidden" id="camarero" value="<?php echo (int)$mesa['camarero']; ?>">
                     <div class="form-actions">
-                        <button type="submit" name="confirmar" value="1" class="btn-danger">Sí, liberar</button>
+                        <button type="submit" id="btn-liberar" name="confirmar" value="1" class="btn-danger">Sí, liberar</button>
                         <a href="<?php echo $sala_redirect_url; ?>" class="btn-secondary">Cancelar</a>
                     </div>
                 </form>

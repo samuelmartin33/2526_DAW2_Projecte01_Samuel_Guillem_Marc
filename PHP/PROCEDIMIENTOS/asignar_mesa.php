@@ -146,14 +146,17 @@ try {
                 <h2>Asignar <?php echo htmlspecialchars($mesa['nombre']); ?></h2>
                 <p><strong>Sala:</strong> <?php echo htmlspecialchars($sala_nombre); ?></p>
                 <p><strong>Capacidad:</strong> <?php echo $mesa['sillas']; ?> comensales</p>
+                
 
-                <form method="POST" class="form-full-page">
+                <form method="POST" id="asignar-mesa-form" class="form-full-page">
                     <input type="hidden" name="mesa_id" value="<?php echo $id_mesa; ?>">
                     <label for="num-comensales">Número de comensales:</label>
                     <input type="number" id="num-comensales" name="num_comensales" min="1" max="<?php echo $mesa['sillas']; ?>" >
+                    <input type="hidden" id="max-sillas" value="<?php echo (int)$mesa['sillas']; ?>">
+
                     
                     <div class="form-actions">
-                        <button type="submit" class="btn-primary">Asignar Mesa</button>
+                        <button type="submit" id="btn-asignar" class="btn-primary">Asignar Mesa</button>
                         <a href="<?php echo $sala_redirect_url; ?>" class="btn-secondary">Cancelar</a>
                     </div>
                 </form>
@@ -176,5 +179,6 @@ try {
         </aside>
 
     </div>
+    <script src="../../JS/validar_asignacion.js"></script>
 </body>
 </html>
