@@ -1,158 +1,75 @@
-# 🌟 CASA GMS – SISTEMA DE GESTIÓN DE MESAS  
-## LA PLATAFORMA DEFINITIVA PARA CONTROLAR LAS MESAS DE TU RESTAURANTE COMO UN PROFESIONAL 🔥
+# 🌟 CASA GMS – Sistema de Gestión de Mesas
 
----
+¿Buscas optimizar la gestión de mesas y disponibilidad en tu restaurante? **Casa GMS** es la solución.
 
-## 🚀 CARACTERÍSTICAS PRINCIPALES
+Este proyecto es un sistema web desarrollado en PHP y MySQL, diseñado para ser la herramienta definitiva que permite a camareros y administradores controlar la ocupación del restaurante en tiempo real, gestionar asignaciones y analizar el rendimiento histórico.
 
-- 🔐 **AUTENTICACIÓN POR ROLES:** CAMAREROS (ROL 1) Y ADMINISTRADORES (ROL 2).  
-- 📊 **PANEL PRINCIPAL:** ESTADÍSTICAS EN TIEMPO REAL Y VISIÓN GLOBAL DE OCUPACIÓN.  
-- 🪑 **GESTIÓN VISUAL DE SALAS:** DISEÑO GRÁFICO CON COLORES DINÁMICOS (LIBRE/OCUPADA).  
-- 📥 **ASIGNACIÓN DE MESAS:** VALIDACIÓN INSTANTÁNEA Y CONFIRMACIÓN SWEETALERT2.  
-- 📤 **LIBERACIÓN DE MESAS:** HORARIO, CAMARERO ASIGNADO Y CONFIRMACIÓN MODERNA.  
-- ⚠️ **CONTROL AVANZADO DE PERMISOS:** SEGURIDAD POR ROL Y VALIDACIÓN DEL SERVIDOR.  
-- 📚 **HISTÓRICO PROFESIONAL:** KPIS, TOP SALAS, TOP CAMAREROS Y FILTROS DETALLADOS.  
-- 🍭 **NOTIFICACIONES MODERNAS:** SWEETALERT2 EN TODAS LAS ACCIONES CLAVE.  
+<br>
 
----
+## 🚀 Características Principales
 
-# 🛠️ TECNOLOGÍAS UTILIZADAS
+* 📊 **Panel Principal (Dashboard):** Visión global de la ocupación del restaurante en tiempo real. Estadísticas clave de un vistazo: mesas libres, ocupadas, y porcentaje de ocupación por sala.
+* 🗺️ **Gestión Visual de Salas:** Representación gráfica de las diferentes salas (Comedor 1, Privada 1, Terraza, etc.). Las mesas cambian de color dinámicamente (libre/ocupada) para un control visual instantáneo.
+* 🔐 **Autenticación y Roles:** Página de login segura (`login.php`). El sistema está preparado para gestionar roles (Camareros y Administradores), con permisos diferenciados.
+* ✅ **Asignación y Liberación de Mesas:** Un flujo de trabajo intuitivo para asignar y liberar mesas. El sistema registra qué camarero realiza cada acción y la hora, fundamental para el análisis posterior.
+* 📈 **Página de Histórico y Estadísticas:** Un potente módulo de analítica (`historico.php`) para tomar decisiones. Descubre KPIs, Top 5 de camareros, salas más rentables y horas punta.
+* 🛡️ **Validaciones Robustas:** Seguridad en cada paso. Se implementan validaciones tanto en el lado del cliente (JavaScript) como en el servidor (PHP) para garantizar la integridad de los datos en todos los formularios.
+* 🎨 **Estilos CSS Personalizados:** Una interfaz de usuario limpia y moderna con CSS dedicado para cada vista (login, dashboard, salas, histórico), asegurando una experiencia de usuario agradable.
+* 🔮 **Base de Datos Escalable:** Una estructura de base de datos MySQL (`BBDD.sql`) diseñada para crecer, lista para incorporar futuras funcionalidades como un sistema de reservas, gestión de menús o un panel de administración avanzado.
 
-- 🧠 **BACKEND:** PHP 8+  
-- 🗄️ **BASE DE DATOS:** MYSQL CON PDO  
-- 🎨 **FRONTEND:** HTML5 + CSS3 (FLEXBOX / GRID)  
-- ⚡ **JAVASCRIPT ES6+**  
-- ✨ **LIBRERÍAS:** SWEETALERT2 PARA POPUPS INTERACTIVOS  
+<br>
 
----
+## 🛠️ Tecnologías Utilizadas
 
-# 🏁 PUESTA EN MARCHA DEL PROYECTO
+* **Backend:** PHP 8+ (Orientado a objetos y procedural)
+* **Base de Datos:** MySQL con PDO (Consultas preparadas para evitar inyección SQL)
+* **Frontend:** HTML5, CSS3 (Flexbox, Grid)
+* **Javascript (ES6+):** Validación de formularios en tiempo real y lógica de UI.
+* **Librerías:** SweetAlert2 (Para notificaciones y confirmaciones modernas)
 
-## 🗂️ 1. IMPORTAR BASE DE DATOS
-IMPORTA EL ARCHIVO:
-BBDD/BBDD.sql  
+<br>
 
-EN TU SERVIDOR MYSQL (PHPMYADMIN, WORKBENCH, ETC.).
+## 🏁 Puesta en Marcha del Proyecto
 
----
+Sigue estos pasos para ejecutar el proyecto en tu entorno local:
 
-## 📁 2. COPIAR EL PROYECTO EN TU SERVIDOR LOCAL
+1.  **Clonar el Repositorio**
+    ```bash
+    git clone [https://github.com/tu-usuario/casa-gms.git](https://github.com/tu-usuario/casa-gms.git)
+    ```
 
-COPIA LA CARPETA COMPLETA DEL PROYECTO EN:
-C:/XAMPP/HTDOCS/RESTAURANTE/
+2.  **Importar la Base de Datos**
+    * Localiza el archivo `BBDD/BBDD.sql`.
+    * Importa el archivo en tu gestor de MySQL (phpMyAdmin, Workbench, DBeaver, etc.) para crear la estructura de tablas y los datos iniciales.
 
----
+3.  **Configurar la Conexión**
+    * Navega al archivo de conexión, probablemente ubicado en `PHP/CONEXION/conexion.php`.
+    * Edita las variables con tus credenciales de la base de datos:
+        * `$servidor` (ej. "localhost")
+        * `$usuario` (ej. "root")
+        * `$contrasena` (ej. "")
+        * `$base_datos` (ej. "restaurante_gms")
 
-## 🔧 3. CONFIGURAR LA CONEXIÓN (¡PASO CRÍTICO!)
+4.  **Configurar la URL Base (¡Crítico!)**
+    * En el mismo archivo `conexion.php` o en un archivo de configuración principal, asegúrate de definir la `BASE_URL`. Esto es esencial para que las rutas y redirecciones funcionen correctamente.
+    * ```php
+        DEFINE('BASE_URL', 'http://localhost/tu-carpeta-proyecto/');
+        ```
 
-ABRE:
+5.  **Iniciar el Servidor**
+    * Asegúrate de que tu servidor local (XAMPP, WAMP, MAMP) esté ejecutando Apache y MySQL.
+    * Abre tu navegador y accede a la `BASE_URL` que configuraste.
 
-PHP/CONEXION/conexion.php
+6.  **Acceder al Sistema**
+    * Serás redirigido a la página de login: `(BASE_URL)/PHP/PUBLIC/login.php`
+    * Utiliza las credenciales de un usuario (camarero) incluidas en la base de datos para acceder.
 
-Y CONFIGURA:
+<br>
 
-- SERVIDOR  
-- USUARIO  
-- CONTRASEÑA  
-- BASE DE DATOS  
+## 🗺️ Roadmap (Próximas Funcionalidades)
 
-AÑADE LA URL BASE:
+Este proyecto está en desarrollo activo. Las siguientes características están planificadas:
 
-```php
-DEFINE('BASE_URL', 'http://localhost/restaurante/');
-
-🌐 4. ACCEDER AL SISTEMA
-
-ENCIENDE APACHE + MYSQL Y VE A:
-http://localhost/restaurante/PHP/PUBLIC/login.php
-📖 FUNCIONAMIENTO DEL SISTEMA
-🔐 1. FLUJO DE AUTENTICACIÓN
-
-PANTALLA DE LOGIN.
-
-OBTENCIÓN DE USUARIOS POR ROL.
-
-VALIDACIÓN PHP.
-
-CREACIÓN DE SESIÓN.
-
-REDIRECCIÓN AL PANEL PRINCIPAL.
-
-🎛️ 2. PANEL PRINCIPAL (INDEX.PHP)
-
-SALUDO PERSONALIZADO.
-
-TARJETAS CON ESTADÍSTICAS.
-
-CUADRÍCULA DE SALAS.
-
-ACCESO DIRECTO A CADA SALA.
-
-🗺️ 3. GESTIÓN DE SALAS (TERRAZA, COMEDORES, PRIVADOS…)
-
-VISUALIZACIÓN DE MESAS.
-
-COLORES SEGÚN ESTADO:
-
-VERDE → LIBRE
-
-ROJO/GRIS → OCUPADA
-
-SI LA MESA ESTÁ LIBRE → ASIGNAR_MESA.PHP
-
-SI ESTÁ OCUPADA → LIBERAR_MESA.PHP
-
-🍽️ 4. ASIGNAR MESA (ASIGNAR_MESA.PHP)
-VALIDACIÓN DOBLE:
-🟢 1. VALIDACIÓN EN TIEMPO REAL (VALIDAR_ASIGNACION.JS)
-
-DETECTA VALORES INVÁLIDOS.
-
-MUESTRA MENSAJES EN ROJO.
-
-DESACTIVA EL ENVÍO SI HAY ERRORES.
-
-🔵 2. CONFIRMACIÓN SWEETALERT (ALERT_ASIGNAR.JS)
-
-CONFIRMA "¿ESTÁS SEGURO?".
-
-SI ACEPTA → ENVÍA EL FORMULARIO.
-
-SI CANCELA → MUESTRA MENSAJE DE CANCELACIÓN.
-
-🧽 5. LIBERAR MESA (LIBERAR_MESA.PHP)
-🔒 VALIDACIÓN DE PERMISOS (LIBERAR_MESA.JS)
-
-COMPARA:
-
-ID DEL CAMARERO ASIGNADOR
-
-ID DEL CAMARERO EN SESIÓN
-
-SI NO COINCIDEN → OCULTA EL BOTÓN.
-
-LOS ADMIN (ROL 2) PUEDEN LIBERAR TODO.
-
-🚨 CONFIRMACIÓN SWEETALERT (ALERT_LIBERAR.JS)
-
-PREGUNTA "¿LIBERAR MESA?".
-
-SI CONFIRMA → ENVÍA EL FORMULARIO.
-
-EL BACKEND VALIDA ANTES DE LIBERAR.
-
-📚 6. HISTÓRICO (HISTORICO.PHP)
-
-KPIS DE OCUPACIONES.
-
-TOP 5 CAMAREROS.
-
-TOP 5 SALAS.
-
-HORAS PUNTA.
-
-GRÁFICAS ESTILIZADAS.
-
-FILTROS AVANZADOS.
-
-📂 ESTRUCTURA DEL PROYECTO (SIMPLIFICADA)
+* [ ] **Panel de Administración:** Una sección protegida para que los administradores puedan gestionar usuarios, salas y mesas.
+* [ ] **Sistema de Reservas:** Permitir a los clientes o al personal crear reservas para una fecha y hora específicas.
+* [ ] **Gestión de Menús:** Asociar comandas a las mesas.
