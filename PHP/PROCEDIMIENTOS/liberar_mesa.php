@@ -47,7 +47,7 @@ if (!$id_mesa) {
 }
 
 $stmt_mesa = $conn->prepare("
-    SELECT m.*, u.username AS camarero, s.nombre AS sala_nombre
+    SELECT m.*, u.username AS camarero, s.nombre AS sala_nombre, u.id
     FROM mesas m
     LEFT JOIN users u ON m.asignado_por = u.id
     JOIN salas s ON m.id_sala = s.id
@@ -130,7 +130,6 @@ if (!$ocupacion_tiempo && !$error) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script src="../PUBLIC/JS/salas.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- AÑADIDO: CSS de SweetAlert -->
@@ -194,7 +193,8 @@ if (!$ocupacion_tiempo && !$error) {
 
                 <form method="POST" id="liberar-mesa-form" class="form-full-page">
                     <input type="hidden" name="mesa_id" value="<?php echo htmlspecialchars($id_mesa ?? ''); ?>">
-                    <input type="hidden" id="camarero" value="<?php echo (int)$mesa['camarero']; ?>">
+                    <input type="hidden" id="camarero" value="<?php echo (int)$mesa['id']; ?>">
+                    <input type="hidden" id="camarero_sesion" value="<?php echo (int)$id_camarero; ?>">
                     <div class="form-actions">
                         <button type="submit" id="btn-liberar" name="confirmar" value="1" class="btn-danger">Sí, liberar</button>
                         <a href="<?php echo $sala_redirect_url; ?>" class="btn-secondary">Cancelar</a>
@@ -228,7 +228,8 @@ if (!$ocupacion_tiempo && !$error) {
     
     <!-- Script para el temporizador de inactividad (NUEVO) -->
     <!-- Ruta corregida: Sube un nivel a /restaurante/ y entra a /PUBLIC/JS/ -->
-    <script src="../PUBLIC/JS/inactivity_timer.js"></script>
-
+    <script src="../../JS/inactivity_timer.js"></script>
+    <script src="../../JS/liberar_mesa.js"></script>
+    <!-- <script src="../../JS/salas.js"></script> -->
 </body>
 </html>
