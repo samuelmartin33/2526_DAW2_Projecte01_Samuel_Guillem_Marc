@@ -3,7 +3,6 @@ window.onload = function () {
     const form = document.getElementById("loginForm");
     const username = document.getElementById("username");
     const password = document.getElementById("password");
-
     // Crear o reutilizar el div de error
     let errorDiv = document.querySelector(".error");
     if (!errorDiv) {
