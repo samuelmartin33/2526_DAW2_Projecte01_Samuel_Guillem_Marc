@@ -2,7 +2,7 @@
     let inactivityTimer;
     
     // 5 minutos en milisegundos
-     const timeoutDuration = 5 * 60 * 1000; 
+      const timeoutDuration = 2 * 60 * 1000; 
     //  const timeoutDuration = 10000; // --- Descomenta esta línea para probar (10 segundos)
 
     // 1. Determinar la ruta correcta al script de logout
@@ -44,8 +44,8 @@
             
             // --- CAMBIO CLAVE ---
             // Se eliminan el temporizador y la barra de progreso de la alerta.
-            // timer: 60000, 
-            // timerProgressBar: true,
+            timer: 60000, 
+            timerProgressBar: true,
 
         }).then((result) => {
             if (result.isConfirmed) {
