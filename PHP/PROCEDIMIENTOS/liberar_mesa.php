@@ -46,8 +46,9 @@ if (!$id_mesa) {
     exit();
 }
 
+// --- CORREGIDO: Pedimos 'm.asignado_por' que es el ID que necesitamos ---
 $stmt_mesa = $conn->prepare("
-    SELECT m.*, u.username AS camarero, s.nombre AS sala_nombre, u.id
+    SELECT m.*, u.username AS camarero, s.nombre AS sala_nombre, m.asignado_por
     FROM mesas m
     LEFT JOIN users u ON m.asignado_por = u.id
     JOIN salas s ON m.id_sala = s.id
@@ -70,9 +71,8 @@ $sala_redirect_url = './../PUBLIC/SALAS/' . $sala_css_class . '.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar']) && !$error) {
     $conn->beginTransaction();
     try {
-        // Solo el camarero que asignó O un admin (rol 2) puede liberar
+        // La comprobación de seguridad del servidor (esta es la que importa)
         if ($mesa['asignado_por'] != $id_camarero && $rol != 2) {
-            // Asignar el error para mostrarlo en el formulario
             $error = "No puedes liberar una mesa asignada por otro camarero.";
         } else {
             $conn->prepare("UPDATE mesas SET estado=1, asignado_por=NULL WHERE id=?")->execute([$id_mesa]);
@@ -130,24 +130,21 @@ if (!$ocupacion_tiempo && !$error) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!-- AÑADIDO: CSS de SweetAlert -->
+    
+    <!-- Cargamos SweetAlert (CSS y JS) -->
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../JS/liberar_mesa.js"></script>
     <link rel="stylesheet" href="../../css/panel_principal.css">
     <link rel="stylesheet" href="../../css/salas_general.css">
-    <!-- La siguiente línea carga el CSS de la sala dinámicamente, ¡perfecto! -->
     <link rel="stylesheet" href="../../css/<?php echo $sala_css_class; ?>.css">
 </head>
 
-<!-- ==============================================
-     AÑADIDO (1/2): Atributo data-user-name para pasar el nombre
-   ============================================== -->
-<body data-user-name="<?php echo htmlspecialchars($nombre); ?>">
+<!-- CORREGIDO: Añadimos data-rol para que los scripts lo lean -->
+<body data-user-name="<?php echo htmlspecialchars($nombre); ?>" data-rol="<?php echo (int)$rol; ?>">
 
 <nav class="main-header">
-        <!-- ... (Tu código de header no se toca) ... -->
         <div class="header-logo">
             <img src="../../img/basic_logo_blanco.png" alt="Logo GMS">
             <div class="logo-text">
@@ -191,11 +188,20 @@ if (!$ocupacion_tiempo && !$error) {
                     </div>
                 <?php endif; ?>
 
+                <!-- ID AÑADIDO AL FORMULARIO -->
                 <form method="POST" id="liberar-mesa-form" class="form-full-page">
                     <input type="hidden" name="mesa_id" value="<?php echo htmlspecialchars($id_mesa ?? ''); ?>">
-                    <input type="hidden" id="camarero" value="<?php echo (int)$mesa['id']; ?>">
+                    
+                    <!-- ===== CORREGIDO: Inputs con los IDs correctos ===== -->
+                    <!-- Este es el ID del camarero que ASIGNÓ la mesa (para liberar_mesa.js) -->
+                    <!-- TU BUG ESTABA AQUÍ: 'id="camarero"' debe tener el ID del camarero, no el ID de la mesa -->
+                    <input type="hidden" id="camarero" value="<?php echo (int)($mesa['asignado_por'] ?? 0); ?>">
+                    
+                    <!-- Este es el ID del camarero que está VIENDO la página (para liberar_mesa.js) -->
                     <input type="hidden" id="camarero_sesion" value="<?php echo (int)$id_camarero; ?>">
+
                     <div class="form-actions">
+                        <!-- ID AÑADIDO AL BOTÓN -->
                         <button type="submit" id="btn-liberar" name="confirmar" value="1" class="btn-danger">Sí, liberar</button>
                         <a href="<?php echo $sala_redirect_url; ?>" class="btn-secondary">Cancelar</a>
                     </div>
@@ -221,15 +227,15 @@ if (!$ocupacion_tiempo && !$error) {
     </div>
 
     <!-- ==============================================
-         AÑADIDO (2/2): Tus scripts JS
+         SCRIPTS JS AL FINAL DEL BODY
        ============================================== -->
-    <!-- LIBRERÍA SWEETALERT2 (JS) -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
-    <!-- Script para el temporizador de inactividad (NUEVO) -->
-    <!-- Ruta corregida: Sube un nivel a /restaurante/ y entra a /PUBLIC/JS/ -->
+    <!-- Script para el temporizador de inactividad (si lo usas) -->
     <script src="../../JS/inactivity_timer.js"></script>
+
+
     <script src="../../JS/liberar_mesa.js"></script>
-    <!-- <script src="../../JS/salas.js"></script> -->
+    <script src="../../JS/alert_liberar.js"></script>
+    
 </body>
 </html>
