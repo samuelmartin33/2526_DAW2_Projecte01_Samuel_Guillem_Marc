@@ -1,215 +1,158 @@
-Casa GMS - Sistema de Gestión de Mesas
+# 🌟 CASA GMS – SISTEMA DE GESTIÓN DE MESAS  
+## LA PLATAFORMA DEFINITIVA PARA CONTROLAR LAS MESAS DE TU RESTAURANTE COMO UN PROFESIONAL 🔥
 
-Proyecto de aplicación web para la gestión en tiempo real de las mesas de un restaurante. Permite a los camareros y administradores controlar la ocupación de las salas, asignar y liberar mesas de forma visual e intuitiva.
+---
 
-🚀 Características Principales
+## 🚀 CARACTERÍSTICAS PRINCIPALES
 
-Autenticación por Roles: Inicio de sesión diferenciado para Camareros (rol 1) y Administradores (rol 2).
+- 🔐 **AUTENTICACIÓN POR ROLES:** CAMAREROS (ROL 1) Y ADMINISTRADORES (ROL 2).  
+- 📊 **PANEL PRINCIPAL:** ESTADÍSTICAS EN TIEMPO REAL Y VISIÓN GLOBAL DE OCUPACIÓN.  
+- 🪑 **GESTIÓN VISUAL DE SALAS:** DISEÑO GRÁFICO CON COLORES DINÁMICOS (LIBRE/OCUPADA).  
+- 📥 **ASIGNACIÓN DE MESAS:** VALIDACIÓN INSTANTÁNEA Y CONFIRMACIÓN SWEETALERT2.  
+- 📤 **LIBERACIÓN DE MESAS:** HORARIO, CAMARERO ASIGNADO Y CONFIRMACIÓN MODERNA.  
+- ⚠️ **CONTROL AVANZADO DE PERMISOS:** SEGURIDAD POR ROL Y VALIDACIÓN DEL SERVIDOR.  
+- 📚 **HISTÓRICO PROFESIONAL:** KPIS, TOP SALAS, TOP CAMAREROS Y FILTROS DETALLADOS.  
+- 🍭 **NOTIFICACIONES MODERNAS:** SWEETALERT2 EN TODAS LAS ACCIONES CLAVE.  
 
-Panel Principal (Dashboard): Vista general con estadísticas en tiempo real (mesas libres, ocupadas, sillas totales) y una cuadrícula de todas las salas con su porcentaje de ocupación.
+---
 
-Gestión Visual de Salas: Múltiples salas (Terrazas, Comedores, Privados) con un layout gráfico que muestra el estado de cada mesa (Verde para Libre, Gris/Rojo para Ocupada).
+# 🛠️ TECNOLOGÍAS UTILIZADAS
 
-Asignación de Mesas: Al hacer clic en una mesa libre, se solicita el número de comensales. El sistema valida la capacidad antes de asignar.
+- 🧠 **BACKEND:** PHP 8+  
+- 🗄️ **BASE DE DATOS:** MYSQL CON PDO  
+- 🎨 **FRONTEND:** HTML5 + CSS3 (FLEXBOX / GRID)  
+- ⚡ **JAVASCRIPT ES6+**  
+- ✨ **LIBRERÍAS:** SWEETALERT2 PARA POPUPS INTERACTIVOS  
 
-Liberación de Mesas: Al hacer clic en una mesa ocupada, se muestra quién la asignó y a qué hora, permitiendo su liberación.
+---
 
-Control de Permisos: Un camarero no puede liberar una mesa asignada por otro compañero. Los Administradores (rol 2) pueden liberar cualquier mesa.
+# 🏁 PUESTA EN MARCHA DEL PROYECTO
 
-Histórico y Estadísticas: Un panel (historico.php) que muestra KPIs (métricas clave), gráficos de rendimiento (horas pico, camareros más activos, salas más usadas) y un registro histórico filtrable de todas las ocupaciones.
+## 🗂️ 1. IMPORTAR BASE DE DATOS
+IMPORTA EL ARCHIVO:
+BBDD/BBDD.sql  
 
-Notificaciones Modernas: Uso de SweetAlert2 para todas las validaciones, confirmaciones y notificaciones de éxito, mejorando la experiencia de usuario.
+EN TU SERVIDOR MYSQL (PHPMYADMIN, WORKBENCH, ETC.).
 
-🛠️ Tecnologías Utilizadas
+---
 
-Backend: PHP 8+ (Scripting del lado del servidor, manejo de sesiones)
+## 📁 2. COPIAR EL PROYECTO EN TU SERVIDOR LOCAL
 
-Base de Datos: MySQL (Gestión de datos con PDO para conexiones seguras)
+COPIA LA CARPETA COMPLETA DEL PROYECTO EN:
+C:/XAMPP/HTDOCS/RESTAURANTE/
 
-Frontend: HTML5, CSS3 (con Flexbox y Grid para layouts)
+---
 
-JavaScript (ES6+): Manipulación del DOM, validación de formularios y gestión de eventos asíncronos.
+## 🔧 3. CONFIGURAR LA CONEXIÓN (¡PASO CRÍTICO!)
 
-Librerías: SweetAlert2 (Para todas las notificaciones y popups)
+ABRE:
 
-🏁 Puesta en Marcha
+PHP/CONEXION/conexion.php
 
-Para ejecutar este proyecto en un entorno local (como XAMPP, WAMP, etc.), sigue estos pasos:
+Y CONFIGURA:
 
-Base de Datos: Importa el archivo BBDD/BBDD.sql en tu gestor de MySQL (por ejemplo, phpMyAdmin). Esto creará la estructura de tablas y algunos datos de prueba.
+- SERVIDOR  
+- USUARIO  
+- CONTRASEÑA  
+- BASE DE DATOS  
 
-Archivos: Copia la carpeta completa del proyecto (ej. restaurante/) en el directorio de tu servidor web (ej. C:/xampp/htdocs/).
+AÑADE LA URL BASE:
 
-Configuración de Conexión (¡CRÍTICO!):
+```php
+DEFINE('BASE_URL', 'http://localhost/restaurante/');
 
-Abre el archivo PHP/CONEXION/conexion.php.
+🌐 4. ACCEDER AL SISTEMA
 
-Modifica las variables de conexión ($servername, $username_db, $password_db, $dbname) para que coincidan con tu configuración local de MySQL.
+ENCIENDE APACHE + MYSQL Y VE A:
+http://localhost/restaurante/PHP/PUBLIC/login.php
+📖 FUNCIONAMIENTO DEL SISTEMA
+🔐 1. FLUJO DE AUTENTICACIÓN
 
-¡MUY IMPORTANTE! Modifica la constante BASE_URL. Debe apuntar a la URL raíz absoluta de tu proyecto.
+PANTALLA DE LOGIN.
 
-Ejemplo: Si accedes al proyecto desde http://localhost/restaurante/, la línea debe ser:
+OBTENCIÓN DE USUARIOS POR ROL.
 
-define('BASE_URL', 'http://localhost/restaurante/');
+VALIDACIÓN PHP.
 
+CREACIÓN DE SESIÓN.
 
-Acceder: Inicia tus servicios de Apache y MySQL. Abre tu navegador y ve a la página de login:
-http://localhost/restaurante/PHP/PUBLIC/login.php (o la URL que corresponda a tu BASE_URL).
+REDIRECCIÓN AL PANEL PRINCIPAL.
 
-📖 Funcionamiento Detallado
+🎛️ 2. PANEL PRINCIPAL (INDEX.PHP)
 
-La aplicación sigue un flujo lógico centrado en la gestión de mesas.
+SALUDO PERSONALIZADO.
 
-1. Flujo de Autenticación
+TARJETAS CON ESTADÍSTICAS.
 
-Login (login.php): El usuario accede y ve un formulario. El desplegable "Selecciona tu usuario" se rellena dinámicamente con los camareros (rol = 1) activos de la base de datos (users).
+CUADRÍCULA DE SALAS.
 
-Proceso (procesar_login.php): El backend recibe el username y password. Compara el hash de la contraseña de la BBDD con la contraseña introducida. Si es correcta, inicia una sesión (session_start()) y guarda el id_usuario, username, nombre y rol en la variable $_SESSION.
+ACCESO DIRECTO A CADA SALA.
 
-Redirección: El usuario es redirigido al panel principal (index.php).
+🗺️ 3. GESTIÓN DE SALAS (TERRAZA, COMEDORES, PRIVADOS…)
 
-2. Panel Principal (index.php)
+VISUALIZACIÓN DE MESAS.
 
-Muestra un header.php unificado que saluda al usuario por su nombre.
+COLORES SEGÚN ESTADO:
 
-Presenta estadísticas rápidas (KPIs) sobre la ocupación actual.
+VERDE → LIBRE
 
-Muestra una cuadrícula con todas las salas disponibles, indicando su porcentaje de ocupación y permitiendo hacer clic para entrar a cada una.
+ROJO/GRIS → OCUPADA
 
-3. Gestión de Salas (Ej. terraza1.php)
+SI LA MESA ESTÁ LIBRE → ASIGNAR_MESA.PHP
 
-Muestra un layout visual de la sala.
+SI ESTÁ OCUPADA → LIBERAR_MESA.PHP
 
-Cada mesa es un <button> dentro de un <form>.
+🍽️ 4. ASIGNAR MESA (ASIGNAR_MESA.PHP)
+VALIDACIÓN DOBLE:
+🟢 1. VALIDACIÓN EN TIEMPO REAL (VALIDAR_ASIGNACION.JS)
 
-El estado (libre/ocupada) se aplica con clases CSS (.libre, .ocupada) según los datos de la BBDD.
+DETECTA VALORES INVÁLIDOS.
 
-Si la mesa está libre (estado 1): El formulario apunta a asignar_mesa.php.
+MUESTRA MENSAJES EN ROJO.
 
-Si la mesa está ocupada (estado 2): El formulario apunta a liberar_mesa.php.
+DESACTIVA EL ENVÍO SI HAY ERRORES.
 
-4. Proceso: Asignar Mesa (asignar_mesa.php)
+🔵 2. CONFIRMACIÓN SWEETALERT (ALERT_ASIGNAR.JS)
 
-Este es un proceso con validación dual (dos scripts JS trabajando juntos):
+CONFIRMA "¿ESTÁS SEGURO?".
 
-Carga de Página: Se muestra un formulario pidiendo el número de comensales. El max del input se define por la capacidad de la mesa.
+SI ACEPTA → ENVÍA EL FORMULARIO.
 
-Validación en Tiempo Real (validar_asignacion.js):
+SI CANCELA → MUESTRA MENSAJE DE CANCELACIÓN.
 
-Este script se activa mientras el usuario escribe (onmouseleave).
+🧽 5. LIBERAR MESA (LIBERAR_MESA.PHP)
+🔒 VALIDACIÓN DE PERMISOS (LIBERAR_MESA.JS)
 
-Comprueba si el campo está vacío, no es un número, es menor que 1 o supera la capacidad (maxSillas).
+COMPARA:
 
-Si hay un error, crea y muestra un <div> de error rojo debajo del formulario.
+ID DEL CAMARERO ASIGNADOR
 
-Si el error se corrige, oculta el <div>.
+ID DEL CAMARERO EN SESIÓN
 
-Envío y Confirmación (alert_asignar.js):
+SI NO COINCIDEN → OCULTA EL BOTÓN.
 
-Este script se activa al hacer clic en el botón "Asignar Mesa".
+LOS ADMIN (ROL 2) PUEDEN LIBERAR TODO.
 
-Previene el envío (e.preventDefault()).
+🚨 CONFIRMACIÓN SWEETALERT (ALERT_LIBERAR.JS)
 
-Comprueba si la validación del otro script (validar_asignacion.js) es correcta (básicamente, si el <div> de error está oculto).
+PREGUNTA "¿LIBERAR MESA?".
 
-Si la validación es correcta, lanza un SweetAlert de confirmación ("¿Estás seguro?").
+SI CONFIRMA → ENVÍA EL FORMULARIO.
 
-Si el usuario pulsa "Sí, asignar", el script envía el formulario (form.submit()).
+EL BACKEND VALIDA ANTES DE LIBERAR.
 
-Si el usuario pulsa "Cancelar", muestra una alerta de "Cancelado".
+📚 6. HISTÓRICO (HISTORICO.PHP)
 
-5. Proceso: Liberar Mesa (liberar_mesa.php)
+KPIS DE OCUPACIONES.
 
-Este proceso también tiene validación dual para gestionar los permisos:
+TOP 5 CAMAREROS.
 
-Carga de Página: Muestra información de la mesa (quién la asignó, a qué hora).
+TOP 5 SALAS.
 
-Validación de Permisos (liberar_mesa.js):
+HORAS PUNTA.
 
-Este script se ejecuta al cargar la página (window.onload).
+GRÁFICAS ESTILIZADAS.
 
-Compara el ID del camarero que asignó la mesa (leído del input oculto id="camarero") con el ID del camarero actual (leído de id="camarero_sesion").
+FILTROS AVANZADOS.
 
-¡IMPORTANTE! Si los IDs no coinciden, este script oculta el botón "Sí, liberar" (botonAsignar.style.display = "none").
-
-Nota: Esta validación no contempla a los Admins (rol 2), pero la lógica del backend sí lo hace.
-
-Envío y Notificación (alert_liberar.js):
-
-Este script se activa al hacer clic en "Sí, liberar".
-
-Previene el envío (e.preventDefault()).
-
-Comprueba si liberar_mesa.js ha ocultado el botón (o si el usuario es Admin).
-
-Si el botón está visible (o es Admin), muestra un toast de éxito ("¡Mesa liberada!").
-
-Espera a que el toast se cierre (1.5 segundos) y entonces envía el formulario (form.submit()). Esto evita que la página se recargue antes de que el usuario vea el mensaje.
-
-Seguridad del Backend: Aunque el JS oculte el botón, la validación final ocurre en el PHP (liberar_mesa.php), que comprueba si $_SESSION['rol'] == 2 o si los IDs coinciden antes de ejecutar la consulta UPDATE en la base de datos.
-
-6. Histórico (historico.php)
-
-Página de solo lectura accesible desde el header.
-
-Realiza múltiples consultas SQL para obtener:
-
-KPIs generales (total ocupaciones, comensales).
-
-Top 5 camareros.
-
-Top 5 salas.
-
-Ocupaciones por hora del día.
-
-Ocupaciones por día de la semana.
-
-Muestra los datos en tarjetas de métricas y gráficos de barras (hechos con HTML/CSS).
-
-Incluye un formulario de filtros que permite buscar en el historial de la tabla ocupaciones.
-
-📂 Estructura del Proyecto (Simplificada)
-
-restaurante/
-│
-├── BBDD/
-│   └── BBDD.sql
-│
-├── css/
-│   ├── login.css
-│   ├── panel_principal.css
-│   ├── salas_general.css
-│   ├── historico.css
-│   └── ... (CSS de cada sala)
-│
-├── img/
-│   └── ... (Todas las imágenes)
-│
-└── PHP/
-    │
-    ├── CONEXION/
-    │   └── conexion.php      (Configuración de BBDD y BASE_URL)
-    │
-    ├── PROCEDIMIENTOS/
-    │   ├── procesar_login.php  (Backend de login)
-    │   ├── asignar_mesa.php    (Backend de asignación)
-    │   ├── liberar_mesa.php    (Backend de liberación)
-    │   └── logout.php
-    │
-    └── PUBLIC/
-        ├── JS/
-        │   ├── validar_asignacion.js (Validación en vivo para asignar)
-        │   ├── alert_asignar.js      (Confirmación SweetAlert para asignar)
-        │   ├── liberar_mesa.js       (Validación de permisos para liberar)
-        │   ├── alert_liberar.js      (Notificación SweetAlert para liberar)
-        │   └── ...
-        │
-        ├── SALAS/
-        │   ├── terraza1.php
-        │   ├── comedor1.php
-        │   └── ... (Todas las páginas de salas)
-        │
-        ├── header.php          (Cabecera unificada)
-        ├── login.php           (Página de inicio de sesión)
-        ├── index.php           (Panel principal / Dashboard)
-        └── historico.php       (Página de estadísticas)
+📂 ESTRUCTURA DEL PROYECTO (SIMPLIFICADA)
