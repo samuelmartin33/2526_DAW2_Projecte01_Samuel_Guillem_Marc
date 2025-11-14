@@ -98,8 +98,12 @@ try {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script src="../PUBLIC/JS/salas.js"></script>
+    
+    <!-- Cargamos SweetAlert PRIMERO -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- (salas.js no interfiere, lo dejamos) -->
+    <script src="../PUBLIC/JS/salas.js"></script>
 
     <link rel="stylesheet" href="../../css/panel_principal.css">
     <link rel="stylesheet" href="../../css/salas_general.css">
@@ -147,6 +151,7 @@ try {
                 <p><strong>Sala:</strong> <?php echo htmlspecialchars($sala_nombre); ?></p>
                 <p><strong>Capacidad:</strong> <?php echo $mesa['sillas']; ?> comensales</p>
                 
+                <!-- El <div> de error que 'validar_asignacion.js' usa se creará aquí -->
 
                 <form method="POST" id="asignar-mesa-form" class="form-full-page">
                     <input type="hidden" name="mesa_id" value="<?php echo $id_mesa; ?>">
@@ -179,6 +184,11 @@ try {
         </aside>
 
     </div>
+    
+    <!-- ===== MODIFICACIÓN AQUÍ ===== -->
+    <!-- Cargamos TUS dos scripts, en este orden -->
     <script src="../../JS/validar_asignacion.js"></script>
+    <script src="../../JS/alert_asignar.js"></script>
+    
 </body>
 </html>
