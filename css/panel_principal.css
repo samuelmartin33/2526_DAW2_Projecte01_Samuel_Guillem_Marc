@@ -3,24 +3,23 @@
 
 /* --- Reseteo Básico y Estilos Globales --- */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    margin: 0; /* Quita márgenes */
+    padding: 0; /* Quita rellenos */
+    box-sizing: border-box; /* Modelo de caja */
 }
 
+/* Estilos para HTML y Body */
 html, body {
-    height: 100%;
-    font-family: 'Poppins', sans-serif;
-    color: #333;
+    height: 100%; /* Altura completa */
+    font-family: 'Poppins', sans-serif; /* Fuente Poppins */
+    color: #333; /* Color de texto */
     
     /* === ESTILOS PARA EL FONDO: fondo_panel_principal.png === */
-    background-color: #f4f7f9; 
-    /* La ruta es correcta desde css/ hasta img/ */
-    background-image: url('../img/fondo_panel_principal.png'); 
-    background-size: cover; 
-    background-attachment: fixed; 
-    /* AJUSTE: Imagen de fondo alineada al 100% (abajo) */
-    background-position: center 50%; 
+    background-color: #f4f7f9; /* Color de fondo de respaldo */
+    background-image: url('../img/fondo_panel_principal.png'); /* Imagen de fondo */
+    background-size: cover; /* Escala la imagen */
+    background-attachment: fixed; /* Fija la imagen (no se mueve con scroll) */
+    background-position: center 50%; /* Centra la imagen */
     /* ======================================================= */
 }
 
@@ -29,112 +28,118 @@ html, body {
    ============================================== */
 
 .main-header {
-    background-color: #ce4535; /* ROJO SOLICITADO */
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    /* AJUSTE: Aumento de padding vertical (más grande) */
-    padding: 20px 40px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    position: relative; 
-    z-index: 10;
+    background-color: #ce4535; /* Fondo rojo */
+    color: white; /* Texto blanco */
+    display: flex; /* Usa Flexbox */
+    justify-content: space-between; /* Distribuye elementos (logo izq, menú der) */
+    align-items: center; /* Centra verticalmente */
+    padding: 20px 40px; /* Relleno interior */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra */
+    position: relative; /* Contexto de posicionamiento */
+    z-index: 10; /* Encima de otros elementos */
 }
 
 /* --- Logo GMS (Imagen + Texto) --- */
 .header-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    display: flex; /* Usa Flexbox */
+    align-items: center; /* Centra verticalmente */
+    gap: 10px; /* Espacio entre imagen y texto */
 }
 
 .header-logo img {
-    /* AJUSTE: Aumento del tamaño del logo */
-    height: 70px; 
+    height: 70px; /* Altura de la imagen del logo */
 }
 
+/* Contenedor de texto del logo */
 .logo-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.1;
+    display: flex; /* Usa Flexbox */
+    flex-direction: column; /* Apila textos verticalmente */
+    line-height: 1.1; /* Interlineado */
 }
 
+/* Título "GMS" */
 .gms-title {
-    /* AJUSTE: Aumento del tamaño del título */
-    font-size: 2.0rem;
-    font-weight: 800;
-    letter-spacing: 1px;
+    font-size: 2.0rem; /* Tamaño de fuente */
+    font-weight: 800; /* Fuente extra-bold */
+    letter-spacing: 1px; /* Espaciado entre letras */
 }
 
+/* Subtítulo */
 .gms-subtitle {
-    font-size: 0.7rem;
-    font-weight: 300;
-    opacity: 0.9;
+    font-size: 0.7rem; /* Tamaño de fuente pequeño */
+    font-weight: 300; /* Fuente ligera */
+    opacity: 0.9; /* Ligera transparencia */
 }
 
 /* --- Saludo y Usuario --- */
 .header-greeting {
-    font-size: 1.4rem;
-    font-weight: 500;
-    flex-grow: 1; /* Para que ocupe el espacio central */
-    text-align: center;
+    font-size: 1.4rem; /* Tamaño de fuente */
+    font-weight: 500; /* Fuente medium */
+    flex-grow: 1; /* Ocupa el espacio central disponible */
+    text-align: center; /* Centra el texto */
 }
 
+/* Etiqueta del nombre de usuario */
 .username-tag {
-    font-weight: 700;
-    background-color: rgba(255, 255, 255, 0.2);
-    padding: 5px 10px;
-    border-radius: 20px;
-    margin-left: 10px;
+    font-weight: 700; /* Fuente bold */
+    background-color: rgba(255, 255, 255, 0.2); /* Fondo blanco semitransparente */
+    padding: 5px 10px; /* Relleno */
+    border-radius: 20px; /* Bordes redondeados (píldora) */
+    margin-left: 10px; /* Margen izquierdo */
 }
 
 /* --- Menú de Navegación --- */
 .header-menu {
-    display: flex;
-    gap: 25px;
-    margin-right: 30px;
+    display: flex; /* Usa Flexbox */
+    gap: 25px; /* Espacio entre enlaces */
+    margin-right: 30px; /* Margen derecho */
 }
 
+/* Enlaces de navegación (Panel, Histórico) */
 .nav-link {
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-    padding: 10px 0;
-    transition: color 0.2s, opacity 0.2s;
-    font-size: 1.05rem;
+    color: white; /* Texto blanco */
+    text-decoration: none; /* Quita subrayado */
+    font-weight: 500; /* Fuente medium */
+    padding: 10px 0; /* Relleno vertical (para área de clic) */
+    transition: color 0.2s, opacity 0.2s; /* Animación suave */
+    font-size: 1.05rem; /* Tamaño de fuente */
 }
 
+/* Hover de los enlaces */
 .nav-link:hover {
-    color: #f7f7f7;
-    opacity: 0.8;
+    color: #f7f7f7; /* Color de texto más claro */
+    opacity: 0.8; /* Ligera transparencia */
 }
 
+/* Iconos dentro de los enlaces */
 .nav-link i {
-    margin-right: 8px;
+    margin-right: 8px; /* Espacio entre el icono y el texto */
 }
 
 /* --- Botón Cerrar Sesión --- */
 .logout-btn {
-    background-color: white;
-    color: #ce4535; /* Color del header */
-    border: none;
-    padding: 10px 20px;
-    border-radius: 25px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: white; /* Fondo blanco */
+    color: #ce4535; /* Texto rojo */
+    border: none; /* Sin borde */
+    padding: 10px 20px; /* Relleno */
+    border-radius: 25px; /* Bordes redondeados */
+    font-size: 1rem; /* Tamaño de fuente */
+    font-weight: 600; /* Fuente semi-bold */
+    cursor: pointer; /* Cursor de mano */
+    transition: all 0.2s ease; /* Animación suave */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
 }
 
+/* Hover del botón de logout */
 .logout-btn:hover {
-    background-color: #f0f0f0;
-    transform: translateY(-1px);
+    background-color: #f0f0f0; /* Fondo gris claro */
+    transform: translateY(-1px); /* Mueve 1px hacia arriba */
 }
 
+/* Icono dentro del botón de logout */
 .logout-btn i {
-    margin-right: 8px;
-    font-size: 1.1em;
+    margin-right: 8px; /* Espacio entre icono y texto */
+    font-size: 1.1em; /* Tamaño del icono */
 }
 
 
@@ -142,250 +147,272 @@ html, body {
    2. ESTILOS DEL DASHBOARD (Estadísticas)
    ============================================== */
 
+/* Contenedor principal del dashboard (tarjeta blanca) */
 .container {
-    padding: 40px;
-    /* AJUSTE: Contenedor más pequeño */
-    /* max-width: 1400px;  <-- VALOR ANTERIOR */
-    max-width: 1200px; /* <-- NUEVO VALOR (Aún más pequeño) */
-    margin: 0 auto;
+    padding: 40px; /* Relleno interior */
+    max-width: 1200px; /* Ancho máximo */
+    margin: 0 auto; /* Centra horizontalmente */
     
-    /* Para mejorar la legibilidad sobre la imagen de fondo */
-    background-color: rgba(255, 255, 255, 0.95); /* Fondo blanco semi-transparente */
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    /* AJUSTE: Margen superior aumentado para separar del header */
-    margin-top: 170px; 
-    margin-bottom: 30px;
+    /* Fondo blanco semitransparente para legibilidad sobre la imagen de fondo */
+    background-color: rgba(255, 255, 255, 0.95); 
+    border-radius: 15px; /* Bordes redondeados */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Sombra */
+    margin-top: 170px; /* Margen superior grande para separar de la cabecera */
+    margin-bottom: 30px; /* Margen inferior */
 }
 
+/* Título principal "Panel de Control" */
 .dashboard-title {
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: #2c3e50;
-    margin-bottom: 30px;
-    border-bottom: 3px solid #ccc;
-    padding-bottom: 10px;
+    font-size: 2.2rem; /* Tamaño de fuente */
+    font-weight: 700; /* Fuente bold */
+    color: #2c3e50; /* Color azul oscuro */
+    margin-bottom: 30px; /* Margen inferior */
+    border-bottom: 3px solid #ccc; /* Línea gris inferior */
+    padding-bottom: 10px; /* Relleno inferior */
 }
 
+/* Títulos de sección (ej. "Ocupación Global", "Ocupación por Sala") */
 .section-title {
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: #555;
-    margin-top: 40px;
-    margin-bottom: 20px;
+    font-size: 1.8rem; /* Tamaño de fuente */
+    font-weight: 600; /* Fuente semi-bold */
+    color: #555; /* Color gris oscuro */
+    margin-top: 40px; /* Margen superior (separa secciones) */
+    margin-bottom: 20px; /* Margen inferior */
 }
 
-/* --- Grid de Widgets Principales (3 Columnas) --- */
+/* --- Grid de Widgets Principales (KPIs) --- */
 .stats-grid {
-    display: grid;
+    display: grid; /* Usa CSS Grid */
+    /* Crea columnas automáticas: mínimo 280px, se ajustan para llenar el espacio (1fr) */
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
+    gap: 30px; /* Espacio entre las tarjetas */
 }
 
+/* Tarjeta individual de estadística (KPI) */
 .stat-card {
-    background-color: white;
-    border-radius: 15px;
-    padding: 30px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.3s ease;
+    background-color: white; /* Fondo blanco */
+    border-radius: 15px; /* Bordes redondeados */
+    padding: 30px; /* Relleno */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05); /* Sombra sutil */
+    position: relative; /* Contexto para el icono de fondo */
+    overflow: hidden; /* Oculta el icono si se desborda */
+    transition: transform 0.3s ease; /* Animación hover */
 }
 
+/* Hover de la tarjeta KPI */
 .stat-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-5px); /* Mueve 5px hacia arriba */
 }
 
+/* Valor numérico (ej. "15") */
 .stat-value {
-    font-size: 2.5rem;
-    font-weight: 800;
-    margin-bottom: 5px;
-    line-height: 1;
+    font-size: 2.5rem; /* Tamaño de fuente grande */
+    font-weight: 800; /* Fuente extra-bold */
+    margin-bottom: 5px; /* Margen inferior */
+    line-height: 1; /* Interlineado */
 }
 
+/* Etiqueta (ej. "Mesas Disponibles") */
 .stat-label {
-    font-size: 1rem;
-    font-weight: 500;
-    color: #777;
+    font-size: 1rem; /* Tamaño de fuente */
+    font-weight: 500; /* Fuente medium */
+    color: #777; /* Color gris */
 }
 
+/* Icono decorativo de fondo */
 .stat-icon {
-    position: absolute;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
-    font-size: 4rem;
-    opacity: 0.1;
+    position: absolute; /* Posicionamiento absoluto */
+    top: 50%; /* 50% desde arriba */
+    right: 20px; /* 20px desde la derecha */
+    transform: translateY(-50%); /* Centra verticalmente */
+    font-size: 4rem; /* Tamaño grande */
+    opacity: 0.1; /* Muy transparente */
 }
 
-/* Colores de los Widgets */
+/* Colores de los Widgets (modifican el color del texto y del icono) */
 .stat-card.primary { color: #2980b9; } /* Azul - Mesas Disponibles */
 .stat-card.warning { color: #f39c12; } /* Amarillo - Mesas Ocupadas */
-.stat-card.success { color: #27ae60; } /* Verde - Sillas Ocupadas (Total) */
+.stat-card.success { color: #27ae60; } /* Verde - Sillas Ocupadas */
 
 
 /* --- Ocupación por Sala (Enlaces Clicables) --- */
 
+/* Grid para las tarjetas de las salas */
 .salas-grid {
-    display: grid;
+    display: grid; /* Usa CSS Grid */
+    /* Columnas automáticas: mínimo 250px, se ajustan */
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+    gap: 20px; /* Espacio entre tarjetas */
 }
 
+/* Estilo para el enlace (<a>) que envuelve la tarjeta */
 .sala-card-link {
     text-decoration: none; /* Elimina el subrayado del enlace */
-    color: inherit; /* Hereda el color del texto */
+    color: inherit; /* Hereda el color del texto (no se ve azul) */
 }
 
+/* Tarjeta individual de sala */
 .sala-card {
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    cursor: pointer;
-    height: 100%; /* Asegura que todas tengan la misma altura */
-    background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente para las tarjetas */
+    padding: 20px; /* Relleno */
+    border-radius: 12px; /* Bordes redondeados */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Sombra */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animación hover */
+    border: 1px solid rgba(0, 0, 0, 0.05); /* Borde sutil */
+    cursor: pointer; /* Cursor de mano (indica clicable) */
+    height: 100%; /* Asegura que todas las tarjetas del grid tengan la misma altura */
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
 }
 
+/* Hover de la tarjeta de sala (aplicado al enlace padre) */
 .sala-card-link:hover .sala-card {
-    transform: translateY(-4px); /* Efecto de elevación al pasar el ratón */
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px); /* Eleva la tarjeta */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
 }
 
 /* Colores de fondo basados en la ocupación */
-.bg-neutral-100 { background-color: #f0f0f0; border-color: #ddd; } /* Nuevo color para 0% (Libre) */
+.bg-neutral-100 { background-color: #f0f0f0; border-color: #ddd; } /* 0% (Libre) */
 .bg-yellow-100 { background-color: #fff3cd; border-color: #ffeeba; } /* Media */
 .bg-red-100   { background-color: #f8d7da; border-color: #f5c6cb; } /* Alta */
 
+/* Nombre de la sala (ej. "Comedor 1") */
 .sala-name {
-    font-size: 1.4rem; /* Más grande para el título */
-    font-weight: 700;
-    margin-bottom: 5px;
-    color: #333;
+    font-size: 1.4rem; /* Tamaño de fuente */
+    font-weight: 700; /* Fuente bold */
+    margin-bottom: 5px; /* Margen inferior */
+    color: #333; /* Color oscuro */
 }
 
+/* Texto de ocupación (ej. "4 de 8 sillas") */
 .sala-occupancy {
-    font-size: 1rem;
-    color: #666;
-    margin-bottom: 15px;
-    font-weight: 500;
+    font-size: 1rem; /* Tamaño de fuente */
+    color: #666; /* Color gris */
+    margin-bottom: 15px; /* Margen inferior */
+    font-weight: 500; /* Fuente medium */
 }
 
+/* Contenedor de la barra de progreso (fondo gris) */
 .progress-bar-container {
-    background-color: #eee;
-    border-radius: 10px;
-    height: 12px;
-    overflow: hidden;
-    margin-bottom: 8px;
+    background-color: #eee; /* Fondo gris claro */
+    border-radius: 10px; /* Bordes redondeados */
+    height: 12px; /* Altura de la barra */
+    overflow: hidden; /* Oculta la barra interior si excede */
+    margin-bottom: 8px; /* Margen inferior */
 }
 
+/* Barra de progreso (la parte de color) */
 .progress-bar {
-    height: 100%;
-    transition: width 0.5s ease-in-out;
+    height: 100%; /* Ocupa toda la altura */
+    transition: width 0.5s ease-in-out; /* Anima el cambio de anchura */
 }
 
+/* Texto del porcentaje (ej. "50%") */
 .percentage {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #444;
-    text-align: right;
+    font-size: 0.9rem; /* Tamaño de fuente pequeño */
+    font-weight: 600; /* Fuente semi-bold */
+    color: #444; /* Color gris oscuro */
+    text-align: right; /* Alineado a la derecha */
 }
 
 /* --- RESPONSIVE --- */
-/* === CAMBIOS IMPORTANTES AQUÍ === */
+/* Estilos para pantallas de 900px o menos (tablets) */
 @media (max-width: 900px) {
     
     .main-header {
-        padding: 20px 20px;
-        /* --- CAMBIO: Cambiamos a row-wrap para controlar el orden --- */
-        flex-direction: row; 
-        flex-wrap: wrap;
-        justify-content: center; /* Centra los items de la última fila (la nav) */
-        gap: 15px;
+        padding: 20px 20px; /* Reduce padding horizontal */
+        flex-direction: row; /* Dirección de fila */
+        flex-wrap: wrap; /* Permite que salten de línea */
+        justify-content: center; /* Centra los elementos */
+        gap: 15px; /* Espacio */
     }
 
-    /* --- CAMBIO: Orden 1 (Arriba) y centrado --- */
+    /* Orden 1 (Arriba) y centrado */
     .header-logo {
-        order: 1;
-        width: 100%;
-        justify-content: center;
+        order: 1; /* Primer elemento */
+        width: 100%; /* Ancho completo */
+        justify-content: center; /* Centra logo */
     }
 
-    /* --- CAMBIO: Orden 2 (Medio) y centrado --- */
+    /* Orden 2 (Medio) y centrado */
     .header-greeting {
-        order: 2;
-        width: 100%;
-        text-align: center;
-        font-size: 1.1rem;
-        margin-bottom: 0; /* Quitar margen extra */
+        order: 2; /* Segundo elemento */
+        width: 100%; /* Ancho completo */
+        text-align: center; /* Centra texto */
+        font-size: 1.1rem; /* Reduce fuente */
+        margin-bottom: 0; /* Quita margen */
     }
 
-    /* --- CAMBIO: Orden 3, vuelve a ser fila --- */
+    /* Orden 3, vuelve a ser fila */
     .header-menu {
-        order: 3;
-        flex-direction: row; /* Vuelve a ser fila */
-        align-items: center;
-        gap: 20px; /* Un poco más de espacio */
+        order: 3; /* Tercer elemento */
+        flex-direction: row; /* Mantiene en fila */
+        align-items: center; /* Centra verticalmente */
+        gap: 20px; /* Espacio */
         width: auto; /* Ancho automático */
-        margin-right: 0; /* Resetea el margen de desktop */
+        margin-right: 0; /* Resetea margen */
     }
 
-    /* --- CAMBIO: El formulario también es orden 3 --- */
+    /* El formulario de logout también es orden 3 */
     nav.main-header form {
         order: 3;
     }
 
-    /* --- CAMBIO: Ocultamos el texto del botón --- */
+    /* Ocultamos el texto del botón de logout */
     .logout-btn {
-        order: 3; /* Redundante pero claro */
+        order: 3; /* Tercer elemento */
         width: auto; /* Ancho automático */
         font-size: 0; /* Oculta el texto "Cerrar Sesión" */
-        padding: 10px 12px; /* Ajusta el padding para el icono */
+        padding: 10px 12px; /* Ajusta padding para el icono */
     }
 
-    /* --- CAMBIO: Hacemos el icono visible de nuevo --- */
+    /* Hacemos el icono visible de nuevo */
     .logout-btn i {
-        font-size: 1.1rem; /* Restaura el tamaño del icono */
-        margin-right: 0; /* Quita el margen que tenía para el texto */
+        font-size: 1.1rem; /* Restaura tamaño del icono */
+        margin-right: 0; /* Quita margen (ya no hay texto) */
     }
 
-    /* --- ESTO SE MANTIENE IGUAL (Contenedor principal) --- */
+    /* Ajuste del contenedor principal en responsive */
     .container {
-        padding: 20px;
-        margin-top: 50px; 
-        width: 95%; 
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
-        margin-bottom: 30px;
+        padding: 20px; /* Reduce relleno */
+        margin-top: 50px; /* Reduce margen superior */
+        width: 95%; /* Ancho fluido */
+        max-width: 600px; /* Ancho máximo */
+        margin-left: auto; /* Centra */
+        margin-right: auto; /* Centra */
+        margin-bottom: 30px; /* Margen inferior */
     }
 }
+
+/* Estilos para botones (ej. en modales) */
+
+/* Botón de Confirmar (rojo) */
 .btn-confirmar {
-  background-color: #d44736; /* rojo temático */
-  color: #fff;
-  border: none;
-  border-radius: 25px;
-  padding: 8px 18px;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  background-color: #d44736; /* Fondo rojo */
+  color: #fff; /* Texto blanco */
+  border: none; /* Sin borde */
+  border-radius: 25px; /* Bordes redondeados */
+  padding: 8px 18px; /* Relleno */
+  font-weight: 600; /* Fuente semi-bold */
+  transition: all 0.3s ease; /* Animación suave */
 }
 
+/* Hover del botón de confirmar */
 .btn-confirmar:hover {
-  background-color: #b73728;
+  background-color: #b73728; /* Rojo más oscuro */
 }
 
+/* Botón de Cancelar (borde rojo) */
 .btn-cancelar {
-  background-color: #fff;
-  color: #d44736;
-  border: 2px solid #d44736;
-  border-radius: 25px;
-  padding: 8px 18px;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  background-color: #fff; /* Fondo blanco */
+  color: #d44736; /* Texto rojo */
+  border: 2px solid #d44736; /* Borde rojo */
+  border-radius: 25px; /* Bordes redondeados */
+  padding: 8px 18px; /* Relleno */
+  font-weight: 600; /* Fuente semi-bold */
+  transition: all 0.3s ease; /* Animación suave */
 }
 
+/* Hover del botón de cancelar (invierte colores) */
 .btn-cancelar:hover {
-  background-color: #d44736;
-  color: #fff;
+  background-color: #d44736; /* Fondo rojo */
+  color: #fff; /* Texto blanco */
 }

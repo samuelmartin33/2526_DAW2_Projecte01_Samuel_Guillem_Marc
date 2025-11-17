@@ -1,42 +1,62 @@
 window.onload = function () {
-    // al cargar la pagina guardamos los elementos del formulario con su id
+    // Al cargar la página guardamos los elementos del formulario con su id
     const form = document.getElementById("loginForm");
     const username = document.getElementById("username");
     const password = document.getElementById("password");
+
     // Crear o reutilizar el div de error
     let errorDiv = document.querySelector(".error");
     if (!errorDiv) {
         errorDiv = document.createElement("div");
         errorDiv.className = "error";
-        form.appendChild(errorDiv);
+        // Si no existe en el HTML, lo añadimos al final del formulario (aunque en tu PHP ya existe)
+        if (form) form.appendChild(errorDiv); 
     }
 
-    // Ocultar inicialmente
-    errorDiv.style.display = "none";
-    // cuando se ejecute la funcion mostrarError se mostrara el mensaje de error
-    function mostrarError(mensaje) {
-        errorDiv.innerHTML = mensaje;
+    // --- CORRECCIÓN APLICADA ---
+    // Comprobamos si el div ya tiene texto traído desde PHP
+    if (errorDiv && errorDiv.innerHTML.trim() !== "") {
+        // Si tiene texto (ej. "Credenciales incorrectas"), lo mostramos
         errorDiv.style.display = "block";
-    }
-    // cuando se ejecute la funcion limpiarError se limpiara el mensaje de error
-    function limpiarError() {
-        errorDiv.innerHTML = "";
+    } else if (errorDiv) {
+        // Si está vacío, lo ocultamos inicialmente
         errorDiv.style.display = "none";
     }
-    // funcion para validar los campos del formulario
+    // ---------------------------
+
+    // Cuando se ejecute la función mostrarError se mostrará el mensaje de error
+    function mostrarError(mensaje) {
+        if (errorDiv) {
+            errorDiv.innerHTML = mensaje;
+            errorDiv.style.display = "block";
+        }
+    }
+
+    // Cuando se ejecute la función limpiarError se limpiará el mensaje de error
+    function limpiarError() {
+        if (errorDiv) {
+            errorDiv.innerHTML = "";
+            errorDiv.style.display = "none";
+        }
+    }
+
+    // Función para validar los campos del formulario
     function validarCampos() {
+        // NOTA: Si prefieres que no se borre el error de PHP al salir del campo,
+        // podrías comentar la línea de abajo, pero para validación JS estándar se suele dejar.
         limpiarError();
-        // si el user esta vacio se mostrara el mensaje de error
+
+        // Si el user está vacío se mostrará el mensaje de error
         if (!username.value) {
             mostrarError("Selecciona un usuario.");
             return false;
         }
-        // si la password esta vacia se mostrara el mensaje de error
+        // Si la password está vacía se mostrará el mensaje de error
         if (!password.value) {
             mostrarError("Introduce tu contraseña.");
             return false;
         }
-        // si la password tiene menos de 6 caracteres se mostrara el mensaje de error
+        // Si la password tiene menos de 6 caracteres se mostrará el mensaje de error
         if (password.value.length < 6) {
             mostrarError("La contraseña debe tener al menos 6 caracteres.");
             return false;
@@ -45,16 +65,16 @@ window.onload = function () {
         return true;
     }
 
-    // Validación al salir del campo, al hacer click fuera del campo
-    username.onblur = validarCampos;
-    password.onblur = validarCampos;
+    // Validación al salir del campo (blur)
+    if (username) username.onblur = validarCampos;
+    if (password) password.onblur = validarCampos;
 
-    // Validación al enviar
-    // se ejecutara la funcion validarCampos al enviar el formulario, se pone la e para evitar que se envie el formulario si no se cumplen las condiciones
-    form.onsubmit = function (e) {
-        if (!validarCampos()) {
-            // e.preventDefault() evita que se envie el formulario porque no se cumplen las condiciones de !validarCampos()
-            e.preventDefault();
-        }
-    };
+    // Validación al enviar el formulario
+    if (form) {
+        form.onsubmit = function (e) {
+            if (!validarCampos()) {
+                e.preventDefault(); // Evita el envío si no pasa la validación JS
+            }
+        };
+    }
 };
