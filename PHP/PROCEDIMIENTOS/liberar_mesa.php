@@ -1,34 +1,45 @@
 <?php
+// Inicia o reanuda la sesión del usuario
 session_start();
+// Requiere el archivo de conexión a la base de datos (sube un nivel y entra en CONEXION)
 require_once './../CONEXION/conexion.php';
 
-$error = ''; // Variable para mostrar errores en el formulario
+// Inicializa una variable para almacenar mensajes de error
+$error = ''; 
 
 // --- Verificación de sesión ---
+// Si el usuario no está logueado (no existe 'loginok' o no es true), lo redirige al login
 if (!isset($_SESSION['loginok']) || $_SESSION['loginok'] !== true) {
     header("Location: ../PUBLIC/login.php");
-    exit();
+    exit(); // Detiene la ejecución
 }
+// Obtiene el username de la sesión
 $username = $_SESSION['username'] ?? null;
+// Si el username es nulo (extraña_seguridad), destruye la sesión y redirige al login
 if (!$username) {
     session_destroy(); header("Location: ../PUBLIC/login.php"); exit();
 }
 
 // --- Consultar ID del camarero ---
+// Prepara una consulta para obtener el ID del usuario logueado usando su username
 $stmt_camarero = $conn->prepare("SELECT id FROM users WHERE username = :username LIMIT 1");
 $stmt_camarero->execute([':username' => $username]);
 $camarero = $stmt_camarero->fetch(PDO::FETCH_ASSOC);
+// Si no se encuentra el camarero en la BBDD, destruye la sesión y redirige al login
 if (!$camarero) {
     session_destroy(); header("Location: ../PUBLIC/login.php"); exit();
 }
+// Almacena el ID del camarero logueado
 $id_camarero = $camarero['id'];
-$rol = $_SESSION['rol'] ?? 1; // Necesitamos el rol para permisos
+// Obtiene el ROL del camarero (1=camarero, 2=admin)
+$rol = $_SESSION['rol'] ?? 1; 
 
 
 // --- Variables para el Header ---
+// Prepara el nombre para mostrar en el header (con htmlspecialchars por seguridad)
 $nombre = htmlspecialchars($_SESSION['nombre'] ?? $username);
 // $rol = $_SESSION['rol'] ?? 1; // Ya definida arriba
-// Saludo dinámico
+// Saludo dinámico según la hora
 $hora = date('H');
 if ($hora >= 6 && $hora < 12) {
     $saludo = "Buenos días";
@@ -40,13 +51,17 @@ if ($hora >= 6 && $hora < 12) {
 
 
 // --- Obtener Mesa ---
+// Obtiene el ID de la mesa enviado por POST desde el formulario de la sala
 $id_mesa = $_POST['mesa_id'] ?? null;
+// Si no se envió un 'mesa_id', redirige a una sala por defecto
 if (!$id_mesa) {
-    header("Location: ./../PUBLIC/SALAS/comedor1.php"); // Redirigir
+    header("Location: ./../PUBLIC/SALAS/comedor1.php"); 
     exit();
 }
 
-// --- CORREGIDO: Pedimos 'm.asignado_por' que es el ID que necesitamos ---
+// --- Obtener datos de la Mesa y quién la asignó ---
+// Prepara una consulta para obtener todos los datos de la mesa, el nombre del camarero que la asignó (u.username)
+// y el nombre de la sala (s.nombre)
 $stmt_mesa = $conn->prepare("
     SELECT m.*, u.username AS camarero, s.nombre AS sala_nombre, m.asignado_por
     FROM mesas m
@@ -57,42 +72,59 @@ $stmt_mesa = $conn->prepare("
 $stmt_mesa->execute([$id_mesa]);
 $mesa = $stmt_mesa->fetch(PDO::FETCH_ASSOC);
 
+// Si la mesa no se encuentra en la BBDD, guarda un error
 if (!$mesa) {
     $error = "Mesa no encontrada.";
 }
 
 // --- Info de la Sala ---
+// Prepara variables para la sala actual (para CSS y redirección)
 $id_sala_actual = $mesa['id_sala'] ?? 0;
 $sala_nombre = $mesa['sala_nombre'] ?? 'Sala Desconocida';
+// Convierte "Comedor 1" en "comedor1" para el nombre del archivo CSS
 $sala_css_class = strtolower(str_replace(' ', '', $sala_nombre));
+// Crea la URL de redirección para volver a la sala de origen
 $sala_redirect_url = './../PUBLIC/SALAS/' . $sala_css_class . '.php';
 
 // --- Lógica de Liberación (POST) ---
+// Comprueba si la página se ha enviado a sí misma (POST) y si se presionó el botón 'confirmar'
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar']) && !$error) {
+    // Inicia una transacción: si algo falla, se revierte todo
     $conn->beginTransaction();
     try {
-        // La comprobación de seguridad del servidor (esta es la que importa)
+        // --- CONTROL DE PERMISOS (Servidor) ---
+        // Comprueba si el camarero que intenta liberar NO es quien la asignó Y NO es admin (rol 2)
         if ($mesa['asignado_por'] != $id_camarero && $rol != 2) {
+            // Si no tiene permisos, guarda un error
             $error = "No puedes liberar una mesa asignada por otro camarero.";
         } else {
+            // --- Si tiene permisos, procede a liberar ---
+            
+            // 1. Actualiza la mesa: estado=1 (libre), asignado_por=NULL
             $conn->prepare("UPDATE mesas SET estado=1, asignado_por=NULL WHERE id=?")->execute([$id_mesa]);
+            
+            // 2. Actualiza la ocupación: pone la hora actual en 'final_ocupacion'
+            //    Busca la ocupación de esta mesa que AÚN NO ha finalizado (IS NULL)
             $conn->prepare("
                 UPDATE ocupaciones SET final_ocupacion=NOW()
                 WHERE id_mesa=? AND final_ocupacion IS NULL
                 ORDER BY inicio_ocupacion DESC LIMIT 1
             ")->execute([$id_mesa]);
 
+            // Si todo ha ido bien, confirma los cambios en la BBDD
             $conn->commit();
-            header("Location: " . $sala_redirect_url); // Redirigir a la sala de origen
+            // Redirige al usuario de vuelta a la sala de la que venía
+            header("Location: " . $sala_redirect_url); 
             exit();
         }
     } catch (Exception $e) {
+        // Si algo falló (BBDD), revierte todos los cambios
         $conn->rollBack();
         $error = "Error al liberar la mesa: " . $e->getMessage();
     }
 }
 
-// --- Consulta para la barra lateral ---
+// --- Consulta para la barra lateral (Navegación de salas) ---
 try {
     $stmt_salas = $conn->query("SELECT id, nombre FROM salas");
     $salas = $stmt_salas->fetchAll(PDO::FETCH_ASSOC);
@@ -104,6 +136,7 @@ try {
 // --- Obtener tiempo de inicio de ocupación ---
 $ocupacion_tiempo = null;
 if ($id_mesa && !$error) {
+    // Busca la hora de inicio de la ocupación más reciente de esta mesa
     $stmt_ocupacion_tiempo = $conn->prepare("
         SELECT DATE_FORMAT(o.inicio_ocupacion, '%d/%m/%Y %H:%i:%s') AS tiempo
         FROM ocupaciones o
@@ -115,6 +148,7 @@ if ($id_mesa && !$error) {
     $ocupacion_tiempo = $stmt_ocupacion_tiempo->fetch(PDO::FETCH_ASSOC);
 }
 
+// Si no se encontró un registro de ocupación (raro, pero posible), guarda un error
 if (!$ocupacion_tiempo && !$error) {
     $error_ocupacion = "Inicio de la ocupacion no detectado.";
 }
@@ -131,17 +165,14 @@ if (!$ocupacion_tiempo && !$error) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- Cargamos SweetAlert (CSS y JS) -->
-    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../../JS/liberar_mesa.js"></script>
-    <link rel="stylesheet" href="../../css/panel_principal.css">
+    
+    <script src="../../JS/liberar_mesa.js"></script> <link rel="stylesheet" href="../../css/panel_principal.css">
     <link rel="stylesheet" href="../../css/salas_general.css">
     <link rel="stylesheet" href="../../css/<?php echo $sala_css_class; ?>.css">
 </head>
 
-<!-- CORREGIDO: Añadimos data-rol para que los scripts lo lean -->
 <body data-user-name="<?php echo htmlspecialchars($nombre); ?>" data-rol="<?php echo (int)$rol; ?>">
 
 <nav class="main-header">
@@ -165,7 +196,6 @@ if (!$ocupacion_tiempo && !$error) {
             </a>
         </div>
 
-        <!-- RUTA CORREGIDA -->
         <form method="post" action="logout.php">
             <button type="submit" class="logout-btn">
                 <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
@@ -188,20 +218,14 @@ if (!$ocupacion_tiempo && !$error) {
                     </div>
                 <?php endif; ?>
 
-                <!-- ID AÑADIDO AL FORMULARIO -->
                 <form method="POST" id="liberar-mesa-form" class="form-full-page">
                     <input type="hidden" name="mesa_id" value="<?php echo htmlspecialchars($id_mesa ?? ''); ?>">
                     
-                    <!-- ===== CORREGIDO: Inputs con los IDs correctos ===== -->
-                    <!-- Este es el ID del camarero que ASIGNÓ la mesa (para liberar_mesa.js) -->
-                    <!-- TU BUG ESTABA AQUÍ: 'id="camarero"' debe tener el ID del camarero, no el ID de la mesa -->
                     <input type="hidden" id="camarero" value="<?php echo (int)($mesa['asignado_por'] ?? 0); ?>">
                     
-                    <!-- Este es el ID del camarero que está VIENDO la página (para liberar_mesa.js) -->
                     <input type="hidden" id="camarero_sesion" value="<?php echo (int)$id_camarero; ?>">
 
                     <div class="form-actions">
-                        <!-- ID AÑADIDO AL BOTÓN -->
                         <button type="submit" id="btn-liberar" name="confirmar" value="1" class="btn-danger">Sí, liberar</button>
                         <a href="<?php echo $sala_redirect_url; ?>" class="btn-secondary">Cancelar</a>
                     </div>
@@ -212,10 +236,12 @@ if (!$ocupacion_tiempo && !$error) {
         <aside class="salas-navigation">
             <?php foreach ($salas as $sala): ?>
                 <?php
+                    // Comprueba si esta sala es la activa (la que estamos viendo)
                     $clase_activa = ($sala['id'] == $id_sala_actual) ? 'active' : '';
+                    // Genera el nombre del archivo PHP (ej: "comedor1")
                     $nombre_fichero = strtolower(str_replace(' ', '', $sala['nombre']));
                     
-                    // Ruta desde PROCEDIMIENTOS/ hasta PUBLIC/SALAS/
+                    // Crea la URL para el enlace
                     $url = './../PUBLIC/SALAS/' . $nombre_fichero . ".php"; 
                 ?>
                 <a href="<?php echo $url; ?>" class="sala-nav-link <?php echo $clase_activa; ?>">
@@ -226,13 +252,7 @@ if (!$ocupacion_tiempo && !$error) {
 
     </div>
 
-    <!-- ==============================================
-         SCRIPTS JS AL FINAL DEL BODY
-       ============================================== -->
-    
-    <!-- Script para el temporizador de inactividad (si lo usas) -->
     <script src="../../JS/inactivity_timer.js"></script>
-
 
     <script src="../../JS/liberar_mesa.js"></script>
     <script src="../../JS/alert_liberar.js"></script>

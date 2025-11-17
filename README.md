@@ -1,5 +1,7 @@
 # 🌟 CASA GMS – Sistema de Gestión de Mesas
 
+[Ver el Repositorio en GitHub](https://github.com/samuelmartin33/2526_DAW2_Projecte01_Samuel_Guillem_Marc.git)
+
 ¿Buscas optimizar la gestión de mesas y disponibilidad en tu restaurante? **Casa GMS** es la solución.
 
 Este proyecto es un sistema web desarrollado en PHP y MySQL, diseñado para ser la herramienta definitiva que permite a camareros y administradores controlar la ocupación del restaurante en tiempo real, gestionar asignaciones y analizar el rendimiento histórico.
@@ -21,11 +23,26 @@ Este proyecto es un sistema web desarrollado en PHP y MySQL, diseñado para ser 
 
 ## 🛠️ Tecnologías Utilizadas
 
-* **Backend:** PHP 8+ (Orientado a objetos y procedural)
+* **Backend:** PHP (Orientado a objetos y procedural)
 * **Base de Datos:** MySQL con PDO (Consultas preparadas para evitar inyección SQL)
-* **Frontend:** HTML5, CSS3 (Flexbox, Grid)
-* **Javascript (ES6+):** Validación de formularios en tiempo real y lógica de UI.
-* **Librerías:** SweetAlert2 (Para notificaciones y confirmaciones modernas)
+* **Frontend:** HTML, CSS
+* **Javascript:** Validación de formularios en tiempo real.
+* **PhP:** Validaciones PHP, por si al iluminado se le ocurre desactivar JS ;).
+* **Librerías:** SweetAlert y BootStrap.
+
+<br>
+
+## 🛡️ Integridad de Datos: Transacciones y Rollback
+
+La fiabilidad de los datos es crítica. Por ello, las operaciones complejas (como asignar una mesa y, al mismo tiempo, crear un registro en el histórico) se gestionan mediante **Transacciones de Base de Datos (PDO)**.
+
+Esto significa que:
+1.  Se inicia una transacción (`beginTransaction`).
+2.  Se intentan ejecutar todas las operaciones (Ej: `UPDATE` en `mesas`, `INSERT` en `ocupaciones`).
+3.  Si **todas** tienen éxito, se confirman los cambios (`commit`).
+4.  Si **alguna** de ellas falla, se ejecuta un `rollback`, revirtiendo **todos** los cambios.
+
+**En resumen: O todo se hace bien, o no se hace nada.** Esto garantiza que la base de datos nunca quede en un estado inconsistente o con datos corruptos.
 
 <br>
 
@@ -35,7 +52,7 @@ Sigue estos pasos para ejecutar el proyecto en tu entorno local:
 
 1.  **Clonar el Repositorio**
     ```bash
-    git clone [https://github.com/tu-usuario/casa-gms.git](https://github.com/tu-usuario/casa-gms.git)
+    git clone [https://github.com/samuelmartin33/2526_DAW2_Projecte01_Samuel_Guillem_Marc.git](https://github.com/samuelmartin33/2526_DAW2_Projecte01_Samuel_Guillem_Marc.git)
     ```
 
 2.  **Importar la Base de Datos**
@@ -43,7 +60,7 @@ Sigue estos pasos para ejecutar el proyecto en tu entorno local:
     * Importa el archivo en tu gestor de MySQL (phpMyAdmin, Workbench, DBeaver, etc.) para crear la estructura de tablas y los datos iniciales.
 
 3.  **Configurar la Conexión**
-    * Navega al archivo de conexión, probablemente ubicado en `PHP/CONEXION/conexion.php`.
+    * Navega al archivo de conexión, ubicado en `PHP/CONEXION/conexion.php`.
     * Edita las variables con tus credenciales de la base de datos:
         * `$servidor` (ej. "localhost")
         * `$usuario` (ej. "root")
@@ -53,7 +70,7 @@ Sigue estos pasos para ejecutar el proyecto en tu entorno local:
 4.  **Configurar la URL Base (¡Crítico!)**
     * En el mismo archivo `conexion.php` o en un archivo de configuración principal, asegúrate de definir la `BASE_URL`. Esto es esencial para que las rutas y redirecciones funcionen correctamente.
     * ```php
-        DEFINE('BASE_URL', 'http://localhost/tu-carpeta-proyecto/');
+        DEFINE('BASE_URL', 'http://localhost/2526_DAW2_Projecte01_Samuel_Guillem_Marc/');
         ```
 
 5.  **Iniciar el Servidor**

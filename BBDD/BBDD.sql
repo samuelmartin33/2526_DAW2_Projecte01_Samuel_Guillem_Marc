@@ -1,8 +1,7 @@
 -- ==========================================
 --   BASE DE DATOS: restaurante_db
---   Autor: Marc Guillem, Samuel Martínez (Adaptado por Gemini)
+--   Autor: Marc Guillem, Samuel Martínez
 --   Fecha: Noviembre 2025
---   Descripción: Modelo para TPV con datos de ocupación manuales.
 -- ==========================================
 
 DROP DATABASE IF EXISTS restaurante_db;

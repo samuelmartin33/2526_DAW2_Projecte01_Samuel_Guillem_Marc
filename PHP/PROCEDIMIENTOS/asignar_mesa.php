@@ -1,24 +1,32 @@
 <?php
+// Inicia o reanuda la sesión
 session_start();
+// Requiere el archivo de conexión
 require_once './../CONEXION/conexion.php';
 
 // --- Verificación de sesión ---
+// Comprueba si el usuario está logueado
 if (!isset($_SESSION['loginok']) || $_SESSION['loginok'] !== true) {
     header("Location: ../PUBLIC/login.php");
     exit();
 }
+// Obtiene el username de la sesión
 $username = $_SESSION['username'] ?? null;
+// Si no existe, destruye la sesión y redirige
 if (!$username) {
     session_destroy(); header("Location: ../PUBLIC/login.php"); exit();
 }
 
 // --- Consultar ID del camarero ---
+// Obtiene el ID del camarero logueado
 $stmt_camarero = $conn->prepare("SELECT id FROM users WHERE username = :username LIMIT 1");
 $stmt_camarero->execute([':username' => $username]);
 $camarero = $stmt_camarero->fetch(PDO::FETCH_ASSOC);
+// Si no se encuentra, destruye la sesión y redirige
 if (!$camarero) {
     session_destroy(); header("Location: ../PUBLIC/login.php"); exit();
 }
+// Almacena el ID
 $id_camarero = $camarero['id'];
 
 // --- Variables para el Header ---
@@ -35,51 +43,67 @@ if ($hora >= 6 && $hora < 12) {
 }
 
 // --- Obtener Mesa ---
+// Obtiene el ID de la mesa enviado por POST
 $id_mesa = $_POST['mesa_id'] ?? null;
+// Si no se envió ID, redirige a una sala por defecto
 if (!$id_mesa) {
-    header("Location: ./../PUBLIC/SALAS/comedor1.php"); // Redirigir si no hay ID
+    header("Location: ./../PUBLIC/SALAS/comedor1.php"); 
     exit();
 }
+// Busca los datos de la mesa
 $stmt_mesa = $conn->prepare("SELECT * FROM mesas WHERE id = ?");
 $stmt_mesa->execute([$id_mesa]);
 $mesa = $stmt_mesa->fetch(PDO::FETCH_ASSOC);
 
+// --- Validación de Estado ---
+// Si la mesa no existe O si su estado NO es 1 (libre), detiene la ejecución
 if (!$mesa || $mesa['estado'] != 1) {
     die("Mesa no disponible o ya ocupada.");
 }
 
 // --- Obtener info de la Sala (para el fondo y la navegación) ---
 $id_sala_actual = $mesa['id_sala'];
+// Busca el nombre de la sala usando su ID
 $stmt_sala_info = $conn->prepare("SELECT nombre FROM salas WHERE id = ?");
 $stmt_sala_info->execute([$id_sala_actual]);
-$sala_nombre = $stmt_sala_info->fetchColumn();
+$sala_nombre = $stmt_sala_info->fetchColumn(); // Obtiene solo la columna 'nombre'
+// Genera el nombre de la clase CSS (ej: "comedor1")
 $sala_css_class = strtolower(str_replace(' ', '', $sala_nombre));
+// Genera la URL de redirección para "Cancelar" o al finalizar
 $sala_redirect_url = './../PUBLIC/SALAS/' . $sala_css_class . '.php';
 
 // --- Lógica de Asignación (POST) ---
+// Comprueba si la página se envió a sí misma (POST) Y si se envió el campo 'num_comensales'
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['num_comensales'])) {
+    // Obtiene el número de comensales (convertido a entero)
     $num_comensales = (int)$_POST['num_comensales'];
+    // Inicia una transacción
     $conn->beginTransaction();
     try {
+        // 1. Actualiza la mesa: estado=2 (ocupada), asignado_por=ID del camarero
         $update = $conn->prepare("UPDATE mesas SET estado=2, asignado_por=? WHERE id=?");
         $update->execute([$id_camarero, $id_mesa]);
 
+        // 2. Inserta un nuevo registro en la tabla 'ocupaciones'
         $insert = $conn->prepare("
             INSERT INTO ocupaciones (id_camarero, id_sala, id_mesa, inicio_ocupacion, num_comensales)
             VALUES (?, ?, ?, NOW(), ?)
         ");
         $insert->execute([$id_camarero, $mesa['id_sala'], $id_mesa, $num_comensales]);
 
+        // Si todo va bien, confirma los cambios
         $conn->commit();
-        header("Location: " . $sala_redirect_url); // Redirigir a la sala de origen
+        // Redirige de vuelta a la sala
+        header("Location: " . $sala_redirect_url); 
         exit();
     } catch (Exception $e) {
+        // Si algo falla, revierte los cambios
         $conn->rollBack();
         die("Error: " . $e->getMessage());
     }
 }
 
-// --- Consulta para la barra lateral ---
+// --- Consulta para la barra lateral (Navegación) ---
 try {
     $stmt_salas = $conn->query("SELECT id, nombre FROM salas");
     $salas = $stmt_salas->fetchAll(PDO::FETCH_ASSOC);
@@ -100,10 +124,8 @@ try {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" type="image/png" href="../../img/icono.png">
     
-    <!-- Cargamos SweetAlert PRIMERO -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
-    <!-- (salas.js no interfiere, lo dejamos) -->
     <script src="../PUBLIC/JS/salas.js"></script>
 
     <link rel="stylesheet" href="../../css/panel_principal.css">
@@ -152,12 +174,13 @@ try {
                 <p><strong>Sala:</strong> <?php echo htmlspecialchars($sala_nombre); ?></p>
                 <p><strong>Capacidad:</strong> <?php echo $mesa['sillas']; ?> comensales</p>
                 
-                <!-- El <div> de error que 'validar_asignacion.js' usa se creará aquí -->
-
+          
                 <form method="POST" id="asignar-mesa-form" class="form-full-page">
                     <input type="hidden" name="mesa_id" value="<?php echo $id_mesa; ?>">
+                    
                     <label for="num-comensales">Número de comensales:</label>
                     <input type="number" id="num-comensales" name="num_comensales" min="1" max="<?php echo $mesa['sillas']; ?>" >
+                    
                     <input type="hidden" id="max-sillas" value="<?php echo (int)$mesa['sillas']; ?>">
 
                     
@@ -172,10 +195,12 @@ try {
         <aside class="salas-navigation">
             <?php foreach ($salas as $sala): ?>
                 <?php
+                    // Define la clase 'active' si esta es la sala actual
                     $clase_activa = ($sala['id'] == $id_sala_actual) ? 'active' : '';
+                    // Genera el nombre del archivo PHP
                     $nombre_fichero = strtolower(str_replace(' ', '', $sala['nombre']));
                     
-                    // Ruta desde PROCEDIMIENTOS/ hasta PUBLIC/SALAS/
+                    // Crea la URL
                     $url = './../PUBLIC/SALAS/' . $nombre_fichero . ".php"; 
                 ?>
                 <a href="<?php echo $url; ?>" class="sala-nav-link <?php echo $clase_activa; ?>">
@@ -186,8 +211,6 @@ try {
 
     </div>
     
-    <!-- ===== MODIFICACIÓN AQUÍ ===== -->
-    <!-- Cargamos TUS dos scripts, en este orden -->
     <script src="../../JS/validar_asignacion.js"></script>
     <script src="../../JS/alert_asignar.js"></script>
     
