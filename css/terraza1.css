@@ -3,7 +3,7 @@
  */
 
 .sala-layout.terraza1 {
-    /* RUTA CORREGIDA
+    /* 
      Sube 1 nivel (de css/ a restaurante/) y entra en img/
     */
     background-image: url('../img/terraza1.png');
@@ -36,7 +36,7 @@
 }
 
 /* ==============================================
-   RESPONSIVE (TABLET Y MÓVIL)
+   RESPONSIVE MÓVIL
    ============================================== */
 @media (max-width: 899px) {
     /* (Mesa T1-1) */

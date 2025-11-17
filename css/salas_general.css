@@ -343,7 +343,7 @@
 
 
 /* ==============================================
-   RESPONSIVE (TABLET Y MÓVIL)
+   RESPONSIVE Y MÓVIL
    ============================================== */
 /* (Se usa 899px para no solapar con el min-width: 900px) */
 @media (max-width: 899px) {

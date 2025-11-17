@@ -3,7 +3,7 @@
  */
 
 .sala-layout.comedor1 {
-    /* CAMBIO: Nueva imagen de fondo */
+   
     background-image: url('../img/comedor1.png');
 }
 
@@ -36,7 +36,7 @@
 }
 
 /* ==============================================
-   RESPONSIVE (TABLET Y MÓVIL)
+   RESPONSIVE MÓVIL
    ============================================== */
 @media (max-width: 899px) {
     /* (Mesa C1-1) */

@@ -5,12 +5,7 @@
 .sala-layout.comedor2 {
     background-image: url('../img/comedor2.png');
     
-    /* * CAMBIO: Mover imagen de fondo manualmente.
-     * ANTES: background-position: center top;
-     * * "center" la mantiene centrada horizontalmente.
-     * "-50px" la "tira" 50 píxeles hacia arriba (ocultando el borde superior).
-     * * Prueba a cambiar -50px por -80px (más arriba) o -20px (menos arriba).
-     */
+   
     background-position: center -145px; 
 }
 
@@ -43,7 +38,7 @@
 }
 
 /* ==============================================
-   RESPONSIVE (TABLET Y MÓVIL)
+   RESPONSIVE MÓVIL
    ============================================== */
 @media (max-width: 899px) {
     

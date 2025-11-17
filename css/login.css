@@ -223,7 +223,6 @@ button[type="submit"]:hover {
 }
 
 /* --- Diseño Responsivo --- */
-/* Estilos para pantallas de 1400px o menos (tablets/laptops) */
 @media (max-width: 1400px) { 
     body {
         overflow: auto; /* Permite el scroll vertical (necesario en móvil) */
