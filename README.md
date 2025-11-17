@@ -23,9 +23,9 @@ Este proyecto es un sistema web desarrollado en PHP y MySQL, diseñado para ser 
 
 ## 🛠️ Tecnologías Utilizadas
 
-* **Backend:** PHP 8+ (Orientado a objetos y procedural)
+* **Backend:** PHP (Orientado a objetos y procedural)
 * **Base de Datos:** MySQL con PDO (Consultas preparadas para evitar inyección SQL)
-* **Frontend:** HTML5, CSS3 (Flexbox, Grid)
+* **Frontend:** HTML, CSS
 * **Javascript:** Validación de formularios en tiempo real.
 * **PhP:** Validaciones PHP, por si al iluminado se le ocurre desactivar JS ;).
 * **Librerías:** SweetAlert y BootStrap.
