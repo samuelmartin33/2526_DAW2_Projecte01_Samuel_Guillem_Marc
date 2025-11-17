@@ -184,7 +184,7 @@ try {
         JOIN salas s ON o.id_sala = s.id
         JOIN mesas m ON o.id_mesa = m.id
         JOIN users u ON o.id_camarero = u.id
-        WHERE 1=1"; // "WHERE 1=1" es un truco: permite añadir siempre "AND" sin preocuparse de si es el primer filtro.
+        WHERE 1=1"; // "WHERE 1=1" permite añadir siempre "AND" sin preocuparse de si es el primer filtro.
     
     // Array para los parámetros de la consulta preparada (evita Inyección SQL).
     $params_tabla = []; 

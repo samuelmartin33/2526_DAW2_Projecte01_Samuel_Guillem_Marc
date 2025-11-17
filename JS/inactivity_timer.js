@@ -18,9 +18,7 @@
         logoutPath = 'logout.php'; 
     }
 
-    // 2. Leer el nombre de usuario del atributo data del body
-    // Usamos 'Usuario' como reserva si algo falla
-    const userName = document.body.dataset.userName || 'Usuario';
+
 
     /**
      * Muestra el popup de SweetAlert
@@ -31,7 +29,7 @@
         removeActivityListeners();
 
         Swal.fire({
-            title: '¿Sigues ahí, ' + userName + '?',
+            title: '¿Sigues ahí?',
             text: '',
             icon: 'warning',
             showCancelButton: true,
@@ -41,9 +39,8 @@
             allowOutsideClick: false, // No permite cerrar clicando fuera
             allowEscapeKey: false, // No permite cerrar con la tecla ESC
             
-            // --- CAMBIO CLAVE ---
-            // Se eliminan el temporizador y la barra de progreso de la alerta.
-            timer: 60000, 
+
+            timer: 900000000, 
             timerProgressBar: true,
 
         }).then((result) => {
