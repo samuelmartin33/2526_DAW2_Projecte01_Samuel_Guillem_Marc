@@ -1,27 +1,30 @@
 <?php
+// Inicia o reanuda la sesión
 session_start();
 
 // 1. Redirigir si ya está autenticado
+// Si el usuario ya tiene una sesión (id_usuario), no debe ver el login
 if (isset($_SESSION["id_usuario"])) {
-    // Si index.php está en la raíz, la ruta es:
+    // Lo redirige al panel principal (index.php)
     header('Location: ../../index.php'); 
-    exit;
+    exit; // Detiene la ejecución del script
 }
 
-// 2. Incluir TU archivo de conexión
-// RUTA CORREGIDA: Solo necesita subir un nivel (../) y entrar en conexion/
+// 2. Incluir el archivo de conexión a la BBDD
 require '../conexion/conexion.php'; 
 
-$camareros = [];
-$db_error = null;
+// Inicializa variables
+$camareros = []; // Array para almacenar la lista de usuarios
+$db_error = null; // Variable para guardar errores de BBDD
 
 try {
-    // 3. Obtener solo los camareros (rol=1)
+    // 3. Obtener solo los camareros (rol=1) y que no estén dados de baja
     $stmt = $conn->query("SELECT id, username, nombre, apellido FROM users WHERE rol = 1 AND fecha_baja IS NULL ORDER BY nombre");
-    $camareros = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $camareros = $stmt->fetchAll(PDO::FETCH_ASSOC); // Obtiene los resultados
     
 } catch (PDOException $e) {
-    // Manejo de error de la base de datos
+    // 4. Manejo de error de la base de datos
+    // Si la consulta falla, guarda un mensaje de error genérico
     $db_error = "Error al cargar la lista de usuarios. Contacte al administrador.";
 }
 ?>
@@ -38,9 +41,7 @@ try {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="icon" type="image/png" href="../../img/icono.png">
-    <link rel="stylesheet" href="../../css/login.css">
-</head>
+    <link rel="icon" type="image/png" href="../../img/icono.png"> <link rel="stylesheet" href="../../css/login.css"> </head>
 <body>
 
     <div class="top-logo">
@@ -48,9 +49,7 @@ try {
     </div>
 
 
-    <main> 
-        
-        <div class="logo-card">
+    <main> <div class="logo-card">
             <img src="../../img/casa_gms.png" alt="Logo Casa GMS">
         </div>
 
@@ -62,8 +61,10 @@ try {
                 <div class="error">
                     <?php
                     if ($db_error) {
+                        // Muestra el error de BBDD si existe
                         echo $db_error;
                     } else {
+                        // Muestra mensajes de error según el parámetro 'error' de la URL
                         switch ($_GET['error']) {
                             case 'campos_vacios':
                                 echo 'Por favor, completa todos los campos.';
@@ -92,8 +93,7 @@ try {
             <form id="loginForm" method="post" action="../PROCEDIMIENTOS/procesar_login.php" novalidate>
                 
                 <div class="input-group select-wrapper">
-                    <i class="fa-solid fa-user"></i>
-                    <select id="username" name="username">
+                    <i class="fa-solid fa-user"></i> <select id="username" name="username">
                         <option value="" disabled selected>Selecciona tu usuario</option>
                         <?php foreach ($camareros as $camarero): ?>
                             <option value="<?php echo htmlspecialchars($camarero['username']); ?>">
@@ -104,8 +104,7 @@ try {
                 </div>
 
                 <div class="input-group">
-                    <i class="fa-solid fa-lock"></i>
-                    <input type="password" id="password" name="password" placeholder="Contraseña">
+                    <i class="fa-solid fa-lock"></i> <input type="password" id="password" name="password" placeholder="Contraseña">
                 </div>
 
                 <button type="submit">Iniciar sesión</button>

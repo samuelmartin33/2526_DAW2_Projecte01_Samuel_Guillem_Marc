@@ -1,11 +1,14 @@
 <?php
+// Determina la hora actual del servidor (formato 24h)
 $hora = date('H');
+
+// Comprueba la franja horaria para definir un saludo personalizado
 if ($hora >= 6 && $hora < 12) {
-    $saludo = "Buenos días";
+    $saludo = "Buenos días"; // Mañana
 } elseif ($hora >= 12 && $hora < 20) {
-    $saludo = "Buenas tardes";
+    $saludo = "Buenas tardes"; // Tarde
 } else {
-    $saludo = "Buenas noches";
+    $saludo = "Buenas noches"; // Noche
 }
 ?>
 
@@ -20,12 +23,11 @@ if ($hora >= 6 && $hora < 12) {
         </div>
     </div>
 
-    <!-- Saludo dinámico -->
     <div class="header-greeting">
-        <?= $saludo ?> <span class="username-tag"><?= $username ?></span>
+        <?= $saludo ?> 
+        <span class="username-tag"><?= $username ?></span>
     </div>
 
-    <!-- Menú de navegación (Opciones de camarero) -->
     <div class="header-menu">
         <a href="../index.php" class="nav-link">
             <i class="fa-solid fa-house"></i> Inicio
@@ -33,14 +35,9 @@ if ($hora >= 6 && $hora < 12) {
         <a href="../historico.php" class="nav-link">
             <i class="fa-solid fa-chart-bar"></i> Histórico
         </a>
-        <?php if ($rol == 2): ?>
-            <a href="admin_panel.php" class="nav-link">
-                <i class="fa-solid fa-gear"></i> Admin
-            </a>
-        <?php endif; ?>
+        
     </div>
 
-    <!-- Botón de Cerrar Sesión -->
     <form method="post" action="../../PROCEDIMIENTOS/logout.php">
         <button type="submit" class="logout-btn">
             <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión

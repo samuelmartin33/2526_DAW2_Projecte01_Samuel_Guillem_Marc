@@ -2,8 +2,8 @@
     let inactivityTimer;
     
     // 5 minutos en milisegundos
-      const timeoutDuration = 2 * 60 * 1000; 
-    //  const timeoutDuration = 10000; // --- Descomenta esta línea para probar (10 segundos)
+    //   const timeoutDuration = 2 * 60 * 1000; 
+      const timeoutDuration = 10000; // --- Descomenta esta línea para probar (10 segundos)
 
     // 1. Determinar la ruta correcta al script de logout
     // (Según tu estructura de carpetas)
