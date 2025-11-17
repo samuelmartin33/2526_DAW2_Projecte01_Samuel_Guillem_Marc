@@ -2,8 +2,8 @@
     let inactivityTimer;
     
     // 5 minutos en milisegundos
-    //   const timeoutDuration = 2 * 60 * 1000; 
-      const timeoutDuration = 10000; // --- Descomenta esta línea para probar (10 segundos)
+    //    const timeoutDuration = 2 * 60 * 1000; 
+    const timeoutDuration = 10000; // --- Descomenta esta línea para probar (10 segundos)
 
     // 1. Determinar la ruta correcta al script de logout
     // (Según tu estructura de carpetas)
@@ -26,8 +26,7 @@
      * Muestra el popup de SweetAlert
      */
     function showInactivityPopup() {
-        // --- CAMBIO CLAVE ---
-        // Se eliminan los listeners de actividad para que el pop-up no se cierre
+
         // si el usuario mueve el ratón para hacer clic.
         removeActivityListeners();
 
@@ -67,8 +66,6 @@
         // Oculta cualquier alerta que pudiera estar abierta
         Swal.close(); 
         
-        // --- CAMBIO CLAVE ---
-        // Vuelve a añadir los listeners de actividad
         addActivityListeners();
         
         // Vuelve a empezar la cuenta de 5 minutos

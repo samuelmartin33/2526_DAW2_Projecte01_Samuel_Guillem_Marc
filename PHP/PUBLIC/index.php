@@ -10,7 +10,6 @@ require_once __DIR__ . '/../CONEXION/conexion.php';
 // Verifica si existen las variables de sesión 'loginok' (true) y 'username'
 if (isset($_SESSION['loginok']) && $_SESSION['loginok'] === true && isset($_SESSION['username'])) {
     // Si está logueado, guarda las variables de sesión en variables locales
-    // htmlspecialchars() previene ataques XSS al imprimir estas variables
     $nombre = htmlspecialchars($_SESSION['nombre']);
     $username = htmlspecialchars($_SESSION['username']);
     // Asigna el rol. Si no está definido, asume 1 (camarero) por defecto.
@@ -21,10 +20,7 @@ if (isset($_SESSION['loginok']) && $_SESSION['loginok'] === true && isset($_SESS
     exit(); // Detiene la ejecución del script
 }
 
-// --- Lógica para el mensaje de bienvenida (Toast) ---
-// Inicializa variables para el mensaje emergente (SweetAlert)
-$welcome_data_flag = "false"; // Flag para que JS sepa si mostrar el mensaje
-$welcome_data_name = ""; // Nombre a mostrar en el mensaje
+
 
 // Comprueba si la variable de sesión 'show_welcome_message' existe y es true
 if (isset($_SESSION['show_welcome_message']) && $_SESSION['show_welcome_message'] === true) {
@@ -140,11 +136,7 @@ if ($hora >= 6 && $hora < 12) {
 
 </head>
 
-<body 
-    data-show-welcome="<?php echo $welcome_data_flag; ?>" 
-    data-welcome-name="<?php echo htmlspecialchars($welcome_data_name); ?>"
-    data-user-name="<?php echo htmlspecialchars($nombre); ?>"
->
+<body>
     
     <nav class="main-header">
         <div class="header-logo">
@@ -236,7 +228,7 @@ if ($hora >= 6 && $hora < 12) {
                         <div class="progress-bar-container">
                             <div 
                                 class="progress-bar" 
-                                /* El ancho y color se definen dinámicamente con PHP */
+                             
                                 style="width: <?= $sala['ocupacion_pct'] ?>%; 
                                        background-color: <?= $bar_color ?>;">
                             </div>
