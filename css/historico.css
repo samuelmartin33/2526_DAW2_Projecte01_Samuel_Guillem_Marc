@@ -417,7 +417,6 @@ body {
  RESPONSIVE
  ========================== */
 
-/* Estilos para pantallas de 900px o menos (tablets) */
 @media (max-width: 900px) {
   
   .main-header {
