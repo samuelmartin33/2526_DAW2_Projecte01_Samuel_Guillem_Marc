@@ -14,19 +14,8 @@ if (isset($_SESSION["id_usuario"])) {
 require '../conexion/conexion.php'; 
 
 // Inicializa variables
-$camareros = []; // Array para almacenar la lista de usuarios
 $db_error = null; // Variable para guardar errores de BBDD
 
-try {
-    // 3. Obtener solo los camareros (rol=1) y que no estén dados de baja
-    $stmt = $conn->query("SELECT id, username, nombre, apellido FROM users WHERE rol = 1 AND fecha_baja IS NULL ORDER BY nombre");
-    $camareros = $stmt->fetchAll(PDO::FETCH_ASSOC); // Obtiene los resultados
-    
-} catch (PDOException $e) {
-    // 4. Manejo de error de la base de datos
-    // Si la consulta falla, guarda un mensaje de error genérico
-    $db_error = "Error al cargar la lista de usuarios. Contacte al administrador.";
-}
 ?>
 
 <!DOCTYPE html>
@@ -92,15 +81,8 @@ try {
 
             <form id="loginForm" method="post" action="../PROCEDIMIENTOS/procesar_login.php" novalidate>
                 
-                <div class="input-group select-wrapper">
-                    <i class="fa-solid fa-user"></i> <select id="username" name="username">
-                        <option value="" disabled selected>Selecciona tu usuario</option>
-                        <?php foreach ($camareros as $camarero): ?>
-                            <option value="<?php echo htmlspecialchars($camarero['username']); ?>">
-                                <?php echo htmlspecialchars($camarero['nombre'] . ' ' . $camarero['apellido']); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
+                <div class="input-group">
+                    <i class="fa-solid fa-user"></i> <input type="text" id="username" name="username" placeholder="Usuario">
                 </div>
 
                 <div class="input-group">

@@ -1,0 +1,234 @@
+/* =============================================
+   ESTILOS PARA GESTIÓN DE SALAS
+   ============================================= */
+
+/* Reutilizar estilos de gestion_usuarios para consistencia */
+@import url('gestion_usuarios.css');
+
+/* --- TABLA DE SALAS --- */
+.salas-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    font-size: 0.95rem;
+}
+
+.salas-table thead {
+    background-color: #ce4535;
+    color: white;
+}
+
+.salas-table thead th {
+    padding: 16px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.salas-table tbody tr {
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s ease;
+}
+
+.salas-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.salas-table tbody td {
+    padding: 14px 12px;
+    color: #333;
+}
+
+.salas-table tbody td strong {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+/* --- IMÁGENES EN TABLA --- */
+.imagen-miniatura {
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 2px solid #eee;
+}
+
+.imagen-miniatura:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-color: #ce4535;
+}
+
+.sin-imagen {
+    color: #999;
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+/* --- MODAL PARA AMPLIAR IMAGEN --- */
+.modal-imagen {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.imagen-ampliada {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.close-imagen {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.close-imagen:hover {
+    color: #ce4535;
+}
+
+/* --- PREVIEW DE IMÁGENES EN FORMULARIO --- */
+.image-preview {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    min-height: 50px;
+}
+
+.preview-container img,
+.current-image-preview img {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 6px;
+    margin-top: 10px;
+    border: 2px solid #ddd;
+}
+
+.preview-container {
+    text-align: center;
+}
+
+.preview-container p strong,
+.current-image-preview p strong {
+    color: #555;
+    font-size: 0.95rem;
+}
+
+.file-info {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.current-image-preview {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #f0f8ff;
+    border-radius: 6px;
+    border: 1px solid #d0e8ff;
+}
+
+/* --- FILE INPUT STYLING --- */
+input[type="file"] {
+    padding: 10px;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    background-color: #fafafa;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+    font-family: 'Poppins', sans-serif;
+    width: 100%;
+}
+
+input[type="file"]:hover {
+    border-color: #ce4535;
+    background-color: #fff;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+    background-color: #ce4535;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-right: 10px;
+    transition: background-color 0.2s ease;
+}
+
+input[type="file"]::-webkit-file-upload-button:hover {
+    background-color: #b73728;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    .salas-table {
+        font-size: 0.85rem;
+    }
+
+    .salas-table thead th,
+    .salas-table tbody td {
+        padding: 10px 8px;
+    }
+
+    .imagen-miniatura {
+        width: 60px;
+        height: 45px;
+    }
+
+    .close-imagen {
+        top: 20px;
+        right: 20px;
+        font-size: 30px;
+    }
+
+    .preview-container img,
+    .current-image-preview img {
+        max-height: 150px;
+    }
+}
+
+@media (max-width: 600px) {
+    .salas-table thead th {
+        font-size: 0.8rem;
+        padding: 12px 6px;
+    }
+
+    .imagen-miniatura {
+        width: 50px;
+        height: 40px;
+    }
+}

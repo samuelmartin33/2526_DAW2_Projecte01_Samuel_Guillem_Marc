@@ -415,3 +415,41 @@ html, body {
   background-color: #d44736; /* Fondo rojo */
   color: #fff; /* Texto blanco */
 }
+/* Botón grande para ver salas */
+.btn-ver-salas {
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    background: linear-gradient(135deg, #ce4535 0%, #e74c3c 100%);
+    color: white;
+    padding: 25px 50px;
+    border-radius: 15px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(206, 69, 53, 0.3);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-ver-salas:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(206, 69, 53, 0.4);
+    background: linear-gradient(135deg, #b73728 0%, #ce4535 100%);
+}
+
+.btn-ver-salas i {
+    font-size: 2rem;
+}
+
+@media (max-width: 768px) {
+    .btn-ver-salas {
+        font-size: 1.3rem;
+        padding: 20px 30px;
+    }
+    
+    .btn-ver-salas i {
+        font-size: 1.5rem;
+    }
+}

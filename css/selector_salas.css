@@ -1,0 +1,103 @@
+/* =============================================
+   SELECTOR DE SALAS - Grid de Salas
+   ============================================= */
+
+.salas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.sala-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+}
+
+.sala-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.sala-imagen {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.sala-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    padding: 20px;
+}
+
+.sala-nombre {
+    color: white;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.sala-info {
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+    gap: 15px;
+    background-color: #f8f9fa;
+}
+
+.sala-stat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.sala-stat i {
+    font-size: 1.2rem;
+}
+
+.sala-accion {
+    padding: 15px 20px;
+    background-color: #ce4535;
+    color: white;
+    font-weight: 600;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s ease;
+}
+
+.sala-card:hover .sala-accion {
+    background-color: #b73728;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    .salas-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .sala-imagen {
+        height: 150px;
+    }
+
+    .sala-nombre {
+        font-size: 1.3rem;
+    }
+}

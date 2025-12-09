@@ -1,6 +1,6 @@
 -- ==========================================
 --   BASE DE DATOS: restaurante_db
---   Autor: Marc Guillem, Samuel Martínez
+--   Autor: Marc, Guillem, Samuel Martínez
 --   Fecha: Noviembre 2025
 -- ==========================================
 
